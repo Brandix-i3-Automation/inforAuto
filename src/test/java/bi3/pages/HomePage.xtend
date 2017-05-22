@@ -103,6 +103,18 @@ class HomePage extends BasePage {
     @FindBy(css="li[data-gv-link='OIS150']")
     WebElement linkCoOpen;
     
+    /**Search and Start pop up Header */
+    @FindBy(id="ui-id-2")
+    WebElement lblSearchAndStart
+    
+    /**Search and Start text box */
+    @FindBy(id="cmdText")
+    WebElement txtSearchAndStart
+    
+    /**Search and Start OK button */
+    @FindBy(id="runTaskButton")
+    WebElement btnOk
+    
 	def void GoToMMS001() {
 		waitForLoadingComplete();
 		// Wait for Home page loaded
@@ -779,6 +791,24 @@ def void GoToOIS275(){
 			waitForLoadingComplete()			
 		}
 		waitForLoadingComplete()	
+	}
+	
+	def void pressShortcutKeys(String key){
+		waitForLoadingComplete();
+		driver.findElement(By.xpath("//body")).sendKeys(Keys.CONTROL + key);
+	}
+	
+	def void goToProgramUsingShrt(String program){
+		pressShortcutKeys("r");
+		waitForLoadingComplete();
+		try{
+			driver.findElement(By.id("ui-id-2"));
+			txtSearchAndStart.click();
+			txtSearchAndStart.sendKeys(program)
+			btnOk.click();
+		}catch(java.util.NoSuchElementException e){
+			e.printStackTrace();
+		}
 	}
 	
 }
