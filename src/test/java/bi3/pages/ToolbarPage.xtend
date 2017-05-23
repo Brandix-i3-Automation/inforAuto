@@ -125,7 +125,7 @@ class ToolbarPage extends BasePage {
     @FindBy(xpath="//ul[@class='inforContextMenu inforMenuOptions']//li/a[contains(text(),'Copy')]]")
     WebElement btnCopy;
     
-    @FindBy(xpath="//ul[@class='inforContextMenu inforMenuOptions']//li/a[contains(text(),'Delete')]]")
+    @FindBy(xpath="(//ul[@class='inforContextMenu inforMenuOptions'])[2]/li/a[contains(text(),'Delete')]")
     WebElement btnDelete;
     
     @FindBy(xpath="//ul[@class='inforContextMenu inforMenuOptions']//li/a[contains(text(),'Display')]]")

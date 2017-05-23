@@ -360,7 +360,7 @@ class WebDriverExtensions extends DefaultWebDriver {
 	def static void EnterText(WebElement element,String text){
 		
 		element.waitToBeClickable();
-		element.click();
+		//element.click();
 		element.clearRobustly();
 		element.sendKeys(text);
 		
