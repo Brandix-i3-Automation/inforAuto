@@ -43,7 +43,7 @@ class OSS401_CreateDataSet extends BaseTest{
 	/**
 	 * @TestCaseID: TC3
 	 * @CloudSuite: F&B
-	 * @Description: This test case includes the process of creating a data set with program OSS401
+	 * @Description: OSS401_CreateDataSet
 	 * @author: dasunik
 	 */
 	@Test

@@ -810,6 +810,13 @@ def void GoToOIS275(){
 			e.printStackTrace();
 		}
 	}
+	//verify the search and start text in pop up is displayed
+	def String verifySearchAndStartPopup(){
+		waitForLoadingComplete();
+		waitToBeDisplayed(lblSearchAndStart);
+		return lblSearchAndStart.text;		
+	}
+	
 	
 }
 
