@@ -161,4 +161,10 @@ class BasePage extends WebDriverExtensions {
 		clearRobustly(txtPanelSequence);
 		txtPanelSequence.sendKeys(seq);
 	}
+	
+	/**Press shortcut Keys */
+	def void pressShortcutKeys(String key){
+		waitForLoadingComplete();
+		driver.findElement(By.xpath("//body")).sendKeys(Keys.CONTROL + key);
+	}
 }
