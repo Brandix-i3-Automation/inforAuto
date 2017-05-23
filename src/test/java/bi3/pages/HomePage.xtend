@@ -8,6 +8,7 @@ import org.openqa.selenium.ElementNotVisibleException
 import org.openqa.selenium.NoSuchElementException
 import com.gargoylesoftware.htmlunit.ElementNotFoundException
 import org.openqa.selenium.By
+import org.testng.Assert
 
 class HomePage extends BasePage {
 
@@ -103,7 +104,19 @@ class HomePage extends BasePage {
     @FindBy(css="li[data-gv-link='OIS150']")
     WebElement linkCoOpen;
     
-    @FindBy(xpath="//button[@class='inforIconButton gvPageMenu gvButtonPageMenu']")
+    /**Search and Start pop up Header */
+    @FindBy(id="ui-id-2")
+    WebElement lblSearchAndStart
+    
+    /**Search and Start text box */
+    @FindBy(id="cmdText")
+    WebElement txtSearchAndStart
+    
+    /**Search and Start OK button */
+    @FindBy(id="runTaskButton")
+    WebElement btnOk
+
+ @FindBy(xpath="//button[@class='inforIconButton gvPageMenu gvButtonPageMenu']")
     WebElement btnSubMenu;
     
     @FindBy(xpath="//ul[@id='gvMenuSettings']")
@@ -144,7 +157,6 @@ class HomePage extends BasePage {
     
     @FindBy(xpath="//ul[@id='gvMenuSettings']/li[17]/a")
     WebElement listAdministration;
-    
     
 	def void GoToMMS001() {
 		waitForLoadingComplete();
@@ -824,7 +836,25 @@ def void GoToOIS275(){
 		waitForLoadingComplete()	
 	}
 	
-	def void GoToOIS301(){
+	/** 
+	 * Navigate to program
+	 * @param: program name
+	 */
+	def void goToProgramUsingShrt(String program){
+		pressShortcutKeys("r");
+		waitForLoadingComplete();
+		try{
+			driver.findElement(By.id("ui-id-2"));
+			txtSearchAndStart.click();
+			txtSearchAndStart.sendKeys(program)
+			Assert.assertEquals(GetTextBoxvalue(txtSearchAndStart),program);
+			btnOk.click();
+		}catch(java.util.NoSuchElementException e){
+			e.printStackTrace();
+		}
+	}
+
+def void GoToOIS301(){
 		waitForLoadingComplete();
 		// Wait for Home page loaded
 		waitToBeDisplayed(MenuWidgetOptions, 60);
@@ -909,9 +939,6 @@ def void GoToOIS275(){
 		listAddPage.click();
 		waitForLoadingComplete();
 	}
-	
-	
-	
 	
 }
 
