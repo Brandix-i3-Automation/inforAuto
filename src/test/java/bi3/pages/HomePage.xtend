@@ -854,7 +854,7 @@ def void GoToOIS275(){
 		}
 	}
 
-def void GoToOIS301(){
+	def void GoToOIS301(){
 		waitForLoadingComplete();
 		// Wait for Home page loaded
 		waitToBeDisplayed(MenuWidgetOptions, 60);
@@ -938,6 +938,13 @@ def void GoToOIS301(){
 		waitForLoadingComplete();
 		listAddPage.click();
 		waitForLoadingComplete();
+	}
+
+	//verify the search and start text in pop up is displayed
+	def String verifySearchAndStartPopup(){
+		waitForLoadingComplete();
+		waitToBeDisplayed(lblSearchAndStart);
+		return lblSearchAndStart.text;		
 	}
 	
 }

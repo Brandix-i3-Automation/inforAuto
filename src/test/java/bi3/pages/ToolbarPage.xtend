@@ -134,6 +134,8 @@ class ToolbarPage extends BasePage {
     @FindBy(xpath="//ul[@class='inforContextMenu inforMenuOptions']//li/a[contains(text(),'Copy to Clipboard')]]")
     WebElement btnCopyToClipBoard;
 
+	@FindBy(id = "helpIconBtn")
+	WebElement btnHelpBtn
     
     /*
      * 
@@ -347,4 +349,16 @@ class ToolbarPage extends BasePage {
 		btnExpandToolbox.click()
 		waitForLoadingComplete()
 	}
+	
+	def WebElement findElementInHelp(String DropDownElement){
+	 	var element = "//ul[@class='inforContextMenu formHelpMenu inforMenuOptions']//li/div/a[contains(text(),'"+DropDownElement+"')]"
+	 	return driver.findElement(By.xpath(element))
+	 }
+
+	 def void clickHelp(String DropDownElement){
+	  	waitToBeClickable(btnHelpBtn)
+	 	btnHelpBtn.click()
+	 	waitForLoadingComplete()
+	 	findElementInHelp(DropDownElement).click()
+	 }
 }
