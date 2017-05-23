@@ -104,6 +104,48 @@ public class HomePage extends BasePage {
   @FindBy(css = "li[data-gv-link=\'OIS150\']")
   private WebElement linkCoOpen;
   
+  @FindBy(xpath = "//button[@class=\'inforIconButton gvPageMenu gvButtonPageMenu\']")
+  private WebElement btnSubMenu;
+  
+  @FindBy(xpath = "//ul[@id=\'gvMenuSettings\']")
+  private WebElement listPageMenu;
+  
+  @FindBy(xpath = "//ul[@id=\'gvMenuSettings\']/li[1]/a")
+  private WebElement listStartPage;
+  
+  @FindBy(xpath = "//ul[@id=\'gvMenuSettings\']/li[3]/a")
+  private WebElement listAddWidget;
+  
+  @FindBy(xpath = "//ul[@id=\'gvMenuSettings\']/li[4]/a")
+  private WebElement listAddPage;
+  
+  @FindBy(xpath = "//ul[@id=\'gvMenuSettings\']/li[5]/a")
+  private WebElement listAddPageFromLibrary;
+  
+  @FindBy(xpath = "//ul[@id=\'gvMenuSettings\']/li[7]/a")
+  private WebElement listDeletePage;
+  
+  @FindBy(xpath = "//ul[@id=\'gvMenuSettings\']/li[8]/a")
+  private WebElement listRemoveFavouritePage;
+  
+  @FindBy(xpath = "//ul[@id=\'gvMenuSettings\']/li[9]/a")
+  private WebElement listRefresh;
+  
+  @FindBy(xpath = "//ul[@id=\'gvMenuSettings\']/li[11]/a")
+  private WebElement listMyPages;
+  
+  @FindBy(xpath = "//ul[@id=\'gvMenuSettings\']/li[12]/a")
+  private WebElement listPageSetting;
+  
+  @FindBy(xpath = "//ul[@id=\'gvMenuSettings\']/li[13]/a")
+  private WebElement listUserSetting;
+  
+  @FindBy(xpath = "//ul[@id=\'gvMenuSettings\']/li[15]/a")
+  private WebElement listAdvanced;
+  
+  @FindBy(xpath = "//ul[@id=\'gvMenuSettings\']/li[17]/a")
+  private WebElement listAdministration;
+  
   public void GoToMMS001() {
     BasePage.waitForLoadingComplete();
     WebDriverExtensions.waitToBeDisplayed(this.MenuWidgetOptions, 120);
@@ -716,5 +758,88 @@ public class HomePage extends BasePage {
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
+  }
+  
+  public void GoToOIS301() {
+    BasePage.waitForLoadingComplete();
+    WebDriverExtensions.waitToBeDisplayed(this.MenuWidgetOptions, 60);
+    this.headerMenu.click();
+    this.txtSearch.click();
+    BasePage.clearRobustly(this.txtSearch);
+    this.txtSearch.sendKeys("OIS301");
+    this.txtSearch.sendKeys(Keys.ENTER);
+    BasePage.waitForLoadingComplete();
+  }
+  
+  public void gotoStart() {
+    BasePage.waitForLoadingComplete();
+    this.btnSubMenu.click();
+    WebDriverExtensions.waitToBeDisplayed(this.listPageMenu, 120);
+  }
+  
+  public String getStartPageName() {
+    BasePage.waitForLoadingComplete();
+    return this.listStartPage.getText();
+  }
+  
+  public String getAddWidgetName() {
+    BasePage.waitForLoadingComplete();
+    return this.listAddWidget.getText();
+  }
+  
+  public String getAddPageName() {
+    BasePage.waitForLoadingComplete();
+    return this.listAddPage.getText();
+  }
+  
+  public String getAddPageFromLibraryName() {
+    BasePage.waitForLoadingComplete();
+    return this.listAddPageFromLibrary.getText();
+  }
+  
+  public String getDeletePageName() {
+    BasePage.waitForLoadingComplete();
+    return this.listDeletePage.getText();
+  }
+  
+  public String getRemoveFavouritePageName() {
+    BasePage.waitForLoadingComplete();
+    return this.listRemoveFavouritePage.getText();
+  }
+  
+  public String getRefreshName() {
+    BasePage.waitForLoadingComplete();
+    return this.listRefresh.getText();
+  }
+  
+  public String getMyPagesName() {
+    BasePage.waitForLoadingComplete();
+    return this.listMyPages.getText();
+  }
+  
+  public String getPageSettingsName() {
+    BasePage.waitForLoadingComplete();
+    return this.listPageSetting.getText();
+  }
+  
+  public String getUserSettingsName() {
+    BasePage.waitForLoadingComplete();
+    return this.listUserSetting.getText();
+  }
+  
+  public String getAdvancedName() {
+    BasePage.waitForLoadingComplete();
+    return this.listAdvanced.getText();
+  }
+  
+  public String getAdministrationName() {
+    BasePage.waitForLoadingComplete();
+    return this.listAdministration.getText();
+  }
+  
+  public void clickAddPage() {
+    BasePage.waitForLoadingComplete();
+    this.listAddPage.click();
+    BasePage.waitForLoadingComplete();
   }
 }
