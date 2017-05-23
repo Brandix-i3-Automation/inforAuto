@@ -326,6 +326,7 @@ class WebDriverExtensions extends DefaultWebDriver {
 
 	def void selectFromDropdown(WebElement btn, List<WebElement> optionsList, String text) {
 		btn.click();
+		Thread.sleep(2000);
 		var matchingElement = getElementByPartialText(optionsList, text);
 		matchingElement.click();
 	}

@@ -36,6 +36,10 @@ class BasePage extends WebDriverExtensions {
 	/**Button Next*/
 	@FindBy(id="Next")
 	public WebElement btnNext
+	
+	/**Panel Sequence textbox */
+	@FindBy(id="WWDSEQ")
+	public WebElement txtPanelSequence
 
 	def static void waitForLoadingComplete() {
 		waitToBeHidden(loadingIcon);
@@ -145,5 +149,22 @@ class BasePage extends WebDriverExtensions {
 			waitForLoadingComplete();
 			shortPageName = lblProgramShortName.text;
 		} while (!shortPageName.equalsIgnoreCase(panelName))
+	}
+	
+	/**
+	 * set the panel sequence of the program
+	 * @param : Sequence
+	 */
+	def void setPanelSequence(String seq){
+		waitForLoadingComplete();
+		txtPanelSequence.click();
+		clearRobustly(txtPanelSequence);
+		txtPanelSequence.sendKeys(seq);
+	}
+	
+	/**Press shortcut Keys */
+	def void pressShortcutKeys(String key){
+		waitForLoadingComplete();
+		driver.findElement(By.xpath("//body")).sendKeys(Keys.CONTROL + key);
 	}
 }

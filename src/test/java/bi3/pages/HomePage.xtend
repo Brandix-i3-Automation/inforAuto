@@ -8,6 +8,7 @@ import org.openqa.selenium.ElementNotVisibleException
 import org.openqa.selenium.NoSuchElementException
 import com.gargoylesoftware.htmlunit.ElementNotFoundException
 import org.openqa.selenium.By
+import org.testng.Assert
 
 class HomePage extends BasePage {
 
@@ -793,11 +794,10 @@ def void GoToOIS275(){
 		waitForLoadingComplete()	
 	}
 	
-	def void pressShortcutKeys(String key){
-		waitForLoadingComplete();
-		driver.findElement(By.xpath("//body")).sendKeys(Keys.CONTROL + key);
-	}
-	
+	/** 
+	 * Navigate to program
+	 * @param: program name
+	 */
 	def void goToProgramUsingShrt(String program){
 		pressShortcutKeys("r");
 		waitForLoadingComplete();
@@ -805,6 +805,7 @@ def void GoToOIS275(){
 			driver.findElement(By.id("ui-id-2"));
 			txtSearchAndStart.click();
 			txtSearchAndStart.sendKeys(program)
+			Assert.assertEquals(GetTextBoxvalue(txtSearchAndStart),program);
 			btnOk.click();
 		}catch(java.util.NoSuchElementException e){
 			e.printStackTrace();
