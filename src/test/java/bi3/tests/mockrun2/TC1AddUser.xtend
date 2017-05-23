@@ -36,18 +36,18 @@ class TC1AddUser extends BaseTest{
 	def void AddUser(){
 		loginPage.GoTo();
 		homePage.goToProgramUsingShrt("MNS204");
-//		toolbarPage.ClickAction_Settings();
-//		homePage.setPanelSequence("E");
-//		homePage.clickOnNext();
+		toolbarPage.ClickAction_Settings();
+		homePage.setPanelSequence("E");
+		homePage.clickOnNext();
 		if(mns204B.checkUserAvailable("RASITHAE")){
 			mns204B.deleteUser();
 		}
-//		homePage.pressShortcutKeys("1");
-//		Assert.assertEquals(homePage.getPageId(),"MNS204/E","Page not Found");
-//		mns204E.addUser();
-//		Assert.assertEquals(homePage.getPageId(),"MNS204/B1","Page not Found");
-//		if(mns204B.checkUserAvailable("RASITHAE")==false){
-//			Assert.fail("User creation unsuccessful");
-//		}
+		homePage.pressShortcutKeys("1");
+		Assert.assertEquals(homePage.getPageId(),"MNS204/E","Page not Found");
+		mns204E.addUser();
+		Assert.assertEquals(homePage.getPageId(),"MNS204/B1","Page not Found");
+		if(mns204B.checkUserAvailable("RASITHAE")==false){
+			Assert.fail("User creation unsuccessful");
+		}
 	}
 }
