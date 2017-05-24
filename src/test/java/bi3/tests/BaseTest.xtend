@@ -32,7 +32,7 @@ class BaseTest {
 
 		if (_BROWSER == "CHROME") {
 			System.setProperty("webdriver.chrome.driver", ConfigKeys.CHROME_DRIVER_PATH);
-			FileUtils.cleanDirectory(new File(downloadFilepath));
+			//FileUtils.cleanDirectory(new File(downloadFilepath));// Commented due to bug
 
 			var HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
 			chromePrefs.put("profile.default_content_settings.popups", 0);
