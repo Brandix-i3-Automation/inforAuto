@@ -18,6 +18,7 @@ public class ConfigKeys {
     public static String FAIL_RETRY_COUNT;
     
     public static String DATA_HELPER_PATH;
+    public static String MOCKRUN2_TEST_DATA_PATH;
 
     def static void setProperties(){
 
@@ -36,6 +37,7 @@ public class ConfigKeys {
             SCREENSHOT_PATH = properties.getProperty("SCREENSHOT_PATH");
             
             DATA_HELPER_PATH = properties.getProperty("DATA_HELPER_PATH");
+            MOCKRUN2_TEST_DATA_PATH = properties.getProperty("MOCKRUN2_TEST_DATA_PATH"); 
 
         } catch (Exception ex) {
             System.exit(0);

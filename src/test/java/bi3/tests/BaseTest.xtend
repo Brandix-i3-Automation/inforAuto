@@ -69,6 +69,6 @@ class BaseTest {
 
 	@AfterMethod
 	def void AfterTest() {
-		driver.quit();
+		//driver.quit();
 	}
 }

@@ -75,7 +75,8 @@ class SystemTC_10 extends BaseTest{
 		homePage.goToProgramUsingShrt(program);
 		
 		//Asserting Tab With ProgramID
-		//homePage.assertInsertedProgram(program);
+		mms001b.assertTabWithProgramId(program);
+		
 		}
 	
 }

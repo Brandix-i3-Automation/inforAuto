@@ -9,6 +9,9 @@ import bi3.pages.crs111.CRS111B1
 import org.testng.Assert
 import bi3.pages.crs111.CRS111E
 import bi3.pages.crs111.CRS111D
+import bi3.framework.util.ExcelUtil
+import java.util.HashMap
+import bi3.framework.config.ConfigKeys
 
 class CRS111_CreateEmailKeyToUser extends BaseTest {
 	
@@ -17,6 +20,8 @@ class CRS111_CreateEmailKeyToUser extends BaseTest {
 	CRS111B1 crs111b1
 	CRS111E crs111e
 	CRS111D crs111d
+	ExcelUtil testData;
+	HashMap<String, String> hashMap;
 	
 	@BeforeMethod
 	def void Initialize() {
@@ -25,6 +30,10 @@ class CRS111_CreateEmailKeyToUser extends BaseTest {
 		crs111b1 = new CRS111B1(driver)
 		crs111e = new CRS111E(driver)
 		crs111d = new CRS111D(driver)
+		val path = ConfigKeys.MOCKRUN2_TEST_DATA_PATH;
+		val sheetName = "CRS111_CreateEmailKeyToUser";
+		testData = new ExcelUtil(path, sheetName);
+		hashMap = testData.getExcelActiveSheetFirstTwoColumnData;
 	}
 	
 	/**
@@ -35,9 +44,9 @@ class CRS111_CreateEmailKeyToUser extends BaseTest {
 	 */
 	@Test
 	def void CRS111_CreateEmailKeyToUser(){
-		var type = "04"
-		var emailKey = "T-DASUNIK"
-		var email = "t-dasunik@brandix.com"
+		var type =  hashMap.get("type").toString();
+		var emailKey =  hashMap.get("emailKey").toString();
+		var email =  hashMap.get("email").toString();
 		
 		loginPage.GoTo()
 		homePage.goToProgram("CRS111")
@@ -57,6 +66,8 @@ class CRS111_CreateEmailKeyToUser extends BaseTest {
 		exists = crs111b1.searchForEmailKey(type,emailKey)
 		
 		Assert.assertTrue(exists)
+		
+		crs111b1.closeAllTabs()
 	}
 	
 	

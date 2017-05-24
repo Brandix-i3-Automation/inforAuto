@@ -51,6 +51,10 @@ class SystemTC_04 extends BaseTest{
 		
 		toolBarPage.clickHelpLogo();
 		toolBarPage.clickHelp("Form Help...");
+		
+		Assert.assertEquals(toolBarPage.getPageTitle(),"Form Help")
+		
+		//Redirects to M3 Infor Centre - System Bug
 			
 	}
 	

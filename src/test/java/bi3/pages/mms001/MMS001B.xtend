@@ -110,9 +110,9 @@ class MMS001B extends BasePage {
 	
 	def void assertTabWithProgramId(String ProgramId){
 		//ProgramID Should Appear with PageName in Tab
-		waitForLoadingComplete();
-		System.out.println(pageId);
-		//Assert.assertEquals(pageId,"");
+		var titleElement = driver.findElement(By.cssSelector("li[class='ui-tabs-selected ui-state-active']>a>div>div"))
+	 	var text = titleElement.text;
+		Assert.assertEquals(text,ProgramId)
 	}
 
 }
