@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement
 import java.util.List
 import bi3.framework.elements.inforelements.InforGrid
 import org.openqa.selenium.Keys
+import org.testng.Assert
+import java.util.ArrayList
 
 class MNS150B extends BasePage {
 	
@@ -23,7 +25,7 @@ class MNS150B extends BasePage {
 	@FindBy(css="div[id*='MNA150BS'][class*='inforDataGrid']")
  	WebElement inforGrid;
  	
- 	@FindBy(css="div.inforMenu ul[id*='menu'][class='inforContextMenu inforMenuOptions']>li ")
+ 	@FindBy(css="div.inforMenu ul[id*='menu'][class='inforContextMenu inforMenuOptions']>li>a ")
  	List<WebElement> listOptions;
  	
  	
@@ -31,12 +33,12 @@ class MNS150B extends BasePage {
 	/**
 	 * This method will search for the User
 	 * in the User Search Field
+	 * and check whether the text is entered to the search field
 	 * @param user will be entered to the Search field
 	 **/
 	 def void searchUser(String user){
-	 	//txtUser.EnterText(user);
 	 	var InforGrid inforGrid = new InforGrid(inforGrid);
-	 	inforGrid.setValueToColumnSearchField("User",user);
+	 	Assert.assertEquals(inforGrid.setValueToColumnSearchField("User",user).GetTextBoxvalue(),user);
 	 	txtUser.sendKeys(Keys.ENTER);
 	 }
 	 
@@ -66,23 +68,45 @@ class MNS150B extends BasePage {
 	 * the option list of the right click
 	 * @return listOfOptions 
 	 **/
-	 def List<String> getOptionsList(){
-//	 	var options=new ArrayList<String>();
-//	 	options.add(listOptions.getTextList().get(0));
+	 def List<String> getOptionsListFromPane(){
 		waitForLoadingComplete();
 	 	return listOptions.getTextList();
 	 }	
 	 
 	 /**
-	 * This method will return the User
+	 * This method will return the User details
 	 * of the first row
-	 * @return username 
+	 * @return list of user details including user,name and Sys
 	 **/
-	 def String getFirstRowUsername(){
+	 def List<String> getFirstRowUserDetails(){
 	 	waitForLoadingComplete();
 	 	var InforGrid inforGrid = new InforGrid(inforGrid);
-		 return inforGrid.getDataOfRow(0).get(0);
+	 	var userDetails=new ArrayList<String>();
+	 	userDetails.add(inforGrid.getDataOfRow(0).get(0));
+	 	userDetails.add(inforGrid.getDataOfRow(0).get(1));
+	 	userDetails.add(inforGrid.getDataOfRow(0).get(7));
+		return userDetails;
 		
 	 }
-	
+	 
+	 /**
+	 * This method will return the 
+	 * actual list of options
+	 * @return actual list of options
+	 **/
+	 def List<String> getActualOptionsList(){
+	 	var options=new ArrayList<String>();
+	 	options.add("Related");
+	 	options.add("Select\nCTRL+1");
+	 	options.add("Change\nCTRL+2");
+	 	options.add("Copy\nCTRL+3");
+	 	options.add("Delete\nCTRL+4");
+	 	options.add("Display\nCTRL+5");
+	 	options.add("Copy to Clipboard");
+	 	options.add("Add Text to Quicknote...");
+	 	options.add("Restore Columns");
+	 	
+		return options;
+		
+	 }	
 }

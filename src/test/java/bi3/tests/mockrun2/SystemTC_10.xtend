@@ -65,5 +65,8 @@ class SystemTC_10 extends BaseTest{
 		toolBarpage.ClickAction_Refresh();
 		mms001b.assertTabWithProgramId(program);
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> ee8251587b8b89f45bc17583e971ea80ec5d5823
 }
