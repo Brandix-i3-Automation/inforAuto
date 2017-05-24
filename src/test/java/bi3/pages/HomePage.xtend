@@ -9,6 +9,7 @@ import org.openqa.selenium.NoSuchElementException
 import com.gargoylesoftware.htmlunit.ElementNotFoundException
 import org.openqa.selenium.By
 import org.testng.Assert
+import java.util.List
 
 class HomePage extends BasePage {
 
@@ -116,7 +117,7 @@ class HomePage extends BasePage {
     @FindBy(id="runTaskButton")
     WebElement btnOk
 
- @FindBy(xpath="//button[@class='inforIconButton gvPageMenu gvButtonPageMenu']")
+ 	@FindBy(xpath="//button[@class='inforIconButton gvPageMenu gvButtonPageMenu']")
     WebElement btnSubMenu;
     
     @FindBy(xpath="//ul[@id='gvMenuSettings']")
@@ -160,6 +161,15 @@ class HomePage extends BasePage {
     
     @FindBy(id="startDiv")
     WebElement linkStart;
+    
+    @FindBy(css="div[class='gvPage'] div[class='gvWidget ui-droppable']")
+    List<WebElement> listAddWidgetIcons;
+	
+    @FindBy(css="span.gvWidgetLibraryTitle")
+    List<WebElement> listAddWidgetTypes;
+	
+	@FindBy(css="div[class='gvPage'] div[class='gvWidget ui-draggable ui-droppable ui-resizable ui-resizable-autohide']")
+    List<WebElement> listWidgets;
     
 	def void GoToMMS001() {
 		waitForLoadingComplete();
@@ -950,6 +960,42 @@ def void GoToOIS275(){
 		return lblSearchAndStart.text;		
 	}
 	
+	/**
+	 * Creates a widget in the given widget box
+	 */
+	def addWidget(int widgetBoxNumber, String widgetName) {
+		listAddWidgetIcons.get(widgetBoxNumber).waitToBeClickable();
+		listAddWidgetIcons.get(widgetBoxNumber).click();
+		waitForLoadingComplete();
+		var WebElement widget = listAddWidgetTypes.getElementByPartialText(widgetName);
+		widget.clickWhenReady();
+		widget.waitToBeHidden();
+	}
+	
+	/**
+	 * Checks whether the given shortcut name is found inside the Shortcut widget
+	 */
+	def boolean isShortcutFoundInShortcutWidget(String shortcutName) {
+		var boolean found = false;
+		var WebElement shortcutWidget;
+		
+		// 1.Find the Shortcut Widget		 
+		for (var int i = 0; i < listWidgets.length; i++) {
+			var String widgetName = listWidgets.get(i).findElement(By.cssSelector("span.gvWidgetHeaderTitle")).text;
+			if(widgetName.contains("Shortcuts")){
+				shortcutWidget = listWidgets.get(i);
+			}
+		}	
+					
+		// 2.Find whether the shortcut is found inside the widget
+		var List<WebElement> shortcutLinks = shortcutWidget.findElements(By.cssSelector(".gvShortcutsHeaderText"));
+		var List<String> shortcutLinkText = shortcutLinks.getTextList();
+		
+		if(shortcutLinkText.contains(shortcutName)){
+			found = true;
+		}
+		return found;
+	}
 	/**
 	 * Click on Start to load the Start menu items.
 	 */

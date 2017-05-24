@@ -34,15 +34,13 @@ class SystemTC_04 extends BaseTest{
 		
 		
 		/* Test*/
-		loginPage.GoTo();
-		
+		loginPage.GoTo();		
 		homePage.pressShortcutKeys("R");
 		
 		//verify that search and start pop up is displayed
 		Assert.assertEquals(homePage.verifySearchAndStartPopup(),"Search and Start");
 		
-		homePage.goToProgramUsingShrt(program);
-		
+		homePage.goToProgramUsingShrt(program);		
 		toolBarPage.clickHelpLogo();
 		
 		//verify that drop down options are listed
@@ -51,7 +49,10 @@ class SystemTC_04 extends BaseTest{
 		
 		toolBarPage.clickHelpLogo();
 		toolBarPage.clickHelp("Form Help...");
-			
+		
+		Assert.assertEquals(toolBarPage.getPageTitle(),"Form Help")
+		
+		//Redirects to M3 Infor Centre - System Bug			
 	}
 	
 }
