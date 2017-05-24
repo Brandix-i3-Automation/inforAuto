@@ -167,4 +167,21 @@ class BasePage extends WebDriverExtensions {
 		waitForLoadingComplete();
 		driver.findElement(By.xpath("//body")).sendKeys(Keys.CONTROL + key);
 	}
+	
+	
+	/*
+	 * To get the name of a program
+	 * @return String page title of the name 
+	 */
+	 def String getPageTitle(){
+	 	var titleElement = driver.findElement(By.cssSelector("li[class='ui-tabs-selected ui-state-active']>a>div>div"))
+	 	var text = titleElement.text;
+	 	System.out.println("element text "+text)
+	 	var subStr = text.indexOf('<')
+	 	if(subStr>0){
+	 		text = text.substring(0,subStr)
+	 		System.out.println("page title "+text)
+	 	}
+	 	return text
+	 }
 }

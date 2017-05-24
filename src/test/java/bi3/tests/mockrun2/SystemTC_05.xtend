@@ -44,7 +44,6 @@ class SystemTC_05 extends BaseTest {
 		Assert.assertEquals(homePage.verifySearchAndStartPopup(),"Search and Start");
 		
 		homePage.goToProgramUsingShrt(program);
-		
 		toolBarPage.clickHelpLogo();
 		
 		//verify that drop down options are listed
@@ -53,7 +52,8 @@ class SystemTC_05 extends BaseTest {
 		
 		toolBarPage.clickHelpLogo();
 		toolBarPage.clickHelp("Infocenter");
-			
+		
+		Assert.assertEquals(toolBarPage.getPageTitle(),"M3 Infocenter")
 	}
 	
 }

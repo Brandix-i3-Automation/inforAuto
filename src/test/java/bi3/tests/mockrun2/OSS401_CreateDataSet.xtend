@@ -12,6 +12,7 @@ import bi3.pages.oss402.OSS402B1
 import bi3.pages.oss402.OSS402E
 import bi3.pages.oss406.OSS406B1
 import bi3.pages.oss406.OSS406E
+import org.openqa.selenium.WebDriver
 
 class OSS401_CreateDataSet extends BaseTest{
 	
@@ -25,6 +26,14 @@ class OSS401_CreateDataSet extends BaseTest{
 	OSS402E oss402e
 	OSS406B1 oss406b1
 	OSS406E oss406e
+	
+	new(WebDriver driver) {
+		this.driver = driver;
+		this.Initialize();
+	}
+	
+	new(){
+	}
 	
 	@BeforeMethod
 	def void Initialize() {
