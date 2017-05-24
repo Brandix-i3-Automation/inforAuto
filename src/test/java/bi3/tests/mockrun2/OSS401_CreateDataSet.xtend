@@ -17,8 +17,11 @@ import bi3.framework.util.ExcelUtil
 import java.util.HashMap
 import bi3.framework.config.ConfigKeys
 import org.openqa.selenium.WebDriver
+<<<<<<< HEAD
 import bi3.pages.oss406.OSS406E
 import bi3.framework.config.ConfigKeys
+=======
+>>>>>>> 8b20ec39d7250a3afa7afdd0348c94cad1bb9e80
 
 class OSS401_CreateDataSet extends BaseTest{
 	
@@ -35,12 +38,21 @@ class OSS401_CreateDataSet extends BaseTest{
 	ExcelUtil testData;
 	HashMap<String, String> hashMap;
 	
+<<<<<<< HEAD
 	new(WebDriver driver) {
 		this.driver = driver;
+=======
+	new(WebDriver webDriver){
+		driver = webDriver;
+>>>>>>> 8b20ec39d7250a3afa7afdd0348c94cad1bb9e80
 		this.Initialize();
 	}
 	
 	new(){
+<<<<<<< HEAD
+=======
+		
+>>>>>>> 8b20ec39d7250a3afa7afdd0348c94cad1bb9e80
 	}
 	
 	@BeforeMethod
