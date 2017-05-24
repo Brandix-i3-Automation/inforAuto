@@ -11,6 +11,8 @@ import org.testng.Assert
 import bi3.pages.oss420.OSS421A
 import bi3.pages.mms001.MMS001
 import bi3.pages.mms001.MMS001C
+import bi3.pages.oss420.OSS421E
+import bi3.pages.oss220.OSS220E
 
 class TC10_E2E extends BaseTest{
 	
@@ -21,6 +23,8 @@ class TC10_E2E extends BaseTest{
 	OSS421A oss421A
 	MMS001 mms001
 	MMS001C mms001C
+	OSS421E oss421E
+	OSS220E oss220E
 	
 	OSS401_CreateDataSet oss401_CreatDataSet;
 	
@@ -33,6 +37,8 @@ class TC10_E2E extends BaseTest{
 		oss421A = new OSS421A(driver);
 		mms001 = new MMS001(driver);
 		mms001C = new MMS001C(driver);
+		oss421E = new OSS421E(driver);
+		oss220E = new OSS220E(driver);
 		
 		oss401_CreatDataSet = new OSS401_CreateDataSet(driver);
 	}
@@ -49,7 +55,11 @@ class TC10_E2E extends BaseTest{
 		var item = itemCreation();
 		//create Data set
 		oss401_CreatDataSet.OSS401_CreateDataSet();
+		//create Sales budget
 		createSalesBudget();
+		//Insert Budget Values
+		insertBudgetValues(item);
+		
 	}
 	
 	/**
@@ -91,6 +101,15 @@ class TC10_E2E extends BaseTest{
 		Assert.assertEquals(oss420B.getPageId,"OSS421/B1","Page not found");
 		oss420B.pressShortcutKeys("1");
 		Assert.assertEquals(oss420B.getPageId,"OSS421/E","Page not found");
+		oss421E.setDemandValues("UCDEMA","100");
+		oss421E.clickOnNext();
+		oss421E.CloseActiveTab();
+		oss420B.selectDataset("D099");
+		oss420B.pressShortcutKeys("21");
+		oss220E.insertFromDetails("D099","2017","34");
+		oss220E.clickOnNext();
+		Assert.assertEquals(oss220E.getMessageFromFooter(),"Job OSS221CL has been submitted","Confirmation message not found");
+		oss220E.closeAllTabs();
 	}
 
 	

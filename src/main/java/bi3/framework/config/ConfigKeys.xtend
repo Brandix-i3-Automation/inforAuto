@@ -37,7 +37,11 @@ public class ConfigKeys {
             SCREENSHOT_PATH = properties.getProperty("SCREENSHOT_PATH");
             
             DATA_HELPER_PATH = properties.getProperty("DATA_HELPER_PATH");
+<<<<<<< HEAD
+            MOCKRUN2_TEST_DATA_PATH = properties.getProperty("MOCKRUN2_TEST_DATA_PATH")
+=======
             MOCKRUN2_TEST_DATA_PATH = properties.getProperty("MOCKRUN2_TEST_DATA_PATH"); 
+>>>>>>> 646686493af64486a33567c325c5a02c7b805a08
 
         } catch (Exception ex) {
             System.exit(0);
