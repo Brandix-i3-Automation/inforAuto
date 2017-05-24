@@ -37,12 +37,14 @@ class OSS401_CreateDataSet extends BaseTest{
 	ExcelUtil testData;
 	HashMap<String, String> hashMap;
 	
-
+	new(){
+		
 	}
-
-		driver = webDriver;
 	
-
+	new(WebDriver webdriver){
+		driver = webdriver
+		this.Initialize()
+	}
 	@BeforeMethod
 	def void Initialize() {
 		loginPage = new LoginPage(driver)
