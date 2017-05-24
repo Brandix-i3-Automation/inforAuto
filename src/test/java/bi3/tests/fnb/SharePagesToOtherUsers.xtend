@@ -1,6 +1,6 @@
 package bi3.tests.fnb
 
-<<<<<<< HEAD
+
 import bi3.tests.BaseTest
 import bi3.pages.LoginPage
 import bi3.pages.HomePage
@@ -71,7 +71,7 @@ class SharePagesToOtherUsers extends BaseTest {
 	}
 	
 }
-=======
+
 //import bi3.tests.BaseTest
 //import bi3.pages.LoginPage
 //import bi3.pages.HomePage
@@ -142,4 +142,4 @@ class SharePagesToOtherUsers extends BaseTest {
 //	}
 //	
 //}
->>>>>>> 2592fead276de7a5af15e8fe67725e38e10e4bbe
+

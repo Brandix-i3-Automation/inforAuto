@@ -23,12 +23,10 @@ class TC10_PlanDemandAndSupply extends BaseTest{
 	OSS421A oss421A
 	MMS001 mms001
 	MMS001C mms001C
-<<<<<<< HEAD
-=======
 	OSS421E oss421E
 	OSS220E oss220E
 	
->>>>>>> 2592fead276de7a5af15e8fe67725e38e10e4bbe
+
 	OSS401_CreateDataSet oss401_CreatDataSet;
 	
 	@BeforeMethod
