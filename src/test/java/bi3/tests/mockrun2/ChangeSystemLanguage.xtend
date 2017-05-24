@@ -5,6 +5,10 @@ import bi3.pages.LoginPage
 import bi3.pages.HomePage
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
+import bi3.pages.ToolbarPage
+import bi3.pages.mns150.MNS150B
+import bi3.pages.mns150.MNS150E
+import org.testng.Assert
 
 class ChangeSystemLanguage extends BaseTest {
 	

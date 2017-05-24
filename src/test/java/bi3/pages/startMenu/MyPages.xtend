@@ -1,4 +1,4 @@
-package bi3.pages.startmenu
+package bi3.pages.startMenu
 
 import bi3.pages.BasePage
 import org.openqa.selenium.WebDriver
