@@ -13,10 +13,18 @@ class MMS001C extends BasePage {
 
 	@FindBy(id="Next")
 	WebElement btnNext;
+	
+	@FindBy(id="CPITNO")
+	WebElement txtItemNumber
 
 	def void Next() {
 		btnNext.click();
 		waitForLoadingComplete();
+	}
+	
+	def getItemNumber(){
+		waitForLoadingComplete();
+		GetTextBoxvalue(txtItemNumber);
 	}
 
 }
