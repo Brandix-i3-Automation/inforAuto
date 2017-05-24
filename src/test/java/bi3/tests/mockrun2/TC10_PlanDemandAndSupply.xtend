@@ -12,7 +12,7 @@ import bi3.pages.oss420.OSS421A
 import bi3.pages.mms001.MMS001
 import bi3.pages.mms001.MMS001C
 
-class TC10_E2E extends BaseTest{
+class TC10_PlanDemandAndSupply extends BaseTest{
 	
 	LoginPage loginPage
 	HomePage homePage
@@ -21,7 +21,6 @@ class TC10_E2E extends BaseTest{
 	OSS421A oss421A
 	MMS001 mms001
 	MMS001C mms001C
-	
 	OSS401_CreateDataSet oss401_CreatDataSet;
 	
 	@BeforeMethod
@@ -34,7 +33,7 @@ class TC10_E2E extends BaseTest{
 		mms001 = new MMS001(driver);
 		mms001C = new MMS001C(driver);
 		
-		oss401_CreatDataSet = new OSS401_CreateDataSet(driver);
+		//oss401_CreatDataSet = new OSS401_CreateDataSet(driver);
 	}
 	
 	/**

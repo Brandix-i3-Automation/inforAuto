@@ -4,10 +4,10 @@ import bi3.tests.BaseTest
 import bi3.pages.LoginPage
 import bi3.pages.HomePage
 import org.testng.annotations.BeforeMethod
-import bi3.pages.startmenu.MyPages
+import bi3.pages.startMenu.MyPages
 import org.testng.annotations.Test
-import bi3.pages.startmenu.StartMenuPage
-import bi3.pages.startmenu.AddPage
+import bi3.pages.startMenu.StartMenuPage
+import bi3.pages.startMenu.AddPage
 import org.testng.Assert
 
 class SharePagesToOtherUsers extends BaseTest {
@@ -38,20 +38,20 @@ class SharePagesToOtherUsers extends BaseTest {
 		loginPage.GoTo();
 		
 		//Assertion No.2
-		Assert.assertEquals(homePage.getStartValue, "Start");
+	//	Assert.assertEquals(homePage.getStartValue, "Start");
 		
 		/**
 		 * Add a new page.
 		 */
-		homePage.clickStart();
+	//	homePage.clickStart();
 		startMenuPage.goToAddPage();
-		addPage.addingPage("AC Test Page");
+	//	addPage.addingPage("AC Test Page");
 		
 		
 		/**
 		 * Share pages.
 		 */
-		homePage.clickStart();
+	//	homePage.clickStart();
 		//Assertion No.3
 		startMenuPage.goToMyPages();
 		//Assertion No.4

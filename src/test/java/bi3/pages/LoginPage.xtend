@@ -30,7 +30,7 @@ class LoginPage extends BasePage {
 			println(labelName);
 
 		} catch (Exception e) {
-			driver.get("http://t-deepikag:bi3@0330@bi3-m313-01.brandixlk.org:44056/mne/");
+			driver.get("http://Priyankara:bi3passwordQ8892@bi3-m313-01.brandixlk.org:44056/mne/");
 		} finally {
 			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		}

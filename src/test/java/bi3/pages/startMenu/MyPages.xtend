@@ -1,4 +1,4 @@
-package bi3.pages.startmenu
+package bi3.pages.startMenu
 
 import bi3.pages.BasePage
 import org.openqa.selenium.WebDriver
@@ -12,6 +12,9 @@ class MyPages extends BasePage{
 	new(WebDriver driver) {
 		super(driver)
 	}
+	
+	@FindBy(xpath="//*[contains(text(),'My Pages...')]")
+	WebElement btnMyPage;
 	
 	@FindBy(xpath="//div[text()='AC Test Page']/following::div[4]/descendant::button")
 	WebElement btnSettings;
@@ -56,6 +59,19 @@ class MyPages extends BasePage{
 	def void savePageSettings(){
 		waitToBeClickable(btnOk);
 		btnOk.click(); 
+	}
+	
+	
+	/**
+	 * Selecting My Pages
+	 * 
+	 */
+	def clickMyPage() {
+
+		waitForLoadingComplete()
+		btnMyPage.click
+		waitForLoadingComplete();
+
 	}
 	
 	
