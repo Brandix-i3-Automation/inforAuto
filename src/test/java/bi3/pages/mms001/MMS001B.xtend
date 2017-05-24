@@ -81,7 +81,7 @@ class MMS001B extends BasePage {
 	def void clickCheckBoxProgramId(){
 		//waitForLoadingComplete();
 		Thread.sleep(2000);
-		waitToBeDisplayed(chkBoxProgramId);
+		//waitToBeDisplayed(chkBoxProgramId);
 		chkBoxProgramId.click();
 		waitForLoadingComplete();
 		var String StatusOfCheckBox =chkBoxProgramId.getAttribute("aria-checked");
@@ -112,7 +112,7 @@ class MMS001B extends BasePage {
 		//ProgramID Should Appear with PageName in Tab
 		var titleElement = driver.findElement(By.cssSelector("li[class='ui-tabs-selected ui-state-active']>a>div>div"))
 	 	var text = titleElement.text;
-		Assert.assertEquals(text,ProgramId)
+		Assert.assertTrue(text.contains(ProgramId),"Program Id is not displayed on the tab");
 	}
 
 }
