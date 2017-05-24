@@ -18,11 +18,9 @@ import java.util.HashMap
 import bi3.framework.config.ConfigKeys
 import org.openqa.selenium.WebDriver
 
-<<<<<<< HEAD
-=======
+
 import bi3.pages.oss406.OSS406E
 
->>>>>>> beae781fa121af878f0f8e08a4a634c289adbaf6
 
 
 class OSS401_CreateDataSet extends BaseTest{
@@ -45,18 +43,7 @@ class OSS401_CreateDataSet extends BaseTest{
 	new(WebDriver driver) {
 		this.driver = driver;
 }
-//	new(WebDriver webDriver){
-//		driver = webDriver;
-//>>>>>>> 8b20ec39d7250a3afa7afdd0348c94cad1bb9e80
-//		this.Initialize();
-//	}
-//	
-//	new(){
-//<<<<<<< HEAD
-//=======
-//		
-//>>>>>>> 8b20ec39d7250a3afa7afdd0348c94cad1bb9e80
-//	}
+
 
 	@BeforeMethod
 	def void Initialize() {
