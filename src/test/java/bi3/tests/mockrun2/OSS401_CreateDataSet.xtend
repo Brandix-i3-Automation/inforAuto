@@ -15,6 +15,7 @@ import bi3.pages.oss406.OSS406E
 import bi3.framework.util.ExcelUtil
 import java.util.HashMap
 import bi3.framework.config.ConfigKeys
+import org.openqa.selenium.WebDriver
 
 class OSS401_CreateDataSet extends BaseTest{
 	
@@ -30,6 +31,15 @@ class OSS401_CreateDataSet extends BaseTest{
 	OSS406E oss406e
 	ExcelUtil testData;
 	HashMap<String, String> hashMap;
+	
+	new(WebDriver webDriver){
+		driver = webDriver;
+		this.Initialize();
+	}
+	
+	new(){
+		
+	}
 	
 	@BeforeMethod
 	def void Initialize() {
