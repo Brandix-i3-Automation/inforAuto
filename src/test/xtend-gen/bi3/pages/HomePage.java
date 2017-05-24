@@ -10,6 +10,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 
 @SuppressWarnings("all")
 public class HomePage extends BasePage {
@@ -103,6 +104,24 @@ public class HomePage extends BasePage {
   
   @FindBy(css = "li[data-gv-link=\'OIS150\']")
   private WebElement linkCoOpen;
+  
+  /**
+   * Search and Start pop up Header
+   */
+  @FindBy(id = "ui-id-2")
+  private WebElement lblSearchAndStart;
+  
+  /**
+   * Search and Start text box
+   */
+  @FindBy(id = "cmdText")
+  private WebElement txtSearchAndStart;
+  
+  /**
+   * Search and Start OK button
+   */
+  @FindBy(id = "runTaskButton")
+  private WebElement btnOk;
   
   @FindBy(xpath = "//button[@class=\'inforIconButton gvPageMenu gvButtonPageMenu\']")
   private WebElement btnSubMenu;
@@ -760,6 +779,29 @@ public class HomePage extends BasePage {
     }
   }
   
+  /**
+   * Navigate to program
+   * @param: program name
+   */
+  public void goToProgramUsingShrt(final String program) {
+    this.pressShortcutKeys("r");
+    BasePage.waitForLoadingComplete();
+    try {
+      DefaultWebDriver.driver.findElement(By.id("ui-id-2"));
+      this.txtSearchAndStart.click();
+      this.txtSearchAndStart.sendKeys(program);
+      Assert.assertEquals(BasePage.GetTextBoxvalue(this.txtSearchAndStart), program);
+      this.btnOk.click();
+    } catch (final Throwable _t) {
+      if (_t instanceof java.util.NoSuchElementException) {
+        final java.util.NoSuchElementException e = (java.util.NoSuchElementException)_t;
+        e.printStackTrace();
+      } else {
+        throw Exceptions.sneakyThrow(_t);
+      }
+    }
+  }
+  
   public void GoToOIS301() {
     BasePage.waitForLoadingComplete();
     WebDriverExtensions.waitToBeDisplayed(this.MenuWidgetOptions, 60);
@@ -841,5 +883,11 @@ public class HomePage extends BasePage {
     BasePage.waitForLoadingComplete();
     this.listAddPage.click();
     BasePage.waitForLoadingComplete();
+  }
+  
+  public String verifySearchAndStartPopup() {
+    BasePage.waitForLoadingComplete();
+    WebDriverExtensions.waitToBeDisplayed(this.lblSearchAndStart);
+    return this.lblSearchAndStart.getText();
   }
 }
