@@ -115,6 +115,48 @@ class HomePage extends BasePage {
     /**Search and Start OK button */
     @FindBy(id="runTaskButton")
     WebElement btnOk
+
+ @FindBy(xpath="//button[@class='inforIconButton gvPageMenu gvButtonPageMenu']")
+    WebElement btnSubMenu;
+    
+    @FindBy(xpath="//ul[@id='gvMenuSettings']")
+    WebElement listPageMenu;
+    
+    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[1]/a")
+    WebElement listStartPage;
+    
+    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[3]/a")
+    WebElement listAddWidget;
+    
+    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[4]/a")
+    WebElement listAddPage;
+    
+    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[5]/a")
+    WebElement listAddPageFromLibrary;
+    
+    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[7]/a")
+    WebElement listDeletePage;
+    
+    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[8]/a")
+    WebElement listRemoveFavouritePage;
+    
+    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[9]/a")
+    WebElement listRefresh;
+    
+    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[11]/a")
+    WebElement listMyPages;
+    
+    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[12]/a")
+    WebElement listPageSetting;
+    
+    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[13]/a")
+    WebElement listUserSetting;
+    
+    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[15]/a")
+    WebElement listAdvanced;
+    
+    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[17]/a")
+    WebElement listAdministration;
     
 	def void GoToMMS001() {
 		waitForLoadingComplete();
@@ -811,13 +853,99 @@ def void GoToOIS275(){
 			e.printStackTrace();
 		}
 	}
+
+	def void GoToOIS301(){
+		waitForLoadingComplete();
+		// Wait for Home page loaded
+		waitToBeDisplayed(MenuWidgetOptions, 60);
+		// Search for PCS230
+		headerMenu.click();
+		//waitToBeDisplayed();
+		txtSearch.click();
+		txtSearch.clearRobustly()
+		txtSearch.sendKeys("OIS301");
+		txtSearch.sendKeys(Keys.ENTER);
+		waitForLoadingComplete();
+	}
+	
+	def void gotoStart(){
+		waitForLoadingComplete();
+		btnSubMenu.click();
+		waitToBeDisplayed(listPageMenu, 120);	
+	}
+	
+	def String getStartPageName(){
+		waitForLoadingComplete();
+		return 	listStartPage.text;
+	}
+	
+	def String getAddWidgetName(){
+		waitForLoadingComplete();
+		return 	listAddWidget.text;
+	}
+	
+	def String getAddPageName(){
+		waitForLoadingComplete();
+		return 	listAddPage.text;
+	}
+	
+	def String getAddPageFromLibraryName(){
+		waitForLoadingComplete();
+		return 	listAddPageFromLibrary.text;
+	}
+	
+	def String getDeletePageName(){
+		waitForLoadingComplete();
+		return 	listDeletePage.text;
+	}
+	
+	def String getRemoveFavouritePageName(){
+		waitForLoadingComplete();
+		return 	listRemoveFavouritePage.text;
+	}
+	
+	def String getRefreshName(){
+		waitForLoadingComplete();
+		return 	listRefresh.text;
+	}
+	
+	def String getMyPagesName(){
+		waitForLoadingComplete();
+		return 	listMyPages.text;
+	}
+	
+	def String getPageSettingsName(){
+		waitForLoadingComplete();
+		return 	listPageSetting.text;
+	}
+	
+	def String getUserSettingsName(){
+		waitForLoadingComplete();
+		return 	listUserSetting.text;
+	}
+	
+	def String getAdvancedName(){
+		waitForLoadingComplete();
+		return 	listAdvanced.text;
+	}
+	
+	def String getAdministrationName(){
+		waitForLoadingComplete();
+		return 	listAdministration.text;
+	}
+	
+	def void clickAddPage(){
+		waitForLoadingComplete();
+		listAddPage.click();
+		waitForLoadingComplete();
+	}
+
 	//verify the search and start text in pop up is displayed
 	def String verifySearchAndStartPopup(){
 		waitForLoadingComplete();
 		waitToBeDisplayed(lblSearchAndStart);
 		return lblSearchAndStart.text;		
 	}
-	
 	
 }
 

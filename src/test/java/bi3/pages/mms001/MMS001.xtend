@@ -7,6 +7,9 @@ import org.openqa.selenium.Keys
 import bi3.pages.BasePage
 import java.util.List
 import bi3.framework.elements.inforelements.InforGrid
+import org.openqa.selenium.interactions.Actions
+import java.awt.Robot
+import java.awt.event.KeyEvent
 
 class MMS001 extends BasePage {
 
@@ -46,6 +49,33 @@ class MMS001 extends BasePage {
 	
 	@FindBy(id="CPITNO")
 	WebElement txtChangeItemNumber;
+	
+	@FindBy(id="WOPAVR-shdo")
+	WebElement btnDrpDwnView;
+	
+	@FindBy(css="#dropdown-list>li")
+	List <WebElement> listView;
+	
+	@FindBy(id="WWQTTP-shdo")
+	WebElement btnDrpDwnSortingOrder;
+	
+	@FindBy(css="ul[id='dropdown-list']>li")
+	List <WebElement> listSortingOrder;
+	
+	@FindBy(id="ui-id-3")
+	WebElement lblHeading;
+	
+	@FindBy(css="div[class='inforDialog ui-draggable']")
+	WebElement pnlExportExcel;
+	
+	@FindBy(id="QuickExport_option1")
+	WebElement btnRadioExportExcel;
+	
+	@FindBy(id="QuickExport_option3")
+	WebElement btnRadioSourceFormat;
+	
+	@FindBy(css="div[id='ExportDlg']+div>button")
+	WebElement btnExport;
 	
 	def void SearchByItemNumber(String itemNumber) {
 		waitForLoadingComplete();
@@ -162,4 +192,101 @@ class MMS001 extends BasePage {
 		txtChangeItemNumber.sendKeys(itemNumber);
 		
 	}
+	
+	/**
+	 * Check whether the Entered view is displayed
+	 * @param value is the view that we have entered in CRS020B
+	 * @Return true is that view is displayed in the view list
+	 */
+	 def boolean checkTheview(String value)
+	 {
+	 	
+	 	waitForLoadingComplete();
+	 	try{
+	 		selectFromDropdown(btnDrpDwnView, listView, value);
+	 		return true;
+	 		
+	 		}
+	 		catch(NullPointerException e)
+	 		{
+	 			return false;
+	 		}
+	 }
+	 /**
+	  * Set the sorting Order
+	  * @param value of the sorting order
+	  */
+	 def void setSortingOrder(String value)
+	 {
+	 	waitForLoadingComplete();
+	 	selectFromDropdown(btnDrpDwnSortingOrder, listSortingOrder, value)
+	 }
+	 
+	 /**
+	  * Select first five rows
+	  */
+	  def void selsctRows()
+	  {
+	  	waitForLoadingComplete();
+		var InforGrid grid = new InforGrid(gridMMS001);
+		var cellList = grid.getCellsFromColumn(3)
+		var firstCell = cellList.get(0);
+		firstCell.click();
+//		actions.click(cellList.get(0)).keyDown(Keys.CONTROL)
+//		.click(cellList.get(4)).keyUp(Keys.CONTROL).build().perform();
+		   var Robot rb = new Robot()
+                  rb.keyPress(KeyEvent.VK_SHIFT);
+                  rb.keyPress(KeyEvent.VK_DOWN);
+                  rb.keyRelease(KeyEvent.VK_DOWN);
+                  rb.keyPress(KeyEvent.VK_DOWN);
+                  rb.keyRelease(KeyEvent.VK_DOWN);
+                  rb.keyPress(KeyEvent.VK_DOWN);
+                  rb.keyRelease(KeyEvent.VK_DOWN);
+                  rb.keyPress(KeyEvent.VK_DOWN);
+                  rb.keyRelease(KeyEvent.VK_DOWN);
+                  rb.keyRelease(KeyEvent.VK_SHIFT);
+		
+		
+	  }
+	  
+	  /**
+	   * Verify the Heading of Excel Export
+	   * 
+	   * @return Name of the Header
+	   */
+	   
+	   def String excelExportheading()
+	   {
+	   		waitForLoadingComplete();
+	   		waitToBeDisplayed(pnlExportExcel);
+	   		waitToBeDisplayed(lblHeading);
+	   		return lblHeading.text;
+	   }
+	   
+	   /**
+	    * Select the expected currently selected rows radio button
+	    */
+	    def void clickSelectedRowRbtn()
+	    {
+	    	waitForLoadingComplete();
+	    	btnRadioExportExcel.click();
+	    }
+	    
+	    /**
+	     * Select the keep source format radio Button
+	     */
+	     def void clickKeepSourceRbtn()
+	     {
+	     	waitForLoadingComplete();
+	     	btnRadioSourceFormat.click();
+	     }
+	     
+	     /**
+	      * Click the export button
+	      */
+	      def clickExportBtn()
+	      {
+	      	waitForLoadingComplete();
+	      	btnExport.click();
+	      }
 }
