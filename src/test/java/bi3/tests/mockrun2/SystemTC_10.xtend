@@ -36,45 +36,33 @@ class SystemTC_10 extends BaseTest{
 	 */
 	@Test
 	def void TestCaseNumber10() {
-		
+
 		var String program = "MMS001";
 		var String shortKey = "r";
-		
+
 		loginPage.GoTo();
-		
-		//homePage.GoToMMS001();
-		//homePage.pressShortcutKeys(shortKey);
+		// 3. Press "Ctrl + R" button in the keyboard - Verify: Search and Start pop up window is displayed
+		// 4. Enter MMS001 in the Textbox - Verify: Code is entered in the textbox
+		// 5. Click the Ok button - Verify: MMS001 (Item.Open) Program is opened and is displayed as a tab in the system.
 		homePage.goToProgramUsingShrt(program);
-		//homePage.assertInsertedProgram(program);
-		
-		//Clicking Tools
+
+		// 6. Click Tools - Verify: Tools list is displayed with the following actions:Add to Start Page Shortcuts,Personalize,User Settings,Export to Excel,Link Manager,Context Publisher
 		mms001b.clickTools();
-	
-		//Asserting The Elements In It
 		mms001b.assertToolListMMS001();
-		
-		//Clicking User Settings
+
+		// 7. Click User Settings - Verify: User Settings pop-up window is prompted.
 		mms001b.clickUserSettings();
-		
-		//Asserting The PopUp 
 		mms001b.assertPopUpWindowUserSettings();
-		
-		//Enable CheckBox ProgramID
+
+		// 8. Select Show Program ID - Verify: Show Program ID is selected.
 		mms001b.clickCheckBoxProgramId();
-		
-		//Asserting CheckBox After Enabling
 		mms001b.assertCheckBoxEnabled();
-		
-		//Clicking Save Button 
+
+		// 9. Click Save - Verify: Changes made are saved and user settings pop-up window closes.
 		mms001b.clickSaveButton();
-		
-		//Refreshing The Page
+
+		// 10. Click Refresh from the program (Note: Not the Refresh page) - Verify: Program ID MMS001 is displayed on the open tab
 		toolBarpage.ClickAction_Refresh();
-		
-		//Asserting The Tab with ProgramID
-		homePage.goToProgramUsingShrt(program);
-		
-		//Asserting Tab With ProgramID
 		mms001b.assertTabWithProgramId(program);
 	}
 }
