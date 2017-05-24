@@ -21,9 +21,9 @@ import org.openqa.selenium.WebDriver
 <<<<<<< HEAD
 =======
 import bi3.pages.oss406.OSS406E
-import bi3.framework.config.ConfigKeys
 
 >>>>>>> beae781fa121af878f0f8e08a4a634c289adbaf6
+
 
 class OSS401_CreateDataSet extends BaseTest{
 	
@@ -40,7 +40,7 @@ class OSS401_CreateDataSet extends BaseTest{
 	ExcelUtil testData;
 	HashMap<String, String> hashMap;
 	
-<<<<<<< HEAD
+
 
 	new(WebDriver driver) {
 		this.driver = driver;
@@ -57,16 +57,7 @@ class OSS401_CreateDataSet extends BaseTest{
 //		
 //>>>>>>> 8b20ec39d7250a3afa7afdd0348c94cad1bb9e80
 //	}
-=======
-	new(){
-		
-	}
->>>>>>> beae781fa121af878f0f8e08a4a634c289adbaf6
-	
-	new(WebDriver webdriver){
-		driver = webdriver
-		this.Initialize()
-	}
+
 	@BeforeMethod
 	def void Initialize() {
 		loginPage = new LoginPage(driver)

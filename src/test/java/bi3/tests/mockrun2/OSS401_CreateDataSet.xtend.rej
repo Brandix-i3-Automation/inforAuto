@@ -1,0 +1,14 @@
+diff a/src/test/java/bi3/tests/mockrun2/OSS401_CreateDataSet.xtend b/src/test/java/bi3/tests/mockrun2/OSS401_CreateDataSet.xtend	(rejected hunks)
+@@ -18,6 +18,12 @@
+ import bi3.framework.config.ConfigKeys
+ import org.openqa.selenium.WebDriver
+ 
++<<<<<<< HEAD
++=======
++import bi3.pages.oss406.OSS406E
++import bi3.framework.config.ConfigKeys
++
++>>>>>>> beae781fa121af878f0f8e08a4a634c289adbaf6
+ 
+ class OSS401_CreateDataSet extends BaseTest{
+ 	
