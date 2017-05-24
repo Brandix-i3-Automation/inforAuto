@@ -26,6 +26,9 @@ class DeletePage extends BasePage{
     @FindBy(xpath="//div[@class='gvPage']")
     WebElement divHomePage;
     
+    @FindBy(css="#inforMessageDialog +.dialogButtonBar .inforFormButton")
+    WebElement btnConfirmation;
+    
     
      def void deletePage(){
 		waitForLoadingComplete();
@@ -57,6 +60,15 @@ class DeletePage extends BasePage{
 	 	var element = "//ul[@id='gvMenuSettings']//a[text()='"+pageName+"']"
 	 	driver.findElement(By.xpath(element))
 
+	 }
+	 
+	 /**
+	  * This method confirms the deletion.
+	  */
+	 def void confirmDeletion(){
+	 	waitToBeClickable(btnConfirmation);
+	 	btnConfirmation.click();
+	 	waitForLoadingComplete();
 	 }
 	
 	
