@@ -167,8 +167,7 @@ class BasePage extends WebDriverExtensions {
 		waitForLoadingComplete();
 		driver.findElement(By.xpath("//body")).sendKeys(Keys.CONTROL + key);
 	}
-	
-	
+
 	/*
 	 * To get the name of a program
 	 * @return String page title of the name 

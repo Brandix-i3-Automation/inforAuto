@@ -13,6 +13,12 @@ import bi3.pages.oss402.OSS402E
 import bi3.pages.oss406.OSS406B1
 import bi3.pages.oss406.OSS406E
 import org.openqa.selenium.WebDriver
+import bi3.framework.util.ExcelUtil
+import java.util.HashMap
+import bi3.framework.config.ConfigKeys
+import org.openqa.selenium.WebDriver
+import bi3.pages.oss406.OSS406E
+import bi3.framework.config.ConfigKeys
 
 class OSS401_CreateDataSet extends BaseTest{
 	
@@ -26,6 +32,8 @@ class OSS401_CreateDataSet extends BaseTest{
 	OSS402E oss402e
 	OSS406B1 oss406b1
 	OSS406E oss406e
+	ExcelUtil testData;
+	HashMap<String, String> hashMap;
 	
 	new(WebDriver driver) {
 		this.driver = driver;
@@ -47,6 +55,10 @@ class OSS401_CreateDataSet extends BaseTest{
 		oss402e = new OSS402E(driver)
 		oss406b1 = new OSS406B1(driver)
 		oss406e = new OSS406E(driver)
+		val path = ConfigKeys.MOCKRUN2_TEST_DATA_PATH;
+		val sheetName = "OSS401_CreateDataSet";
+		testData = new ExcelUtil(path, sheetName);
+		hashMap = testData.getExcelActiveSheetFirstTwoColumnData;
 	}
 	
 	/**
@@ -58,23 +70,23 @@ class OSS401_CreateDataSet extends BaseTest{
 	@Test
 	def void OSS401_CreateDataSet(){
 		
-		var panelSeq = "E123"
-		var dataset = "D001"
-		var desc = "Cloud Suite Automation Testing"
-		var name = "Testing Dataset"
-		var periodType = "1-Period type 1"
-		var key1 = "UCWHLO"
-		var key2 = "UCITNO"
-		var seq = "1"
-		var field = "UCDEMA"
-		var seq2 = "2"
-		var field2 = "UCIVQT"
-		var seq3 = "3"
-		var field3 = "UCORQT"
-		var ttp1 = "31"
-		var ttp2 = "32"
-		var ttp3 = "33"
-		var ttp4 = "34"
+		var panelSeq =  hashMap.get("panelSeq").toString();
+		var dataset = hashMap.get("dataset").toString();
+		var desc = hashMap.get("desc").toString();
+		var name = hashMap.get("name").toString();
+		var periodType = hashMap.get("periodType").toString();
+		var key1 = hashMap.get("key1").toString();
+		var key2 = hashMap.get("key2").toString();
+		var seq = hashMap.get("seq").toString();
+		var field = hashMap.get("field").toString();
+		var seq2 = hashMap.get("seq2").toString();
+		var field2 = hashMap.get("field2").toString();
+		var seq3 = hashMap.get("seq3").toString();
+		var field3 = hashMap.get("seq3").toString();
+		var ttp1 = hashMap.get("ttp1").toString();
+		var ttp2 = hashMap.get("ttp2").toString();
+		var ttp3 = hashMap.get("ttp3").toString();
+		var ttp4 = hashMap.get("ttp4").toString();
 		
 		loginPage.GoTo()
 		oss401SettingsTest.SetPanelSequence(panelSeq)
@@ -123,7 +135,7 @@ class OSS401_CreateDataSet extends BaseTest{
 		oss402e.clickOnNext()
 		
 		oss402b1.CloseActiveTab()
-		Thread.sleep(2000)
+		Thread.sleep(4000)
 		oss402b1.CloseActiveTab()
 		
 		Assert.assertTrue(oss406b1.getPageId().contains("OSS406/B1"))
@@ -154,6 +166,8 @@ class OSS401_CreateDataSet extends BaseTest{
 		oss401b1.searchDataSet(dataset)
 		oss401b1.activateDataset(dataset)
 		Assert.assertEquals(oss401b1.getStsOfDataset(dataset),"20")
+		
+		oss401b1.closeAllTabs()
 		
 	}
 	

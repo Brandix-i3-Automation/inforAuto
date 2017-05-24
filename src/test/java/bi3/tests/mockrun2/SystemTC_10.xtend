@@ -76,7 +76,5 @@ class SystemTC_10 extends BaseTest{
 		
 		//Asserting Tab With ProgramID
 		mms001b.assertTabWithProgramId(program);
-		
 	}
-	
 }
