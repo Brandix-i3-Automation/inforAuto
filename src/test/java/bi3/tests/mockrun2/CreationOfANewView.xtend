@@ -6,7 +6,7 @@
  * 
  */
 
-package bi3.tests.fnb
+package bi3.tests.mockrun2
 
 import bi3.tests.BaseTest
 import bi3.pages.LoginPage
