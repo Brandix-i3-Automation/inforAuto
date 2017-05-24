@@ -23,4 +23,10 @@ class ProgramCommons extends ToolbarPage {
 	@FindBy(id="cmpDivInfo")
 	public WebElement lblFooterCompanyInfo;
 	
+	/**
+	 * method returns the message displayed in the footer
+	 */
+	def String getMessageFromFooter(){
+		return lblFooterMessage.text;
+	}
 }
