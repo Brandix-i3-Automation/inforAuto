@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement
 import java.util.List
 import bi3.framework.elements.inforelements.InforGrid
 import org.openqa.selenium.Keys
+import org.testng.Assert
+import java.util.ArrayList
 
 class MNS150B extends BasePage {
 	
