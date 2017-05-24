@@ -13,9 +13,6 @@ class MyPages extends BasePage{
 		super(driver)
 	}
 	
-	@FindBy(xpath="//*[contains(text(),'My Pages...')]")
-	WebElement btnMyPage;
-	
 	@FindBy(xpath="//div[text()='AC Test Page']/following::div[4]/descendant::button")
 	WebElement btnSettings;
 	
@@ -59,19 +56,6 @@ class MyPages extends BasePage{
 	def void savePageSettings(){
 		waitToBeClickable(btnOk);
 		btnOk.click(); 
-	}
-	
-	
-	/**
-	 * Selecting My Pages
-	 * 
-	 */
-	def clickMyPage() {
-
-		waitForLoadingComplete()
-		btnMyPage.click
-		waitForLoadingComplete();
-
 	}
 	
 	
