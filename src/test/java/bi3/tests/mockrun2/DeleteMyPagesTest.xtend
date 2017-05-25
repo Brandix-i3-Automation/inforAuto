@@ -9,7 +9,7 @@ import org.testng.annotations.Test
 import org.testng.Assert
 import bi3.tests.BaseTest
 
-class DeleteMyPagesTest extends BaseTest {
+class DeleteMyPagesTest extends bi3.tests.BaseTest {
 	
 	LoginPage loginPage
 	HomePage homePage
