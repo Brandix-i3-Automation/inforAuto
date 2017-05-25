@@ -37,16 +37,16 @@ class PageSettings extends BasePage {
     @FindBy(css = "div#gvPageSettingsDialog div label[for='gvChangedBy']")
     WebElement lblChangedBy;
     
-    @FindBy(css = "//label[text()='Changed']")
+    @FindBy(xpath = "//label[text()='Changed']")
     WebElement lblChanged;
 	
 	@FindBy(css = "div#gvPageSettingsDialog div label[for='gvPageEditLevel']")
     WebElement lblEditors;
     
-    @FindBy(css = "//label[text()='Share this page']")
+    @FindBy(xpath = "//label[text()='Share this page']")
     WebElement lblSharePage;
     
-    @FindBy(css = "//label[text()='Lock this page']")
+    @FindBy(xpath = "//label[text()='Lock this page']")
     WebElement lblLockPage;
     
 	
