@@ -159,6 +159,9 @@ class HomePage extends BasePage {
     @FindBy(xpath="//ul[@id='gvMenuSettings']/li[17]/a")
     WebElement listAdministration;
     
+    @FindBy(id="startDiv")
+    WebElement linkStart;
+    
     @FindBy(css="div[class='gvPage'] div[class='gvWidget ui-droppable']")
     List<WebElement> listAddWidgetIcons;
 	
@@ -993,6 +996,24 @@ def void GoToOIS275(){
 		}
 		return found;
 	}
+	/**
+	 * Click on Start to load the Start menu items.
+	 */
+	def void clickStart(){
+		waitForLoadingComplete();
+		Thread.sleep(2000)
+		linkStart.click();
+		waitForLoadingComplete();
+	}
+	
+	/**
+	 * Verify startPage is displayed.
+	 */
+	def String verifyStartPageExist() {
+		waitToBeDisplayed(linkStart)
+		return linkStart.text;
+	}
+	
 }
 
 
