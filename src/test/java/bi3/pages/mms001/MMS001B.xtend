@@ -44,6 +44,20 @@ class MMS001B extends ToolbarPage {
 	
 	@FindBy(css="div[id='ExportDlg']+div>button")
 	WebElement btnExport;
+	
+	@FindBy(id = "QuickExport_option1")
+	WebElement rbtnExportSelectedRows;
+	
+	@FindBy(id = "QuickExport_option3")
+	WebElement rbtnSourceFormat;
+	
+	def String isCheckedExportSelectedRows(){
+		return rbtnExportSelectedRows.getAttribute("aria-checked");
+	}
+	
+	def String isCheckedSourceFormat(){
+		return rbtnSourceFormat.getAttribute("aria-checked");
+	}
 
 	override WebElement findElementInTools(String DropDownElement) {
 		var element = "//ul[@class='inforContextMenu ToolsMenu inforMenuOptions']//li/a[contains(text(),'" +
