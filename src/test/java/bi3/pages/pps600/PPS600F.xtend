@@ -25,6 +25,12 @@ class PPS600F extends BasePage{
 		txtReport.sendKeys(PoNumber);
 	}
 	
+	def String getReportText()
+	{
+		waitForLoadingComplete();
+		return txtReport.text;
+	}
+	
 	def void clickNext()
 	{
 		waitForLoadingComplete()

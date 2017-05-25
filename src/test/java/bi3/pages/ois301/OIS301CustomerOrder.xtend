@@ -39,7 +39,21 @@ class OIS301CustomerOrder extends BasePage {
     @FindBy(xpath="//div[text()='Test Attribute 01']/ancestor::div[1]//div[4]/div")
     WebElement txtAttribute
     
+    @FindBy(xpath="//button[@id='ActionsBtn']") 
+ 	WebElement btnAction;
+ 	
+ 	@FindBy(xpath="//span[@id='menuBar']/descendant::button[4]/following-sibling::div[1]//ul//span[text()='F3']/ancestor::a") 
+ 	WebElement linkClose;
+ 	
+ 	@FindBy(xpath="//button[@class='inforIconButton edit']") 
+ 	WebElement btnEdit;
+ 	
+ 	@FindBy(xpath="//input[@id='WWATAV']")
+    WebElement txtAttributeinChange
     
+    @FindBy(xpath="//button[@id='Next']")
+    WebElement btnNext
+
     
     def void clickDropDownSort(){
     	waitForLoadingComplete();
@@ -82,9 +96,11 @@ class OIS301CustomerOrder extends BasePage {
    	def void enterAttributeNo(String attributeValue){
    		waitForLoadingComplete();
 		txtAttribute.click();
-		txtAttribute.clearRobustly()
-		txtAttribute.sendKeys(attributeValue);
-		txtAttribute.sendKeys(Keys.ENTER);
+		btnEdit.click();
+		txtAttributeinChange.click();
+		txtAttributeinChange.clearRobustly();
+		txtAttributeinChange.sendKeys(attributeValue);
+		btnNext.click();
 		waitForLoadingComplete();
    	}
    	
@@ -94,11 +110,14 @@ class OIS301CustomerOrder extends BasePage {
 	 }
 	 
 	def WebElement validatePanal(String panalName){
-	 	var element = "//span[text()='"+panalName+"']"
+	 	var element = "//span[text()='"+panalName+" ']"
 	 	driver.findElement(By.xpath(element))
 	 }
-	def WebElement closePanal(String panalName){
-	 	var element = "//span[text()='"+panalName+"']/ancestor::div[1]/ancestor::div[1]/ancestor::a[1]/following-sibling::button"
-	 	driver.findElement(By.xpath(element))
-	 }
+	
+ 	def void closePanal(){
+ 		btnAction.click();
+ 		waitForLoadingComplete();
+ 		linkClose.click();
+ 		waitForLoadingComplete();
+ 	}
 }

@@ -23,6 +23,15 @@ class PPS200A extends BasePage{
 	@FindBy	(id = "WAORTY")
 	WebElement txtOrderType
 	
+	/**Page label */
+	@FindBy	(xpath = "//span[@id='showProgramShortName'][text()='PPS200/A ']")
+	WebElement txtPagelabel
+	
+	/** Next Button*/
+	@FindBy	(xpath = "//button[@id='Next']")
+	WebElement btnNext
+	
+	
 	/**
 	 * Used to Fill data when creating a PO in PPS200/A
 	 * @param : Supplier 
@@ -36,6 +45,23 @@ class PPS200A extends BasePage{
 		dateReqDel.sendKeys(delDate);
 		txtOrderType.click();
 		txtOrderType.sendKeys(orderType);
+		waitForLoadingComplete();
+	}
+	
+	/**
+	 * Used to check the page label whether it display as PPS200/A
+	 */
+	def String pageLabel() {
+		waitForLoadingComplete();
+		return txtPagelabel.text;
+	}
+	
+	/**
+	 * click Next
+	 */
+	def void clickNext() {
+		waitForLoadingComplete();
+		btnNext.click();
 		waitForLoadingComplete();
 	}
 }
