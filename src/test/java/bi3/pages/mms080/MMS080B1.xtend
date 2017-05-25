@@ -44,7 +44,11 @@ class MMS080B1 extends ProgramCommons{
 	@FindBy(id = "W1ORCA")
 	WebElement txtOct
 	
+	@FindBy(id="headerText")
+	WebElement filterOprions
 	
+	@FindBy(xpath="//fieldset[@id='collapsibleDiv']/button")
+	WebElement btnFilterOptions 
 	
 	
 	/*
@@ -71,6 +75,7 @@ class MMS080B1 extends ProgramCommons{
 			txtWarehouse.click()
 			txtWarehouse.clearRobustly()
 			txtWarehouse.sendKeys(warehouse)
+			txtWarehouse.sendKeys(Keys.ENTER);
 		}
 
 		// Apply
@@ -146,4 +151,18 @@ class MMS080B1 extends ProgramCommons{
 		return cells;
 	}
 	
+	/**
+	 * click on filter options
+	 */
+	def void clickFilterOptions(){
+		filterOprions.click();
+		waitForLoadingComplete();
+	}
+	
+	def void minimiseFilterOptions(){
+		if(btnFilterOptions.getAttribute("class").contains("closed")){
+			filterOprions.click();
+			waitForLoadingComplete();
+		}			
+	} 
 }

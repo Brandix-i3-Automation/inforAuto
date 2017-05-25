@@ -21,6 +21,8 @@ import bi3.pages.rps999.RPS999F
 import bi3.pages.pms170.PMS170B
 import bi3.pages.pms270.PMS270E
 import bi3.pages.pms100.PMS100_B
+import java.util.ArrayList
+import java.lang.reflect.Array
 
 class TC10_E2E extends BaseTest{
 	
@@ -66,7 +68,7 @@ class TC10_E2E extends BaseTest{
 	}
 	
 	var panelSeq = "E"
-	var dataset = "D100"
+	var dataset = "D001"
 	var budget = "BUD"
 	var whs = "001"
 	var demandFeild = "UCDEMA"
@@ -96,7 +98,7 @@ class TC10_E2E extends BaseTest{
 		println("Dataset Created")
 		//Create an item as a Prerequisite
 		var item = itemCreation();
-		println("Prereq - Item Created")
+		println("Prerequisite - Item Created")
 		//create Sales budget
 		createSalesBudget();
 		println("Sales budget created")
@@ -106,6 +108,9 @@ class TC10_E2E extends BaseTest{
 		//Create Forecast
 		createForecast(item);
 		println("Created Forecast")
+		//Release MOP
+		releaseMOP(item);
+		println("MOP Released")
 	}
 	
 	/**
@@ -119,6 +124,7 @@ class TC10_E2E extends BaseTest{
 		var itemNo = mms001C.getItemNumber();
 		mms001C.clickNextTillReqPanel("MMS001/B");
 		mms001.closeAllTabs();
+		println(itemNo); 
 		return itemNo;
 	}
 	
@@ -160,20 +166,25 @@ class TC10_E2E extends BaseTest{
 		oss220E.closeAllTabs();
 	}
 
+	var per = newArrayList("1706","1707","1708","1709","1710","1711","1712","1801","1802","1803","1804","1805");
+	
+	
 	/**
 	 * create forecast via m3
 	 */
 	def void createForecast(String item){
 		homePage.goToProgramUsingShrt("FCS350");
 		fcs350B.setHeaderDetails(item,periodFrame,periodType);
-		for(var i = 0 ; i<12; i++){
-			fcs350B.setFCQtyForTheEmptyPeriod(period,FCQty)	
+		for(String i:per){
+			fcs350B.setFCQtyForTheEmptyPeriod(i,FCQty)	
 		}
 		fcs350B.clickOnNext();
 		fcs350B.closeAllTabs();
 		
 		homePage.goToProgramUsingShrt("MMS080");
+		mms080B1.minimiseFilterOptions();
 		mms080B1.setHeaderDetails(item,whs);
+		mms080B1.clickFilterOptions();
 		var List<String> ordCat = mms080B1.getFnbDetailsFromGrid(); 
 		for(String s:ordCat){
 			Assert.assertEquals(s,"010","Incorrect Order Category");

@@ -27,6 +27,8 @@ class ProgramCommons extends ToolbarPage {
 	 * method returns the message displayed in the footer
 	 */
 	def String getMessageFromFooter(){
+		waitForLoadingComplete();
 		return lblFooterMessage.text;
+		
 	}
 }

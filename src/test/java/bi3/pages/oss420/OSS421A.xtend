@@ -20,9 +20,10 @@ class OSS421A extends BasePage{
 	 */
 	def fillSaleValues(String warehouse, String itemNo){
 		cellEdit.click();
-		driver.findElement(By.xpath("//div[contains(@class,'edit-cell') and not (text())]/input")).sendKeys(warehouse);
+		driver.findElement(By.xpath("//input[@id='R1C4']")).sendKeys(warehouse);
 		cellEdit.click();
-		driver.findElement(By.xpath("//div[contains(@class,'edit-cell') and not (text())]/input")).sendKeys(itemNo);
+		driver.findElement(By.xpath("//input[@id='R2C4']")).sendKeys(itemNo);
 		clickOnNext();
+		waitForLoadingComplete();
 	}
 }
