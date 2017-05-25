@@ -194,7 +194,8 @@ class ToolbarPage extends BasePage {
 		waitToBeClickable(btnActionBtn)
 		btnActionBtn.click()
 		waitForLoadingComplete()
-		btnRefresh.click()	
+		btnRefresh.click()
+		waitForLoadingComplete()	
 	}
 	def void ClickAction_Cancel() {
 		waitToBeClickable(btnActionBtn)

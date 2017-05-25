@@ -28,6 +28,7 @@ class AddPage extends BasePage{
     
      
 	def void enterNewPageTitle(String newTitleValue){
+		waitForLoadingComplete();
 		txtNewPageTitle.click();
 		txtNewPageTitle.clearRobustly();
 		txtNewPageTitle.sendKeys(newTitleValue);

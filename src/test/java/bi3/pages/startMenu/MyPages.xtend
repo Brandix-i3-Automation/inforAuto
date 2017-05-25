@@ -4,60 +4,110 @@ import bi3.pages.BasePage
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.WebElement
-import org.testng.Assert
 import org.openqa.selenium.By
 
-class MyPages extends BasePage{
-	
+class MyPages extends BasePage {
+
 	new(WebDriver driver) {
 		super(driver)
 	}
 	
-	@FindBy(xpath="//div[text()='AC Test Page']/following::div[4]/descendant::button")
-	WebElement btnSettings;
+	@FindBy(css="div.inforDialog.ui-draggable")
+    WebElement panelMyPage;
+    
+    @FindBy(id="okButton")
+    WebElement btnOk;
 	
-	@FindBy(css="input#gvPageType+label div div+div")
-	WebElement btnShareThisPage;
+	def WebElement lblChangedDate(String pageTitle){
+		var String lblChangedDateXpath = "//div[text()='"+pageTitle+"']/following::div[4]";
+		return driver.findElement(By.xpath(lblChangedDateXpath));
+	}
+
+	def WebElement iconShare(String pageTitle) {
+		var String iconShareXpath = "//div[text()='"+pageTitle+"']/following::div[1]/descendant::div[1]";
+		return driver.findElement(By.xpath(iconShareXpath));
+	}
 	
-	@FindBy(css="#gvPageSettingsDialog +.dialogButtonBar #okButton")
-	WebElement btnOk;
+	def WebElement btnSettings(String pageTitle) {
+		var String btnSettingsXpath = "//div[text()='" + pageTitle + "']/following::div[4]/descendant::button";
+		return driver.findElement(By.xpath(btnSettingsXpath));
+	}
 	
-	//@FindBy(css="input#gvPageType+label .inforSwitchInner")
-	@FindBy(xpath="//div[@class='inforSwitchInner']/following::label[text()='Share this page']")
-	WebElement btnShareThisPageColor;
-	
-	////div[@class='inforSwitchInner']/following::label[text()='Share this page']
-	
+	def WebElement btnDelete(String pageTitle){
+		var String btnDeleteXpath = "//div[text()='"+pageTitle+"']/following::div[7]/descendant::button";
+		return driver.findElement(By.xpath(btnDeleteXpath));
+	}
 	
 	/**
 	 * Go to page settings.
 	 */
-	def void clickPageSettings(){
+	def void clickPageSettings(String pageTitle) {
 		waitForLoadingComplete();
-		waitToBeClickable(btnSettings);
-		btnSettings.click();
-		waitForLoadingComplete();		
+		var WebElement btnSett = btnSettings(pageTitle);
+		waitToBeClickable(btnSett);
+		btnSett.click();
+		waitForLoadingComplete();
 	}
 	
 	/**
-	 * Select share this page.
+	 * This method returns the of Share icon.
+	 * @return Share icon
+	 * 
 	 */
-	def void toggleShareButton(){
-		waitToBeDisplayed(btnShareThisPage);
-		btnShareThisPage.click();
-		Thread.sleep(3000);
-	}	
-	
-	def String getTogglecolor(){
-		var togglecolor = btnShareThisPageColor.getCssValue("background-color");
-			return togglecolor.toString();
+	def boolean isShareIconAvailable(String pageTitle) {
+		var WebElement iconShare = iconShare(pageTitle);
+		waitForLoadingComplete();
+		try {
+			if (iconShare.displayed) {
+				return true;
+			}
+		} catch (Exception exception) {
+			return false;
+		}
 	}
 	
-	def void savePageSettings(){
-		waitToBeClickable(btnOk);
-		btnOk.click(); 
+	/**
+	 * This method returns the changed date.
+	 * @return Changed date
+	 */
+	def String getChangedDate(String pageTitle){
+		var WebElement lblDate = lblChangedDate(pageTitle);
+		var String date = lblDate.text;
+		return date;
 	}
 	
+	/**
+      * This method returns the page title.
+      * @return "My Page" page title.
+      **/
+      def boolean isMyPageClosed(){    
+           try {
+                  if(panelMyPage.displayed){
+                        return true;
+                  }  
+            } catch (Exception exception) {
+                 return false; 
+            }           
+      }
+      
+      /**
+	 * Go to delete confirmation.
+	 */
+	def void clickDeleteIcon(String pageTitle) {
+		waitForLoadingComplete();
+		var WebElement btnDel = btnDelete(pageTitle);
+		waitToBeClickable(btnDel);
+		btnDel.click();
+		waitForLoadingComplete();
+	}
 	
-		
+	/**
+	 * Closing My Pages panel.
+	 */
+	 def void closeMyPages(){
+	 	waitToBeClickable(btnOk);
+	 	btnOk.click();
+	 	waitForLoadingComplete();
+	 }
+
 }

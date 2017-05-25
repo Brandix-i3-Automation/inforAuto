@@ -37,7 +37,6 @@ class SystemTC_05 extends BaseTest {
 		
 		/* Test*/
 		loginPage.GoTo();
-
 		homePage.pressShortcutKeys("R");
 		
 		//verify that search and start pop up is displayed

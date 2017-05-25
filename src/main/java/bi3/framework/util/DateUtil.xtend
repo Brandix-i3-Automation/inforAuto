@@ -28,4 +28,13 @@ class DateUtil {
 	def static Date getCurrentDate() {
 		return new Date();
 	}
+	
+	/**
+	 * Return the current date using the given format.
+	 * @return String current date
+	 */
+	def static String getCurrentDate(String dateFormat) {
+		var SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+		return formatter.format(DateUtil.getCurrentDate());
+	}
 }
