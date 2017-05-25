@@ -33,6 +33,15 @@ class PPS600E extends BasePage{
 	@FindBy(id="Next")
 	WebElement btnNext;
 	
+	@FindBy(xpath="//div[@id='messageBarContent']/span[1][text()='Job PPS601CL has been submitted']")
+	WebElement txtMessage;
+	
+	@FindBy(xpath="//button[@id='ActionsBtn']") 
+ 	WebElement btnAction;
+ 	
+ 	@FindBy(xpath="//span[@id='menuBar']/descendant::button[4]/following-sibling::div[1]//ul//span[text()='F3']/ancestor::a") 
+ 	WebElement linkClose;
+	
 	def void FillPONumbers(String PONumber)
 	{
 		waitForLoadingComplete();
@@ -67,4 +76,18 @@ class PPS600E extends BasePage{
 		btnNext.click()
 		waitForLoadingComplete()
 	}
+	
+	def String findMessage(){
+	 	return txtMessage.text;
+	 }
+	 
+	  /**
+	 * Close Panal
+	 */
+	def void closePanal(){
+ 		btnAction.click();
+ 		waitForLoadingComplete();
+ 		linkClose.click();
+ 		waitForLoadingComplete();
+ 	}
 }

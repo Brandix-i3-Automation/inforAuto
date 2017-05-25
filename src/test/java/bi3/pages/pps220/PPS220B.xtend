@@ -54,8 +54,15 @@ class PPS220B extends BasePage{
  	
  	@FindBy(xpath="//a/span[contains(text(),'Purchase Order Transactions')]")
 	WebElement linkPurchaseOrderTransactions;
+	
+	@FindBy(xpath="//a/span[text()='Change']")
+ 	WebElement linkChange
  	
+ 	@FindBy(xpath="//button[@id='ActionsBtn']") 
+ 	WebElement btnAction;
  	
+ 	@FindBy(xpath="//span[@id='menuBar']/descendant::button[4]/following-sibling::div[1]//ul//span[text()='F3']/ancestor::a") 
+ 	WebElement linkClose;
 	
 	def void searchPONumber(String po){
 		waitToBeClickable(txtPOSearch)
@@ -240,4 +247,18 @@ class PPS220B extends BasePage{
 		
 	}
 	
+	def void gotoChange(){
+		waitForLoadingComplete();
+		rightClick(gridFirstLine);
+		waitToBeClickable(linkChange);
+		linkChange.click();
+		waitForLoadingComplete();	
+	}
+	
+	def void closePanal(){
+ 		btnAction.click();
+ 		waitForLoadingComplete();
+ 		linkClose.click();
+ 		waitForLoadingComplete();
+ 	}
 }
