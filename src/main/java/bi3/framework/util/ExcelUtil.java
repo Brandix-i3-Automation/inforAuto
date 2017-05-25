@@ -1,18 +1,33 @@
 package bi3.framework.util;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import bi3.framework.dto.ExcelData;
 import bi3.framework.exceptions.FrameworkException;
 
 /**
@@ -33,17 +48,29 @@ public class ExcelUtil {
 	public FileOutputStream fileOut = null;
 
 	/** The workbook. */
-	private static HSSFWorkbook workbook = null;
+	private static HSSFWorkbook hssfWorkbook = null;
 
 	/** The sheet. */
-	private static HSSFSheet sheet = null;
+	private static HSSFSheet hssfSheet = null;
 
 	/** The row. */
-	private static HSSFRow row = null;
+	private static HSSFRow hssfRow = null;
 
 	/** The cell. */
-	private static HSSFCell cell = null;
-
+	private static HSSFCell hssfCell = null;
+	
+	/** The XSSF workbook. */
+	private static XSSFWorkbook xssfWorkBook;
+	
+	/** The XSSF sheet. */
+	private static XSSFSheet xssfSheet;
+	
+	/** The XSSF row. */
+	private static  XSSFRow xssfRow;
+	
+	/** The XSSF cell. */
+	private static XSSFCell xssfCell;
+	
 	/** The sheet name. */
 	private static String sheetName;
 
@@ -62,13 +89,13 @@ public class ExcelUtil {
 		this.path = path;
 		try {
 			fis = new FileInputStream(new File(path));
-			workbook = new HSSFWorkbook(fis);
+			hssfWorkbook = new HSSFWorkbook(fis);
 
-			int sheetNumbers = workbook.getNumberOfSheets();
+			int sheetNumbers = hssfWorkbook.getNumberOfSheets();
 			for (int i = 0; i < sheetNumbers; i++) {
-				if (givenSheetName.equals(workbook.getSheetName(i))) {
-					workbook.setActiveSheet(i);
-					sheet = workbook.getSheetAt(i);
+				if (givenSheetName.equals(hssfWorkbook.getSheetName(i))) {
+					hssfWorkbook.setActiveSheet(i);
+					hssfSheet = hssfWorkbook.getSheetAt(i);
 					return;
 				}
 			}
@@ -78,8 +105,29 @@ public class ExcelUtil {
 			//logger.error("ERROR in ExcelFileReader", e);
 			throw new FrameworkException("ERROR in ExcelFileReader", e);
 		}
-
 	}
+	
+	public ExcelUtil(final String path){
+		File file = FileUtil.getFile(path);
+		try {
+			Boolean fileTypeHssf = POIFSFileSystem.hasPOIFSHeader(new BufferedInputStream(new FileInputStream(file)));
+			
+			if(fileTypeHssf) { // HSSF
+				FileInputStream fis = new FileInputStream(file);
+				hssfWorkbook = new HSSFWorkbook(fis);
+				
+			} else { // XSSF
+				xssfWorkBook = new XSSFWorkbook(file);
+			}
+			
+		} catch (InvalidFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 
 	/**
 	 * Gets the row count in an active sheet of the opened excel sheet
@@ -87,7 +135,7 @@ public class ExcelUtil {
 	 * @return the row count active sheet
 	 */
 	public int getRowCountActiveSheet() {
-		int number = sheet.getLastRowNum() + 1;
+		int number = hssfSheet.getLastRowNum() + 1;
 		return number;
 	}
 
@@ -101,11 +149,11 @@ public class ExcelUtil {
 
 	public HashMap<String, String> getExcelActiveSheetFirstTwoColumnData() throws Exception {
 		HashMap<String, String> recordsMap = new HashMap<String, String>();
-		int lastRow = sheet.getLastRowNum() + 2;
+		int lastRow = hssfSheet.getLastRowNum() + 2;
 		try {
 			// Finding whether shee has any data...
 			if (lastRow < 1) {
-				throw new Exception("Give sheet " + sheet.getSheetName() + "Does not have any records");
+				throw new Exception("Give sheet " + hssfSheet.getSheetName() + "Does not have any records");
 			}
 			for (int i = 1; i < lastRow; i++) {
 				recordsMap.put(getCellData(0, i), getCellData(1, i));
@@ -126,12 +174,12 @@ public class ExcelUtil {
 	 * @return returns the row count in a sheet
 	 */
 	public int getRowCount(String sheetName) {
-		int index = workbook.getSheetIndex(sheetName);
+		int index = hssfWorkbook.getSheetIndex(sheetName);
 		if (index == -1) {
 			return 0;
 		} else {
-			sheet = workbook.getSheetAt(index);
-			int number = sheet.getLastRowNum() + 1;
+			hssfSheet = hssfWorkbook.getSheetAt(index);
+			int number = hssfSheet.getLastRowNum() + 1;
 			return number;
 		}
 
@@ -152,16 +200,16 @@ public class ExcelUtil {
 			if (rowNum <= 0) {
 				return "";
 			}
-			row = sheet.getRow(rowNum - 1);
-			if (row == null) {
+			hssfRow = hssfSheet.getRow(rowNum - 1);
+			if (hssfRow == null) {
 				return "";
 			}
-			cell = row.getCell(colNum);
-			if (cell == null) {
+			hssfCell = hssfRow.getCell(colNum);
+			if (hssfCell == null) {
 				return "";
 			}
-			cell.setCellType(Cell.CELL_TYPE_STRING);
-			return cell.getStringCellValue().trim();
+			hssfCell.setCellType(Cell.CELL_TYPE_STRING);
+			return hssfCell.getStringCellValue().trim();
 		} catch (Exception e) {
 			//logger.error("ERROR in getCellData", e);
 			throw new FrameworkException("ERROR in getCellData", e);
@@ -186,42 +234,42 @@ public class ExcelUtil {
 				return "";
 			}
 
-			int index = workbook.getSheetIndex(sheetName);
+			int index = hssfWorkbook.getSheetIndex(sheetName);
 			int col_Num = -1;
 			if (index == -1) {
 				return "";
 			}
 
-			sheet = workbook.getSheetAt(index);
-			row = sheet.getRow(0);
-			for (int i = 0; i < row.getLastCellNum(); i++) {
-				if (row.getCell(i).getStringCellValue().trim().equals(colName.trim()))
+			hssfSheet = hssfWorkbook.getSheetAt(index);
+			hssfRow = hssfSheet.getRow(0);
+			for (int i = 0; i < hssfRow.getLastCellNum(); i++) {
+				if (hssfRow.getCell(i).getStringCellValue().trim().equals(colName.trim()))
 					col_Num = i;
 			}
 			if (col_Num == -1) {
 				return "";
 			}
 
-			sheet = workbook.getSheetAt(index);
-			row = sheet.getRow(rowNum - 1);
-			if (row == null) {
+			hssfSheet = hssfWorkbook.getSheetAt(index);
+			hssfRow = hssfSheet.getRow(rowNum - 1);
+			if (hssfRow == null) {
 				return "";
 			}
-			cell = row.getCell(col_Num);
+			hssfCell = hssfRow.getCell(col_Num);
 
-			if (cell == null) {
+			if (hssfCell == null) {
 				return "";
 			}
-			if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-				return cell.getStringCellValue();
+			if (hssfCell.getCellType() == Cell.CELL_TYPE_STRING) {
+				return hssfCell.getStringCellValue();
 			}
-			else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC
-					|| cell.getCellType() == Cell.CELL_TYPE_FORMULA) {
+			else if (hssfCell.getCellType() == Cell.CELL_TYPE_NUMERIC
+					|| hssfCell.getCellType() == Cell.CELL_TYPE_FORMULA) {
 
-				String cellText = String.valueOf(cell.getNumericCellValue());
-				if (HSSFDateUtil.isCellDateFormatted(cell)) {
+				String cellText = String.valueOf(hssfCell.getNumericCellValue());
+				if (HSSFDateUtil.isCellDateFormatted(hssfCell)) {
 					// format in form of M/D/YY
-					double d = cell.getNumericCellValue();
+					double d = hssfCell.getNumericCellValue();
 
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(HSSFDateUtil.getJavaDate(d));
@@ -231,11 +279,11 @@ public class ExcelUtil {
 				}
 
 				return cellText;
-			} else if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+			} else if (hssfCell.getCellType() == Cell.CELL_TYPE_BLANK) {
 				return "";
 			}
 			else {
-				return String.valueOf(cell.getBooleanCellValue());
+				return String.valueOf(hssfCell.getBooleanCellValue());
 			}
 
 		} catch (Exception e) {
@@ -261,32 +309,32 @@ public class ExcelUtil {
 				return "";
 			}
 
-			int index = workbook.getSheetIndex(sheetName);
+			int index = hssfWorkbook.getSheetIndex(sheetName);
 
 			if (index == -1) {
 				return "";
 			}
 
-			sheet = workbook.getSheetAt(index);
-			row = sheet.getRow(rowNum - 1);
-			if (row == null) {
+			hssfSheet = hssfWorkbook.getSheetAt(index);
+			hssfRow = hssfSheet.getRow(rowNum - 1);
+			if (hssfRow == null) {
 				return "";
 			}
-			cell = row.getCell(colNum);
-			if (cell == null) {
+			hssfCell = hssfRow.getCell(colNum);
+			if (hssfCell == null) {
 				return "";
 			}
 
-			if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-				return cell.getStringCellValue();
+			if (hssfCell.getCellType() == Cell.CELL_TYPE_STRING) {
+				return hssfCell.getStringCellValue();
 			}
-			else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC
-					|| cell.getCellType() == Cell.CELL_TYPE_FORMULA) {
+			else if (hssfCell.getCellType() == Cell.CELL_TYPE_NUMERIC
+					|| hssfCell.getCellType() == Cell.CELL_TYPE_FORMULA) {
 
-				String cellText = String.valueOf(cell.getNumericCellValue());
-				if (HSSFDateUtil.isCellDateFormatted(cell)) {
+				String cellText = String.valueOf(hssfCell.getNumericCellValue());
+				if (HSSFDateUtil.isCellDateFormatted(hssfCell)) {
 					// format in form of M/D/YY
-					double d = cell.getNumericCellValue();
+					double d = hssfCell.getNumericCellValue();
 
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(HSSFDateUtil.getJavaDate(d));
@@ -296,11 +344,11 @@ public class ExcelUtil {
 				}
 
 				return cellText;
-			} else if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+			} else if (hssfCell.getCellType() == Cell.CELL_TYPE_BLANK) {
 				return "";
 			}
 			else {
-				return String.valueOf(cell.getBooleanCellValue());
+				return String.valueOf(hssfCell.getBooleanCellValue());
 			}
 		} catch (Exception e) {
 			//logger.error("ERROR in getCellData", e);
@@ -323,42 +371,42 @@ public class ExcelUtil {
 				return "";
 			}
 
-			int index = workbook.getSheetIndex(sheetName);
+			int index = hssfWorkbook.getSheetIndex(sheetName);
 			int col_Num = -1;
 			if (index == -1) {
 				return "";
 			}
 
-			sheet = workbook.getSheetAt(index);
-			row = sheet.getRow(0);
-			for (int i = 0; i < row.getLastCellNum(); i++) {
-				if (row.getCell(i).getStringCellValue().trim().equals(colName.trim()))
+			hssfSheet = hssfWorkbook.getSheetAt(index);
+			hssfRow = hssfSheet.getRow(0);
+			for (int i = 0; i < hssfRow.getLastCellNum(); i++) {
+				if (hssfRow.getCell(i).getStringCellValue().trim().equals(colName.trim()))
 					col_Num = i;
 			}
 			if (col_Num == -1) {
 				return "";
 			}
 
-			sheet = workbook.getSheetAt(index);
-			row = sheet.getRow(rowNum - 1);
-			if (row == null) {
+			hssfSheet = hssfWorkbook.getSheetAt(index);
+			hssfRow = hssfSheet.getRow(rowNum - 1);
+			if (hssfRow == null) {
 				return "";
 			}
-			cell = row.getCell(col_Num);
+			hssfCell = hssfRow.getCell(col_Num);
 
-			if (cell == null) {
+			if (hssfCell == null) {
 				return "";
 			}
-			if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-				return cell.getStringCellValue();
+			if (hssfCell.getCellType() == Cell.CELL_TYPE_STRING) {
+				return hssfCell.getStringCellValue();
 			}
-			else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC
-					|| cell.getCellType() == Cell.CELL_TYPE_FORMULA) {
+			else if (hssfCell.getCellType() == Cell.CELL_TYPE_NUMERIC
+					|| hssfCell.getCellType() == Cell.CELL_TYPE_FORMULA) {
 
-				String cellText = String.valueOf(cell.getNumericCellValue());
-				if (HSSFDateUtil.isCellDateFormatted(cell)) {
+				String cellText = String.valueOf(hssfCell.getNumericCellValue());
+				if (HSSFDateUtil.isCellDateFormatted(hssfCell)) {
 					// format in form of M/D/YY
-					double d = cell.getNumericCellValue();
+					double d = hssfCell.getNumericCellValue();
 
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(HSSFDateUtil.getJavaDate(d));
@@ -368,10 +416,10 @@ public class ExcelUtil {
 				}
 
 				return cellText;
-			} else if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+			} else if (hssfCell.getCellType() == Cell.CELL_TYPE_BLANK) {
 				return "";
 			} else {
-				return String.valueOf(cell.getBooleanCellValue());
+				return String.valueOf(hssfCell.getBooleanCellValue());
 			}
 
 		} catch (Exception e) {
@@ -388,13 +436,88 @@ public class ExcelUtil {
 	 * @return true, if is sheet exist
 	 */
 	public boolean isSheetExist(final String sheetName) {
-		int index = workbook.getSheetIndex(sheetName);
+		int index = hssfWorkbook.getSheetIndex(sheetName);
 		if (index == -1) {
-			index = workbook.getSheetIndex(sheetName.toUpperCase());
+			index = hssfWorkbook.getSheetIndex(sheetName.toUpperCase());
 			return false;
-			
 		} else {
 			return true;
 		}
+	}
+	
+	public ExcelData readXlsxExcel(Integer sheetIndex) {
+		
+		ExcelData data = new ExcelData();
+		List<List<String>> rtnData = new ArrayList<List<String>>();
+		
+		xssfSheet = xssfWorkBook.getSheetAt(sheetIndex);
+		Iterator<Row> rowIterator = xssfSheet.iterator();
+		
+		while (rowIterator.hasNext()){
+			xssfRow = (XSSFRow) rowIterator.next();
+			Iterator <Cell> cellIterator = xssfRow.cellIterator();
+			List<String> tmp = new ArrayList<String>();
+			
+			while (cellIterator.hasNext()) {
+	            xssfCell = (XSSFCell) cellIterator.next();
+	            
+	            if (xssfCell != null && xssfCell.getCellType() != Cell.CELL_TYPE_BLANK) {
+	                
+	            	switch (xssfCell.getCellType()) {
+		               case Cell.CELL_TYPE_NUMERIC:
+		            	   //tmp.add(xssfCell.getNumericCellValue());
+		            	   break;
+		               
+		               case Cell.CELL_TYPE_STRING:
+		            	   tmp.add(xssfCell.getStringCellValue());
+		            	   break;
+		            }
+	            } else {
+	            	tmp.add("");
+	            }
+	         }
+			rtnData.add(tmp);
+		}
+
+		data.setData(rtnData);
+		return data;
+	}
+	
+	public ExcelData readXlsExcel(Integer sheetIndex){
+		
+		ExcelData data = new ExcelData();
+		List<List<String>> rtnData = new ArrayList<List<String>>();
+		
+		hssfSheet = hssfWorkbook.getSheetAt(sheetIndex);
+		Iterator<Row> rowIterator = hssfSheet.iterator();
+		
+		while (rowIterator.hasNext()){
+			hssfRow = (HSSFRow) rowIterator.next();
+			Iterator <Cell> cellIterator = hssfRow.cellIterator();
+			List<String> tmp = new ArrayList<String>();
+			
+			while (cellIterator.hasNext()) {
+	            hssfCell = (HSSFCell) cellIterator.next();
+	            
+	            if (hssfCell != null && hssfCell.getCellType() != Cell.CELL_TYPE_BLANK) {
+	                
+	            	switch (hssfCell.getCellType()) {
+		               case Cell.CELL_TYPE_NUMERIC:
+		            	   //tmp.add(xssfCell.getNumericCellValue());
+		            	   break;
+		               
+		               case Cell.CELL_TYPE_STRING:
+		            	   tmp.add(hssfCell.getStringCellValue());
+		            	   break;
+		            }
+	            } else {
+	            	tmp.add("");
+	            }
+	         }
+			rtnData.add(tmp);
+		}
+
+		data.setData(rtnData);
+		return data;
 	}
 }

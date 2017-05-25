@@ -29,6 +29,16 @@ class PPS200B extends BasePage{
 	@FindBy(xpath = "//a/span[text()='Lines']")
 	WebElement linkLines
 	
+	@FindBy(xpath = "//button[@class='inforIconButton new']")
+	WebElement btnCreate
+	
+	@FindBy(xpath="//button[@id='ActionsBtn']") 
+ 	WebElement btnAction;
+ 	
+ 	@FindBy(xpath="//span[@id='menuBar']/descendant::button[4]/following-sibling::div[1]//ul//span[text()='F3']/ancestor::a") 
+ 	WebElement linkClose;
+	
+	
 	def boolean SearchPONo(String po){
 		waitForLoadingComplete();
 		txtPONo.waitToBeClickable()
@@ -107,4 +117,42 @@ class PPS200B extends BasePage{
 	 	
 	}
 	
+	def String verifyHighestStatus(String PONo){
+	 	CreatePO(PONo);
+	 	txtPONo.sendKeys(Keys.ENTER)
+	 	waitForLoadingComplete();
+	 	var grid = new InforGrid(gridElement);
+	 	return grid.getColumnValByColumnHeader("Hst", 0);
+	 	
+	}
+	
+	/**
+	 * methods types to create PO
+	 */
+	def void CreatePOno(){
+		txtPONo.click();
+		clearRobustly(txtPONo);
+		btnCreate.click();
+		waitForLoadingComplete();
+	}
+	
+	/**
+	 * Opens PO
+	 * @param: PO number
+	 */
+	 def String verifyLowerStatusatLines(String itemNo){
+	 	
+	 		return driver.findElement(By.xpath("//a[text()='"+itemNo+"']//preceding::div[2]")).text;
+	 	
+	 }
+	 
+	 /**
+	 * Close Panal
+	 */
+	 def void closePanal(){
+ 		btnAction.click();
+ 		waitForLoadingComplete();
+ 		linkClose.click();
+ 		waitForLoadingComplete();
+ 	}
 }

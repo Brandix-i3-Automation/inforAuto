@@ -17,6 +17,8 @@ class DeleteMyPagesTest extends BaseTest {
 	BasePage basePage
 	StartPage startPage
 	
+	
+	
 	@BeforeMethod
 	def void Initialize() {
 		loginPage = new LoginPage(driver);
@@ -29,38 +31,27 @@ class DeleteMyPagesTest extends BaseTest {
 	 * @TestCaseID: System Test case 12
 	 * @CloudSuite: F&B
 	 * @Description: This test case includes the steps to delete a page
-	 * @author:	lakshikaj
+	 * @author:	LakshikaJ
 	 */
 	@Test
 	def void DeletePagesTest() {
 		
 		var String newPageName = "My Page";
-		
+            
 		loginPage.GoTo();
 		// validate whether the start page is displayed
 		Assert.assertEquals(startPage.getStartPageText,"Start","Start page is not displayed");
 		
 		basePage.goToHome();
-		//validate the start menu list
-		Assert.assertEquals(homePage.startPageName, "Start Page");
-		Assert.assertEquals(homePage.getAddWidgetName, "Add Widget...");
-		Assert.assertEquals(homePage.getAddPageName, "Add Page...");
-		Assert.assertEquals(homePage.getAddPageFromLibraryName, "Add Page from Library...");
-		Assert.assertEquals(homePage.getDeletePageName, "Delete Page...");
-		Assert.assertEquals(homePage.getRemoveFavouritePageName, "Remove Favorite Page ...");
-		Assert.assertEquals(homePage.getRefreshName, "Refresh");
-		Assert.assertEquals(homePage.getMyPagesName, "My Pages...");
-		Assert.assertEquals(homePage.getPageSettingsName, "Page Settings...");
-		Assert.assertEquals(homePage.getUserSettingsName, "User Settings...");
-		Assert.assertEquals(homePage.getAdvancedName, "Advanced");
-		Assert.assertEquals(homePage.getAdministrationName, "Administration");
+		//validate the start menu list      
+      	validateStartMenuList();
 		
 		// check whether a page exists and create if not
 		if(startPage.checkPageExists(newPageName)){
-			print("The page already exists");
+			System.out.println("The page already exists");
 		}
 		else{
-			print("The page not exist");
+			System.out.println("The page not exist");
 			startPage.addNewPage(newPageName);
 		}
 		
@@ -74,5 +65,26 @@ class DeleteMyPagesTest extends BaseTest {
 		basePage.goToHome();
 		// validate the start list whether the new page is deleted
 		Assert.assertFalse(startPage.checkPageExists(newPageName),"The new page is not deleted");
+	}
+	
+	/**
+	 * Validates the items in the start menu list
+	 */
+	def validateStartMenuList(){
+		val String[] EXPECTED_MENU_LIST = #['Start Page','Add Widget...','Add Page...','Add Page from Library...',
+            'Delete Page...','Remove Favorite Page ...','Refresh','My Pages...','Page Settings...','User Settings...',
+            'Advanced','Administration']
+            
+		for (var i = 0; i < EXPECTED_MENU_LIST.length; i++) {
+            
+            if(homePage.getList(EXPECTED_MENU_LIST.get(i)).text.equals(EXPECTED_MENU_LIST.get(i))){
+                  
+                  System.out.println("List item : "+homePage.getList(EXPECTED_MENU_LIST.get(i)).text+" found ");
+                  Assert.assertEquals(homePage.getList(EXPECTED_MENU_LIST.get(i)).text, EXPECTED_MENU_LIST.get(i));
+            }
+            else{
+                  System.out.println("List item : "+homePage.getList(EXPECTED_MENU_LIST.get(i)).text+" not found ");
+            }
+        }
 	}
 }

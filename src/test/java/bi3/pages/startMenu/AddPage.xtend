@@ -13,6 +13,10 @@ class AddPage extends BasePage{
 	new(WebDriver driver) {
 		super(driver)
 	}
+	
+	
+	  @FindBy(xpath="//*[contains(text(),'Add Page...')]")
+	WebElement btnAddPage;
     
     @FindBy(xpath="//input[@id='gvAddDashoboardTitle']")
     WebElement txtNewPageTitle;
@@ -25,6 +29,8 @@ class AddPage extends BasePage{
     
     @FindBy(xpath="//div[@class='gvContainer']")
     WebElement divBlackPage;
+    
+  
     
      
 	def void enterNewPageTitle(String newTitleValue){
@@ -61,7 +67,16 @@ class AddPage extends BasePage{
 	 	
 	 }
 	 
-	
+	 /**
+	 * Adding new pages
+	 */
+	def addNewPages() {
+		waitForLoadingComplete();
+		btnAddPage.click
+		waitForLoadingComplete();
+
+	}
+	 
 	
 	 
 }

@@ -55,6 +55,12 @@ class PMS100_B extends BasePage {
 	@FindBy(xpath="//a/span[contains(text(),'Check Component Availability')]")
 	WebElement linkCheckCompAvailability;
 
+	@FindBy(css=".slick-cell.l0.r0")
+	WebElement gridFirstLine;
+	
+	@FindBy(css="#tabsList > li.ui-tabs-selected.ui-state-active > button")
+	WebElement btnClose
+	
 	def void EnterSchNo(String ScNo) {
 
 		txtScheduleNo.clearRobustly();
@@ -158,6 +164,10 @@ class PMS100_B extends BasePage {
 
 	}
 
+    def void goTOMeterialOperations() {
+    			
+    		rightClick(gridFirstLine, true,"Materials and Operations" )
+    }
 	def List<String> GetStatuses(String ScheduleNo) {
 		waitForLoadingComplete();
 		Thread.sleep(3000);
@@ -234,8 +244,8 @@ class PMS100_B extends BasePage {
 	}
 	
 	def void goToCheckCompAvailability(String mo) {
+		
 		var InforGrid grid = new InforGrid(gridElement);
-
 		var colId = grid.getColumnIndexByname("MO no     ")
 		System.out.println("Mo is in columns : "+colId)
 		//var row = grid.getRowContainingTextInColumn(colId,mo)
@@ -248,6 +258,18 @@ class PMS100_B extends BasePage {
 		linkCheckCompAvailability.waitToBeClickable()
 		linkCheckCompAvailability.click()
 		waitForLoadingComplete()
+	}
+	
+	def String getGridValue() {	
+		
+		var InforGrid grid = new InforGrid(gridElement);		
+	    grid.getColumnValByColumnHeader("Comp no/Wrk ctr" , 2);
+	    		
+	}
+	
+		def close() {
+		btnClose.click()
+		System.out.println("MMS001 tab closed")
 	}
 	
 }

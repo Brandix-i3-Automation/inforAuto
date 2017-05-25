@@ -9,9 +9,6 @@ import org.openqa.selenium.By
 class StartPage extends BasePage {
 	
 	// Elements
-	@FindBy(xpath="//ul[@id='gvMenuSettings']/li[2]/a")
-	WebElement listItemNewPage;
-	
 	@FindBy(id="startDiv")
 	WebElement btnStart;
 	
@@ -35,7 +32,6 @@ class StartPage extends BasePage {
 	
 	@FindBy(xpath="//div[@class='dialogButtonBar']/button[contains(text(),'OK')]")
 	WebElement btnDeleteConfirm;
-	
 	
 	// Constructor
 	new(WebDriver driver) { 
@@ -102,7 +98,7 @@ class StartPage extends BasePage {
 		linkToPage.click();
 		waitForLoadingComplete();
 	}
-	
+	 
 	/**
 	 * Deletes the selected page
 	 */

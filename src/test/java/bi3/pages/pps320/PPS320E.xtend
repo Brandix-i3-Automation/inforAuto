@@ -92,4 +92,10 @@ class PPS320E extends BasePage {
 		waitForLoadingComplete();
 		txtStoredQty.sendKeys(txtRecvdQty.GetTextBoxvalue());
 	}
+	
+	def void ClickNext(){
+		btnNext.waitToBeClickable()
+		btnNext.click()
+		waitForLoadingComplete()
+	}
 }

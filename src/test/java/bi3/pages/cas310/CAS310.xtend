@@ -1,11 +1,11 @@
-package bi3.pages.cas950
-
+package bi3.pages.cas310
 import bi3.pages.BasePage
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.WebElement
+import java.util.List
 
-class CAS950E extends BasePage {
+class CAS310 extends BasePage {
 
 	new(WebDriver driver) {
 		super(driver)
@@ -44,10 +44,15 @@ class CAS950E extends BasePage {
 	@FindBy(css="#tabsList > li.ui-tabs-selected.ui-state-active > button")
 	WebElement btnClose
 	
-	@FindBy(id="WWDIVI")
-    WebElement txtDivision
+	@FindBy(css="#WWQTTP-shdo")
+	WebElement cmdSortingOrder;
+
+//	@FindBy(css="#dropdown-list li")
+//	
+	@FindBy(css="Next#WGFACIContainer>input") 
+	WebElement textFaciulity;
 	
-	
+	List<WebElement> listSortingOrder;
 	def void selectFromDate(String fromDate) {
 		waitForLoadingComplete();
 		txtFromDate.click();
@@ -62,29 +67,6 @@ class CAS950E extends BasePage {
 		txtToDate.sendKeys(toDate);
 	}
 
-	def checkStockTrance() {
-		waitForLoadingComplete();
-		chBoxStockTrans.click();
-
-	}
-
-	def checkOpTranceMo() {
-		waitForLoadingComplete();
-		chBoxOpTransMo.click();
-
-	}
-
-	def checkOtherTrance() {
-		waitForLoadingComplete();
-		chBoxOtherTrans.click();
-
-	}
-
-	def checkOpTranceWo() {
-		waitForLoadingComplete();
-		chBoxOpTransWo.click();
-
-	}
 
 	def void clickNext(){
 		waitToBeClickable(btnNext)
@@ -116,12 +98,19 @@ class CAS950E extends BasePage {
 		System.out.println("MMS001 tab closed")
 	}
 	
-	def void FillDivision(String Division) {
-				
-		txtDivision.sendKeys(Division);
-				 
+	def void SelectSortingOrder(String value) {
+		
+		waitForLoadingComplete();
+		selectFromDropdown(cmdSortingOrder, listSortingOrder, value);
+		waitForLoadingComplete();
 	}
 	
+	def void addFacilityDetails( String facility) {
+				
+		textFaciulity.click();
+		textFaciulity.sendKeys(facility)	
+		
+	}
 }
 
 
