@@ -49,6 +49,6 @@ class AddShortcutWidgetTest extends BaseTest {
 		homePage.addWidget(widgetNumber,widgetName);
 		
 		// Validate whether the created shortcut exists in the shortcut widget
-		Assert.assertTrue(homePage.isShortcutFoundInShortcutWidget(shortcutName));
+		Assert.assertTrue(homePage.isShortcutFoundInShortcutWidget(shortcutName),"Shortcut not found");
 	}
 }

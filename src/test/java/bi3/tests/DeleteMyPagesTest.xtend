@@ -37,10 +37,11 @@ class DeleteMyPagesTest extends BaseTest {
 		var String newPageName = "My Page";
 		
 		loginPage.GoTo();
+		// validate whether the start page is displayed
 		Assert.assertEquals(startPage.getStartPageText,"Start","Start page is not displayed");
-		basePage.goToHome();
 		
-		//validate the start list
+		basePage.goToHome();
+		//validate the start menu list
 		startItemsList = startPage.getStartMenuItemNames();		
 		Assert.assertEquals(startItemsList.get(0),"Start Page");
 		Assert.assertEquals(startItemsList.get(1),"Add Widget...");
@@ -55,7 +56,7 @@ class DeleteMyPagesTest extends BaseTest {
 		Assert.assertEquals(homePage.getAdvancedName, "Advanced");
 		Assert.assertEquals(homePage.getAdministrationName, "Administration");
 		
-		// check whether a page exists
+		// check whether a page exists and create if not
 		if(startPage.checkPageExists(newPageName)){
 			print("The page already exists");
 		}
@@ -65,14 +66,12 @@ class DeleteMyPagesTest extends BaseTest {
 		}
 		
 		basePage.goToHome();
-		
 		// validate the start list whether the new page is created
 		Assert.assertTrue(startPage.checkPageExists(newPageName),"The new page is not created");
 		
 		startPage.gotoNewPage(newPageName);
 		startPage.deletePage();
 		basePage.goToHome();
-
 		// validate the start list whether the new page is deleted
 		Assert.assertFalse(startPage.checkPageExists(newPageName),"The new page is not deleted");
 	}
