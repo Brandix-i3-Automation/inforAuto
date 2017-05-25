@@ -135,7 +135,8 @@ class MMS001B extends ToolbarPage {
 		var InforGrid grid = new InforGrid(gridMMS001);
 		var WebElement firstRow = grid.getRow(0);
 		firstRow.click();
-
+		
+		Thread.sleep(1000);
 		var Robot rb = new Robot();
 		rb.keyPress(KeyEvent.VK_SHIFT);
 		
