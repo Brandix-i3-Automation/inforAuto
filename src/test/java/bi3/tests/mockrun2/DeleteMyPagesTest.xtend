@@ -1,4 +1,4 @@
-package bi3.tests
+package bi3.tests.mockrun2
 
 import bi3.pages.LoginPage
 import bi3.pages.HomePage
@@ -9,7 +9,7 @@ import org.testng.annotations.Test
 import org.testng.Assert
 import java.util.List
 
-class DeleteMyPagesTest extends BaseTest {
+class DeleteMyPagesTest extends bi3.tests.BaseTest {
 	
 	LoginPage loginPage
 	HomePage homePage

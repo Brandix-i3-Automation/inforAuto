@@ -1,4 +1,4 @@
-package bi3.tests
+package bi3.tests.mockrun2
 
 import bi3.pages.LoginPage
 import bi3.pages.HomePage
@@ -10,6 +10,7 @@ import bi3.framework.config.ConfigKeys
 import bi3.framework.util.ExcelUtil
 import java.util.HashMap
 import org.testng.Assert
+import bi3.tests.BaseTest
 
 class AddShortcutWidgetTest extends BaseTest {
 	
