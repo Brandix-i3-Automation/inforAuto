@@ -57,7 +57,22 @@ class SharePagesToOtherUsers extends BaseTest {
 		/* Share pages. */
 		homePage.clickStart();
 		//Assertion No.3
+		val String[] expected = #['Start Page','Add Widget...','Add Page...','Add Page from Library...',
+		'Delete Page...','Remove Favorite Page ...','Refresh','My Pages...','Page Settings...','User Settings...',
+		'Advanced','Administration']
 		
+    	for (var i = 0; i < expected.length; i++) {
+    		
+    		if(homePage.getList(expected.get(i)).text.equals(expected.get(i))){
+    			
+    			System.out.println("List item : "+homePage.getList(expected.get(i)).text+" found ");
+    			Assert.assertEquals(homePage.getList(expected.get(i)).text, expected.get(i));
+    		}
+    		else{
+    			System.out.println("List item : "+homePage.getList(expected.get(i)).text+" not found ");
+    		}
+		}
+				
 		startMenuPage.goToMyPages();
 		//Assertion No.4
 		Assert.assertTrue(myPages.isMyPageClosed())
