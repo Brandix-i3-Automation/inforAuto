@@ -507,7 +507,7 @@ public class ExcelUtil {
 		            	   break;
 		               
 		               case Cell.CELL_TYPE_STRING:
-		            	   tmp.add(hssfCell.getStringCellValue());
+		            	   tmp.add(hssfCell.getStringCellValue().trim());
 		            	   break;
 		            }
 	            } else {
