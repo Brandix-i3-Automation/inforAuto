@@ -21,7 +21,8 @@ class LoginPage extends BasePage {
     @FindBy(id="MenuTabLabel")
     WebElement lblMenu;
 	
-
+	@FindBy(xpath="//div[@class='gvWidgetHeader']/span[contains(text(),'Menu')]/../..//div[@class='gvFillAbsolute']//li")
+	WebElement MenuWidgetOptions;
     
 	def void GoTo() {	
 		try {
@@ -33,6 +34,9 @@ class LoginPage extends BasePage {
 			driver.get("http://t-deepikag:bi3@0330@bi3-m313-01.brandixlk.org:44056/mne/");
 		} finally {
 			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+			waitForLoadingComplete();
+			// Wait for Home page loaded
+			waitToBeDisplayed(MenuWidgetOptions, 120);
 		}
 		
 	}

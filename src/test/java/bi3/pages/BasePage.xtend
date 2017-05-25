@@ -41,6 +41,15 @@ class BasePage extends WebDriverExtensions {
 	@FindBy(id="WWDSEQ")
 	public WebElement txtPanelSequence
 
+	/**
+	 * close button of a given tab
+	 */
+	def WebElement btnTabClose(String tabName) {
+		waitForLoadingComplete();
+		var String xpath = "//div[@class='tabTitle'][contains(text(),'" + tabName + "')]/../../../button[@class='inforTabCloseButton']";
+		return driver.findElement(By.xpath(xpath));
+	}
+	
 	def static void waitForLoadingComplete() {
 		waitToBeHidden(loadingIcon);
 	}
@@ -126,6 +135,15 @@ class BasePage extends WebDriverExtensions {
 		btnActiveTabClose.waitToBeClickable()
 		btnActiveTabClose.click()
 		waitForLoadingComplete()
+	}
+	
+	/**
+	 * Closes a tab with a given name
+	 * @param : tabName tab name
+	 */
+	def void closeTab(String tabName){
+		this.btnTabClose(tabName).click();
+		waitForLoadingComplete();
 	}
 	
 	/**

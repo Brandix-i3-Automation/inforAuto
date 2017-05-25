@@ -106,7 +106,7 @@ class HomePage extends BasePage {
     WebElement linkCoOpen;
     
     /**Search and Start pop up Header */
-    @FindBy(id="ui-id-2")
+    @FindBy(css="div.inforDialogTitleBar .caption")
     WebElement lblSearchAndStart
     
     /**Search and Start text box */
@@ -857,6 +857,7 @@ def void GoToOIS275(){
 		pressShortcutKeys("r");
 		waitForLoadingComplete();
 		try{
+			Assert.assertEquals(verifySearchAndStartPopup(),"Search and Start");			
 			driver.findElement(By.id("ui-id-2"));
 			txtSearchAndStart.click();
 			txtSearchAndStart.sendKeys(program)
