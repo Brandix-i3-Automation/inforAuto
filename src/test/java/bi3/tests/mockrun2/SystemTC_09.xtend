@@ -64,11 +64,11 @@ class SystemTC_09 extends BaseTest {
 		
 		// 9. Under Rows, select Export currently selected rows - Verify: Export currently selected row is selected.
 		mms001b.clickSelectedRowsBtn();
-		//TODO verify
+		Assert.assertEquals(mms001b.isCheckedExportSelectedRows(), "true");
 		
 		// 10. Under Data Format, select Source Format - Verify: Source Format is selected.
 		mms001b.clickSourceFormatBtn();
-		//TODO verify
+		Assert.assertEquals(mms001b.isCheckedSourceFormat(), "true");
 		
 		// 11. Click Export - Verify: Selected Row is exported to an excel file with "Item+Open.xls" filename
 		mms001b.clickExportBtn();
