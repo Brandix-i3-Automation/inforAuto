@@ -28,10 +28,7 @@ class SystemTC_09 extends BaseTest {
 	 */
 	@Test
 	def void TestExportSelectedRowsToExcel() {
-		/* Test Data */
-		var String program = "MMS001";
 
-		/* Test*/
 		loginPage.GoTo();
 		// 3. Press "Ctrl + R" button in the keyboard - Verify:Search and Start pop up window is displayed
 		homePage.pressShortcutKeys("R");
@@ -39,7 +36,7 @@ class SystemTC_09 extends BaseTest {
 		
 		// 4. Enter MMS001 in the Textbox - Verify:Code is entered in the textbox
 		// 5. Click the Ok button - Verify: MMS001 (Item.Open) Program is opened and is displayed as a tab in the system.
-		homePage.goToProgramUsingShrt(program);
+		homePage.goToProgramUsingShrt("MMS001");
 		// TODO: Assert here
 		
 		// 6. Select any row - Verify: Row selected is highlighted
