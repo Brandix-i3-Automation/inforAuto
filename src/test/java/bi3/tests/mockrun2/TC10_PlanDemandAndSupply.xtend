@@ -93,14 +93,19 @@ class TC10_E2E extends BaseTest{
 	def void TC10FullFlow() {		
 		//create Data set
 		oss401_CreatDataSet.OSS401_CreateDataSet();
+		println("Dataset Created")
 		//Create an item as a Prerequisite
 		var item = itemCreation();
+		println("Prereq - Item Created")
 		//create Sales budget
 		createSalesBudget();
+		println("Sales budget created")
 		//Insert Budget Values
 		insertBudgetValues(item);
+		println("Inserted budget values")
 		//Create Forecast
 		createForecast(item);
+		println("Created Forecast")
 	}
 	
 	/**
@@ -122,7 +127,9 @@ class TC10_E2E extends BaseTest{
 	 */
 	def void createSalesBudget(){
 		homePage.goToProgramUsingShrt("OSS420");
+		oss420B.ClickAction_Settings();
 		oss420B.setPanelSequence(panelSeq);
+		oss420B.clickOnNext();
 		oss420B.createSaleBud(dataset,budget);
 		oss420E.fillInformation("Test Sales Budget","Test Sales Budget","0-Not in budget","1-Manual budget","USD","01","3","1-Subtotal - stan");
 		oss420B.selectDataset(dataset);

@@ -1,5 +1,6 @@
-package bi3.tests
+package bi3.tests.mockrun2
 
+import bi3.tests.BaseTest
 import bi3.pages.LoginPage
 import bi3.pages.HomePage
 import org.testng.annotations.BeforeMethod
@@ -18,21 +19,12 @@ class AddShortcutWidgetTest extends BaseTest {
 	ToolbarPage toolbarPage
 	MMS001 mms001
 	
-	ExcelUtil addShortcutData;
-	HashMap<String, String> hashMap;
-	
 	@BeforeMethod
 	def void Initialize() {
 		loginPage = new LoginPage(driver);
 		homePage = new HomePage(driver);
 		toolbarPage = new ToolbarPage(driver);
 		mms001 = new MMS001(driver);
-		
-		val path = ConfigKeys.DATA_HELPER_PATH;
-		val sheetOIS390A = "OIS390A";
-
-		addShortcutData = new ExcelUtil(path, sheetOIS390A);
-		hashMap = addShortcutData.getExcelActiveSheetFirstTwoColumnData;
 	}
 	
 	/**
@@ -58,6 +50,6 @@ class AddShortcutWidgetTest extends BaseTest {
 		homePage.addWidget(widgetNumber,widgetName);
 		
 		// Validate whether the created shortcut exists in the shortcut widget
-		Assert.assertTrue(homePage.isShortcutFoundInShortcutWidget(shortcutName));
+		Assert.assertTrue(homePage.isShortcutFoundInShortcutWidget(shortcutName),"Shortcut not found");
 	}
 }

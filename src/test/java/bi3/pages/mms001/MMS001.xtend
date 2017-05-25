@@ -251,7 +251,7 @@ class MMS001 extends BasePage {
                   rb.keyPress(KeyEvent.VK_DOWN);
                   rb.keyRelease(KeyEvent.VK_DOWN);
                   rb.keyRelease(KeyEvent.VK_SHIFT);
-		
+	
 		
 	  }
 	  
