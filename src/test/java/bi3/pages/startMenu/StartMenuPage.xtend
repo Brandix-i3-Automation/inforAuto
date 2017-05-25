@@ -17,7 +17,7 @@ class StartMenuPage extends BasePage {
 	@FindBy(linkText="My Pages...")
 	WebElement linkMyPages;
 	
-	/**Navigate to Add Page*/
+	/**Navigates to Add Page*/
 	def void goToAddPage(){
 		Thread.sleep(2000);
 		waitToBeClickable(linkAddPage);
@@ -25,7 +25,7 @@ class StartMenuPage extends BasePage {
 		waitForLoadingComplete();
 	}
 	
-	/**Navigate to My Pages*/
+	/**Navigates to My Pages*/
 	def void goToMyPages(){
 		waitToBeClickable(linkMyPages);
 		linkMyPages.click();

@@ -42,6 +42,8 @@ class FCS350_B extends BasePage {
 	@FindBy(id="Next") 
 	WebElement nextBtn;
 	
+	@FindBy(id="W1CYP6")
+	WebElement txtPer
 	/*
 	 * ACTIONS ( TEST METHODS )
 	 * 
@@ -105,4 +107,13 @@ class FCS350_B extends BasePage {
 		waitForLoadingComplete();
 	}
 	
+	/**
+	 * set period within calendar year
+	 */
+	def setPeriod(String per){
+		txtPer.click();
+		clearRobustly(txtPer);
+		txtPer.sendKeys(per);
+		txtPer.sendKeys(Keys.ENTER);
+	}
 }
