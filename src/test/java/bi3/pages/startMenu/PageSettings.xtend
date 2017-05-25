@@ -19,12 +19,36 @@ class PageSettings extends BasePage {
 	@FindBy(css="#gvPageSettingsDialog +.dialogButtonBar #okButton")
 	WebElement btnOk;
 	
-	@FindBy(xpath="//div[@class='inforSwitchInner']/following::label[text()='Share this page']")
+	@FindBy(xpath = "//div[@class='inforSwitchInner']/following::label[text()='Share this page']")
 	WebElement btnShareThisPageColor;
 	
-	@FindBy(css="div.inforDialog.ui-draggable")
+	@FindBy(css = "div.inforDialog.ui-draggable")
     List<WebElement> panelPageSettings;
+    
+    @FindBy(css = "div#gvPageSettingsDialog div label[for='gvPageTitle']")
+    WebElement lblName;
+    
+    @FindBy(css="div#gvPageSettingsDialog div label[for='gvPageDescription']")
+    WebElement lblDescription;
+    
+    @FindBy(css = "div#gvPageSettingsDialog div label[for='gvPageOwner']")
+    WebElement lblOwner;
+    
+    @FindBy(css = "div#gvPageSettingsDialog div label[for='gvChangedBy']")
+    WebElement lblChangedBy;
+    
+    @FindBy(css = "//label[text()='Changed']")
+    WebElement lblChanged;
 	
+	@FindBy(css = "div#gvPageSettingsDialog div label[for='gvPageEditLevel']")
+    WebElement lblEditors;
+    
+    @FindBy(css = "//label[text()='Share this page']")
+    WebElement lblSharePage;
+    
+    @FindBy(css = "//label[text()='Lock this page']")
+    WebElement lblLockPage;
+    
 	
 	/**
 	 * Select share this page.
@@ -66,4 +90,75 @@ class PageSettings extends BasePage {
             }               
       }
       
+      /**
+	 * This method returns the Name label value.
+	 * @return Name label value
+	 */
+	def String getNameLabelValue(){
+		var String name = lblName.text;
+		return name;
+	}
+	
+	/**
+	 * This method returns the Description label value.
+	 * @return Description label value
+	 */
+	def String getDescriptionLabelValue(){
+		var String description = lblDescription.text;
+		return description;
+	}
+	
+	/**
+	 * This method returns the Owner label value.
+	 * @return Owner label value
+	 */
+	def String getOwnerLabelValue(){
+		var String owner = lblOwner.text;
+		return owner;
+	}
+	
+	/**
+	 * This method returns the Changed by user label value.
+	 * @return Changed by user label value
+	 */
+	def String getChangedByUserLabelValue(){
+		var String changedby = lblChangedBy.text;
+		return changedby;
+	}
+	
+	/**
+	 * This method returns the Changed time label value.
+	 * @return Changed time label value
+	 */
+	def String getChangedTimeLabelValue(){
+		var String changedtime = lblChanged.text;
+		return changedtime;
+	}
+	
+	/**
+	 * This method returns the Editor label value.
+	 * @return Editor label value
+	 */
+	def String getEditorLabelValue(){
+		var String editor = lblEditors.text;
+		return editor;
+	}
+	
+	/**
+	 * This method returns the page share label value.
+	 * @return Page share label value
+	 */
+	def String getSharePageLabelValue(){
+		var String sharepage = lblSharePage.text;
+		return sharepage;
+	}
+	
+	/**
+	 * This method returns the page Lock label value.
+	 * @return Page lock label value
+	 */
+	def String getLockPageLabelValue(){
+		var String lockpage = lblLockPage.text;
+		return lockpage;
+	}
 }
