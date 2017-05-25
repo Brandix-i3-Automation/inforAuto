@@ -17,6 +17,11 @@ class MyPages extends BasePage {
     
     @FindBy(id="okButton")
     WebElement btnOk;
+    
+     @FindBy(xpath=" //*[contains(text(),'My Pages...')]")
+    WebElement btnMyPage;
+    
+   
 	
 	def WebElement lblChangedDate(String pageTitle){
 		var String lblChangedDateXpath = "//div[text()='"+pageTitle+"']/../div[contains(@class, 'gvMyPagesChangedCell')]";
@@ -36,6 +41,14 @@ class MyPages extends BasePage {
 	def WebElement btnDelete(String pageTitle){
 		var String btnDeleteXpath = "//div[text()='"+pageTitle+"']/..//button[contains(@class, 'inforIconButton delete')]";
 		return driver.findElement(By.xpath(btnDeleteXpath));
+	}
+	
+	
+	def clickMyPage(){
+		
+		waitForLoadingComplete();
+		btnMyPage.click
+		waitForLoadingComplete();
 	}
 	
 	def WebElement lblTitle(String pageTitle){
