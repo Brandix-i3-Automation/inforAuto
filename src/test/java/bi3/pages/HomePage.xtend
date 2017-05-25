@@ -9,6 +9,7 @@ import org.openqa.selenium.NoSuchElementException
 import com.gargoylesoftware.htmlunit.ElementNotFoundException
 import org.openqa.selenium.By
 import org.testng.Assert
+import java.util.List
 
 class HomePage extends BasePage {
 
@@ -105,7 +106,7 @@ class HomePage extends BasePage {
     WebElement linkCoOpen;
     
     /**Search and Start pop up Header */
-    @FindBy(id="ui-id-2")
+    @FindBy(css="div.inforDialogTitleBar .caption")
     WebElement lblSearchAndStart
     
     /**Search and Start text box */
@@ -116,47 +117,59 @@ class HomePage extends BasePage {
     @FindBy(id="runTaskButton")
     WebElement btnOk
 
- @FindBy(xpath="//button[@class='inforIconButton gvPageMenu gvButtonPageMenu']")
+ 	@FindBy(xpath="//button[@class='inforIconButton gvPageMenu gvButtonPageMenu']")
     WebElement btnSubMenu;
     
     @FindBy(xpath="//ul[@id='gvMenuSettings']")
     WebElement listPageMenu;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[1]/a")
+    @FindBy(xpath="//a[text()='Start Page']")
     WebElement listStartPage;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[3]/a")
+    @FindBy(xpath="//a[text()='Add Widget...']")
     WebElement listAddWidget;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[4]/a")
+    @FindBy(xpath="//a[text()='Add Page...']")
     WebElement listAddPage;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[5]/a")
+    @FindBy(xpath="//a[text()='Add Page from Library...']")
     WebElement listAddPageFromLibrary;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[7]/a")
+    @FindBy(xpath="//a[text()='Delete Page...']")
     WebElement listDeletePage;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[8]/a")
+    @FindBy(xpath="//a[text()='Remove Favorite Page ...']")
     WebElement listRemoveFavouritePage;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[9]/a")
+    @FindBy(xpath="//ul[@id='gvMenuSettings']//a[text()='Refresh']")
     WebElement listRefresh;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[11]/a")
+    @FindBy(xpath="//a[text()='My Pages...']")
     WebElement listMyPages;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[12]/a")
+    @FindBy(xpath="//a[text()='Page Settings...']")
     WebElement listPageSetting;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[13]/a")
+    @FindBy(xpath="//ul[@id='gvMenuSettings']//a[text()='User Settings...']")
     WebElement listUserSetting;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[15]/a")
+    @FindBy(xpath="//a[text()='Advanced']")
     WebElement listAdvanced;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[17]/a")
+    @FindBy(xpath="//a[text()='Administration']")
     WebElement listAdministration;
+    
+    @FindBy(id="startDiv")
+    WebElement linkStart;
+    
+    @FindBy(css="div[class='gvPage'] div[class='gvWidget ui-droppable']")
+    List<WebElement> listAddWidgetIcons;
+	
+    @FindBy(css="span.gvWidgetLibraryTitle")
+    List<WebElement> listAddWidgetTypes;
+	
+	@FindBy(css="div[class='gvPage'] div[class='gvWidget ui-draggable ui-droppable ui-resizable ui-resizable-autohide']")
+    List<WebElement> listWidgets;
     
 	def void GoToMMS001() {
 		waitForLoadingComplete();
@@ -844,6 +857,7 @@ def void GoToOIS275(){
 		pressShortcutKeys("r");
 		waitForLoadingComplete();
 		try{
+			Assert.assertEquals(verifySearchAndStartPopup(),"Search and Start");			
 			driver.findElement(By.id("ui-id-2"));
 			txtSearchAndStart.click();
 			txtSearchAndStart.sendKeys(program)
@@ -947,6 +961,67 @@ def void GoToOIS275(){
 		return lblSearchAndStart.text;		
 	}
 	
+	/**
+	 * Creates a widget in the given widget box
+	 */
+	def addWidget(int widgetBoxNumber, String widgetName) {
+		listAddWidgetIcons.get(widgetBoxNumber).waitToBeClickable();
+		listAddWidgetIcons.get(widgetBoxNumber).click();
+		waitForLoadingComplete();
+		var WebElement widget = listAddWidgetTypes.getElementByPartialText(widgetName);
+		widget.clickWhenReady();
+		widget.waitToBeHidden();
+	}
+	
+	/**
+	 * Checks whether the given shortcut name is found inside the Shortcut widget
+	 */
+	def boolean isShortcutFoundInShortcutWidget(String shortcutName) {
+		var boolean found = false;
+		var WebElement shortcutWidget;
+		
+		// 1.Find the Shortcut Widget		 
+		for (var int i = 0; i < listWidgets.length; i++) {
+			var String widgetName = listWidgets.get(i).findElement(By.cssSelector("span.gvWidgetHeaderTitle")).text;
+			if(widgetName.contains("Shortcuts")){
+				shortcutWidget = listWidgets.get(i);
+			}
+		}	
+					
+		// 2.Find whether the shortcut is found inside the widget
+		var List<WebElement> shortcutLinks = shortcutWidget.findElements(By.cssSelector(".gvShortcutsHeaderText"));
+		var List<String> shortcutLinkText = shortcutLinks.getTextList();
+		
+		if(shortcutLinkText.contains(shortcutName)){
+			found = true;
+		}
+		return found;
+	}
+	/**
+	 * Click on Start to load the Start menu items.
+	 */
+	def void clickStart(){
+		waitForLoadingComplete();
+		Thread.sleep(2000)
+		linkStart.click();
+		waitForLoadingComplete();
+	}
+	
+	/**
+	 * Verify startPage is displayed.
+	 */
+	def String verifyStartPageExist() {
+		waitToBeDisplayed(linkStart)
+		return linkStart.text;
+	}
+	
+	/**
+	 * Start menu List
+	 */
+	def WebElement getList(String listMenu){
+	var element = "//ul[@id='gvMenuSettings']/descendant::a[text()='"+listMenu+"']"
+	 	driver.findElement(By.xpath(element))
+	}
 }
 
 

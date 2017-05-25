@@ -37,22 +37,21 @@ class SystemTC_05 extends BaseTest {
 		
 		/* Test*/
 		loginPage.GoTo();
-
+		// 3. Press "Ctrl + R" button in the keyboard - Verify:Search and Start pop up window is displayed
 		homePage.pressShortcutKeys("R");
-		
-		//verify that search and start pop up is displayed
 		Assert.assertEquals(homePage.verifySearchAndStartPopup(),"Search and Start");
 		
+		// 4. Enter MMS001 in the Textbox - Verify:Code is entered in the textbox
 		homePage.goToProgramUsingShrt(program);
-		toolBarPage.clickHelpLogo();
 		
-		//verify that drop down options are listed
+		// 5. Click "?" dropdown arrow in the upper right portion of the page - Verify:Form Help and Infocenter options are listed
+		toolBarPage.clickHelpLogo();
 		Assert.assertEquals(toolBarPage.findElementInHelp("Form Help...").text,"Form Help...");
-		Assert.assertEquals(toolBarPage.findElementInHelp("Infocenter").text,"Infocenter");
-		
+		Assert.assertEquals(toolBarPage.findElementInHelp("Infocenter").text,"Infocenter");		
 		toolBarPage.clickHelpLogo();
-		toolBarPage.clickHelp("Infocenter");
 		
+		// 6. Click Info Center - Verify:M3 User guide documentation is shown on the main section with version and when it is published. Business Engine Component user guide is also shown.
+		toolBarPage.clickHelp("Infocenter");		
 		Assert.assertEquals(toolBarPage.getPageTitle(),"M3 Infocenter")
 	}
 	

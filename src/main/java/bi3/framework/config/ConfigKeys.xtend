@@ -2,6 +2,11 @@ package bi3.framework.config
 
 import java.util.Properties
 import java.io.FileInputStream
+import bi3.framework.util.DataUtil
+import bi3.framework.util.SystemUtil
+import java.net.URI
+import java.io.File
+import bi3.framework.exceptions.FrameworkException
 
 public class ConfigKeys {
 
@@ -16,9 +21,12 @@ public class ConfigKeys {
     public static String IE_32_DRIVER_PATH;
     public static String SCREENSHOT_PATH;
     public static String FAIL_RETRY_COUNT;
+    public static String MOCKRUN2_TEST_DATA_PATH;
     
     public static String DATA_HELPER_PATH;
-    public static String MOCKRUN2_TEST_DATA_PATH;
+    public static String EXCEL_DOWNLOAD_PATH;
+    
+    private static String URL_SEPARATOR = File.separatorChar.toString();
 
     def static void setProperties(){
 
@@ -37,13 +45,20 @@ public class ConfigKeys {
             SCREENSHOT_PATH = properties.getProperty("SCREENSHOT_PATH");
             
             DATA_HELPER_PATH = properties.getProperty("DATA_HELPER_PATH");
-
-            MOCKRUN2_TEST_DATA_PATH = properties.getProperty("MOCKRUN2_TEST_DATA_PATH")
-
+            
             MOCKRUN2_TEST_DATA_PATH = properties.getProperty("MOCKRUN2_TEST_DATA_PATH"); 
-
+            
+            SystemUtil.emptyTheFolder(properties.getProperty("EXCEL_DOWNLOAD_PATH"));
+            EXCEL_DOWNLOAD_PATH = properties.getProperty("EXCEL_DOWNLOAD_PATH").concat(URL_SEPARATOR).concat(DataUtil.getRandomNumber());
+            if(SystemUtil.createFolder(EXCEL_DOWNLOAD_PATH)){
+            	println("Directory created success!");
+            } else {
+            	println("Directory created fail!");
+            	throw new FrameworkException("EXCEL_DOWNLOAD_PATH directory fail to create!");
+            }
 
         } catch (Exception ex) {
+        	ex.printStackTrace();
             System.exit(0);
         }
     }

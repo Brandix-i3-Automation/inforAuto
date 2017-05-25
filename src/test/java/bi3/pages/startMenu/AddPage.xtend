@@ -26,11 +26,9 @@ class AddPage extends BasePage{
     @FindBy(xpath="//div[@class='gvContainer']")
     WebElement divBlackPage;
     
-    @FindBy(xpath="//*[contains(text(),'Add Page...')]")
-	WebElement btnAddPage;
-    
      
 	def void enterNewPageTitle(String newTitleValue){
+		waitForLoadingComplete();
 		txtNewPageTitle.click();
 		txtNewPageTitle.clearRobustly();
 		txtNewPageTitle.sendKeys(newTitleValue);
@@ -63,19 +61,6 @@ class AddPage extends BasePage{
 	 	
 	 }
 	 
-	 	/**
-	 * Adding new pages
-	 */
-	def addNewPages() {
-		waitForLoadingComplete();
-		btnAddPage.click
-		waitForLoadingComplete();
-
-	}
-	 
-	 
-	 
-	
 	
 	 
 }

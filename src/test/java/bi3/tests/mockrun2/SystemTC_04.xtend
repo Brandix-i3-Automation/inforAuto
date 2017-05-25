@@ -35,27 +35,24 @@ class SystemTC_04 extends BaseTest{
 		
 		/* Test*/
 		loginPage.GoTo();
-		
+		// 3. Press "Ctrl + R" button in the keyboard - Verify:Search and Start pop up window is displayed 		
 		homePage.pressShortcutKeys("R");
-		
-		//verify that search and start pop up is displayed
 		Assert.assertEquals(homePage.verifySearchAndStartPopup(),"Search and Start");
 		
+		// 4. Enter MMS001 in the Textbox - Verify:Code is entered in the textbox
 		homePage.goToProgramUsingShrt(program);
 		
+		// 5. Click "?" dropdown arrow in the upper right portion of the page - Verify:Form Help and Infocenter options are listed	
 		toolBarPage.clickHelpLogo();
-		
-		//verify that drop down options are listed
 		Assert.assertEquals(toolBarPage.findElementInHelp("Form Help...").text,"Form Help...");
-		Assert.assertEquals(toolBarPage.findElementInHelp("Infocenter").text,"Infocenter");
-		
+		Assert.assertEquals(toolBarPage.findElementInHelp("Infocenter").text,"Infocenter");		
 		toolBarPage.clickHelpLogo();
-		toolBarPage.clickHelp("Form Help...");
 		
+		// 6. Click Form Help - Verify:Create Item topic is opened in the main section and all topic matches with MMS001 are listed on the left panel section.
+		toolBarPage.clickHelp("Form Help...");		
 		Assert.assertEquals(toolBarPage.getPageTitle(),"Form Help")
 		
-		//Redirects to M3 Infor Centre - System Bug
-			
+		//Redirects to M3 Infor Centre - System Bug			
 	}
 	
 }

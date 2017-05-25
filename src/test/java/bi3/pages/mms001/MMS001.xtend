@@ -77,6 +77,12 @@ class MMS001 extends BasePage {
 	@FindBy(css="div[id='ExportDlg']+div>button")
 	WebElement btnExport;
 	
+	@FindBy(id="bmName")
+	WebElement txtShortcutName;
+	
+	@FindBy(xpath="//div[@class='dialogButtonBar']/button[contains(text(),'OK')]")
+	WebElement btnOKDialogBox;
+	
 	def void SearchByItemNumber(String itemNumber) {
 		waitForLoadingComplete();
 		txtItemNumber.click();
@@ -245,7 +251,7 @@ class MMS001 extends BasePage {
                   rb.keyPress(KeyEvent.VK_DOWN);
                   rb.keyRelease(KeyEvent.VK_DOWN);
                   rb.keyRelease(KeyEvent.VK_SHIFT);
-		
+	
 		
 	  }
 	  
@@ -264,29 +270,40 @@ class MMS001 extends BasePage {
 	   }
 	   
 	   /**
-	    * Select the expected currently selected rows radio button
-	    */
-	    def void clickSelectedRowRbtn()
-	    {
-	    	waitForLoadingComplete();
-	    	btnRadioExportExcel.click();
-	    }
-	    
-	    /**
-	     * Select the keep source format radio Button
-	     */
-	     def void clickKeepSourceRbtn()
-	     {
-	     	waitForLoadingComplete();
-	     	btnRadioSourceFormat.click();
-	     }
-	     
-	     /**
-	      * Click the export button
-	      */
-	      def clickExportBtn()
-	      {
-	      	waitForLoadingComplete();
-	      	btnExport.click();
-	      }
+		 * Select the expected currently selected rows radio button
+		 */
+		def void clickSelectedRowRbtn() {
+			waitForLoadingComplete();
+			btnRadioExportExcel.click();
+		}
+	
+		/**
+		 * Select the keep source format radio Button
+		 */
+		def void clickKeepSourceRbtn() {
+			waitForLoadingComplete();
+			btnRadioSourceFormat.click();
+		}
+	
+		/**
+		 * Click the export button
+		 */
+		def clickExportBtn() {
+			waitForLoadingComplete();
+			btnExport.click();
+		}
+	
+		/**
+		 * Sets shortcut name in the Shortcuts dialog box and create shortcut
+		 */
+		def createShortcut(String shortcutName) {
+			txtShortcutName.waitToBeClickable();
+			txtShortcutName.click();
+			txtShortcutName.clearRobustly();
+			txtShortcutName.sendKeys(shortcutName);
+	
+			// click OK button in the Shortcuts dialog box
+			btnOKDialogBox.waitToBeClickable();
+			btnOKDialogBox.click();
+		}
 }

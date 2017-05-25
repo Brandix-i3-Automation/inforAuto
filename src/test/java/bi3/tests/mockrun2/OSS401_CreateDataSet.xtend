@@ -12,13 +12,12 @@ import bi3.pages.oss402.OSS402B1
 import bi3.pages.oss402.OSS402E
 import bi3.pages.oss406.OSS406B1
 import bi3.pages.oss406.OSS406E
-import org.openqa.selenium.WebDriver
 import bi3.framework.util.ExcelUtil
 import java.util.HashMap
 import bi3.framework.config.ConfigKeys
 import org.openqa.selenium.WebDriver
 import bi3.pages.oss406.OSS406E
-import bi3.framework.config.ConfigKeys
+import org.openqa.selenium.WebDriver
 
 class OSS401_CreateDataSet extends BaseTest{
 	
@@ -34,24 +33,16 @@ class OSS401_CreateDataSet extends BaseTest{
 	OSS406E oss406e
 	ExcelUtil testData;
 	HashMap<String, String> hashMap;
-	
 
-	new(WebDriver driver) {
-		this.driver = driver;
-}
-//	new(WebDriver webDriver){
-//		driver = webDriver;
-//>>>>>>> 8b20ec39d7250a3afa7afdd0348c94cad1bb9e80
-//		this.Initialize();
-//	}
-//	
-//	new(){
-//<<<<<<< HEAD
-//=======
-//		
-//>>>>>>> 8b20ec39d7250a3afa7afdd0348c94cad1bb9e80
-//	}
+	new(WebDriver webDriver){
+		driver = webDriver;
+		this.Initialize();
+	}
 	
+	new(){
+		
+	}
+
 	@BeforeMethod
 	def void Initialize() {
 		loginPage = new LoginPage(driver)
@@ -143,9 +134,9 @@ class OSS401_CreateDataSet extends BaseTest{
 		//oss402e.selectFCMtdFrWhs()
 		oss402e.clickOnNext()
 		
-		oss402b1.CloseActiveTab()
+		oss402b1.closeTab("Dataset. Connect Accumulator Fields");		
 		Thread.sleep(4000)
-		oss402b1.CloseActiveTab()
+		oss402b1.closeTab("Dataset. Connect Selection Fields");
 		
 		Assert.assertTrue(oss406b1.getPageId().contains("OSS406/B1"))
 		

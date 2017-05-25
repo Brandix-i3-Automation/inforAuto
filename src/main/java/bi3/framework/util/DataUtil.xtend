@@ -13,4 +13,13 @@ class DataUtil {
 		var SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
 		return formatter.format(DateUtil.getCurrentDate());
 	}
+	
+	/**
+	 * Return a random number.
+	 * 
+	 * @return String random number
+	 */
+	def static String getRandomNumber() {
+		return Math.random().toString();
+	}
 }

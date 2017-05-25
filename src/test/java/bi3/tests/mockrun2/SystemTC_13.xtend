@@ -75,7 +75,7 @@ class SystemTC_13 extends BaseTest {
 		homePage.goToHome();
 		var menuListAfterDelNewPage = startMenuPage.getTextList()
 		Assert.assertFalse(menuListAfterDelNewPage.contains(newPageName))
-		System.out.println(menuListAfterDelNewPage)
+
 
 	}
 
