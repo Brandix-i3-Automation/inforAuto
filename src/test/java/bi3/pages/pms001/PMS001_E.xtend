@@ -19,6 +19,9 @@ class PMS001_E extends BasePage {
 	@FindBy(id="WAFIDT") 
 	WebElement txtFinishDate;
 	
+	@FindBy(id="WASTDT") 
+	WebElement txtStartDate;
+	
 	@FindBy(id="Next") 
 	WebElement btnNext;
 	
@@ -34,6 +37,9 @@ class PMS001_E extends BasePage {
 	@FindBy(id="BTN_L52T24")
 	WebElement btnSelect
 	
+	@FindBy(css="showProgramShortName") 
+	WebElement lblProgramShortName;
+	//Page actions
 	
 	
 	//Page Actions
@@ -50,22 +56,30 @@ class PMS001_E extends BasePage {
 		txtFinishDate.sendKeys(finishDate);	
 	}
 	
+	// Added new
+	def void EnterStartDate(String startDate){
+		waitForLoadingComplete();
+		txtFinishDate.click();
+		clearRobustly(txtStartDate);
+		txtStartDate.sendKeys(startDate);	
+	}
+	
 	def void clickNext(){
-		waitToBeClickable(btnNext)
-		btnNext.click()
-		waitForLoadingComplete()
+		waitToBeClickable(btnNext);
+		btnNext.click();
+		waitForLoadingComplete();
 	}
 	
 	def void setOrderType(String orderType){
 		
 		btnOrderTypeOpen.click();
-		waitForLoadingComplete()
+		waitForLoadingComplete();
 		txtOtp.click();
 		clearRobustly(txtOtp);
-		txtOtp.sendKeys(orderType)
-		txtOtp.sendKeys(Keys.ENTER)
-		waitForLoadingComplete()
-		System.out.println("First cell content : "+firstGridCell.text)
+		txtOtp.sendKeys(orderType);
+		txtOtp.sendKeys(Keys.ENTER);
+		waitForLoadingComplete();
+		System.out.println("First cell content : "+firstGridCell.text);
 		
 		if(firstGridCell.text==orderType)
 		{
@@ -79,7 +93,11 @@ class PMS001_E extends BasePage {
 		waitForLoadingComplete()
 	}
 	
-	
+	def String ValidateInterfaceDetails() {
+		waitForLoadingComplete();
+		return lblProgramShortName.text;
+	}
+		
 	
 	
 }
