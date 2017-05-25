@@ -29,10 +29,10 @@ class SystemTC_10 extends BaseTest{
 	}
 	
 	/**
-	 * @Params : 
-	 * @Result :M3 UI Adapter: Change default options via User Settings
-	 * @Purpose:To validate if changes in user settings default options will take effect upon saved GOALS
-	 * @Description : System Test TestCaseNo 10
+	 * @TestCaseID: 10
+	 * @CloudSuite: General
+	 * @Description : M3 UI Adapter: Change default options via User Settings
+	 * @author: nuwan
 	 */
 	@Test
 	def void TestCaseNumber10() {

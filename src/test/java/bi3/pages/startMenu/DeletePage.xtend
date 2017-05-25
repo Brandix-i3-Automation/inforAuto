@@ -14,7 +14,7 @@ class DeletePage extends BasePage{
 		super(driver)
 	}
 
-	@FindBy(xpath="//ul[@id='gvMenuSettings']/li[8]/a")
+	@FindBy(xpath="//ul[@id='gvMenuSettings']/li/a[text()='Delete Page...']")
     WebElement listDeletPage;
     
     @FindBy(xpath="//div[@class='inforIcon help']//following-sibling::div")

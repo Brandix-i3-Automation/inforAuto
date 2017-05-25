@@ -19,7 +19,6 @@ import org.openqa.selenium.WebDriver
 import bi3.pages.oss406.OSS406E
 import org.openqa.selenium.WebDriver
 
-
 class OSS401_CreateDataSet extends BaseTest{
 	
 	LoginPage loginPage
@@ -135,9 +134,9 @@ class OSS401_CreateDataSet extends BaseTest{
 		//oss402e.selectFCMtdFrWhs()
 		oss402e.clickOnNext()
 		
-		oss402b1.CloseActiveTab()
+		oss402b1.closeTab("Dataset. Connect Accumulator Fields");		
 		Thread.sleep(4000)
-		oss402b1.CloseActiveTab()
+		oss402b1.closeTab("Dataset. Connect Selection Fields");
 		
 		Assert.assertTrue(oss406b1.getPageId().contains("OSS406/B1"))
 		

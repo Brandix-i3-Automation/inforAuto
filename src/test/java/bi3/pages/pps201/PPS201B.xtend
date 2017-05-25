@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.WebElement
 import bi3.framework.elements.inforelements.InforGrid
-import org.testng.asserts.Assertion
 import org.testng.Assert
 
 class PPS201B extends BasePage{
@@ -34,6 +33,15 @@ class PPS201B extends BasePage{
  	
  	@FindBy(id="dbtnent")
  	WebElement btnNextPopUp
+ 	
+ 	@FindBy(xpath="//input[@id='IAPUNO']")
+ 	WebElement txtPOno
+ 	
+	@FindBy(xpath="//button[@id='ActionsBtn']") 
+ 	WebElement btnAction;
+ 	
+ 	@FindBy(xpath="//span[@id='menuBar']/descendant::button[4]/following-sibling::div[1]//ul//li[9]//a") 
+ 	WebElement linkClose;
 	
 	def boolean CheckIfDetailsGridEmpty(){
 		var grid = new InforGrid(gridElement)
@@ -67,8 +75,19 @@ class PPS201B extends BasePage{
 		clickOnNext();
 		clickOnNext();
 		clickOnNext();
+		clickOnNext();
 		btnNextPopUp.click();
 	}
 	
+	def String getPOno(){
+		return txtPOno.GetTextBoxvalue;
+	}
+	
+ 	def void closePanal(){
+ 		btnAction.click();
+ 		waitForLoadingComplete();
+ 		linkClose.click();
+ 		waitForLoadingComplete();
+ 	}
 	
 }

@@ -7,8 +7,9 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.Keys
 import org.openqa.selenium.By
 import bi3.framework.elements.inforelements.InforGrid
+import bi3.pages.ProgramCommons
 
-class OSS420B extends BasePage{
+class OSS420B extends ProgramCommons{
 	
 	new(WebDriver driver) {
 		super(driver)

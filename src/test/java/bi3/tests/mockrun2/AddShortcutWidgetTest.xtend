@@ -1,5 +1,6 @@
-package bi3.tests
+package bi3.tests.mockrun2
 
+import bi3.tests.BaseTest
 import bi3.pages.LoginPage
 import bi3.pages.HomePage
 import org.testng.annotations.BeforeMethod

@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.WebElement
 import bi3.framework.elements.inforelements.InforGrid
+import java.util.List
 
 class MNS105B extends BasePage{
 	
@@ -26,5 +27,8 @@ class MNS105B extends BasePage{
 		
 	}
 	
-	
+	def List<String> getSystemLanguages(){
+		var InforGrid grid = new InforGrid(gridMNS105);
+		return grid.getDataOfColumn("Name");
+	}
 }

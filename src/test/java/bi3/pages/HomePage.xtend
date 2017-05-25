@@ -106,7 +106,7 @@ class HomePage extends BasePage {
     WebElement linkCoOpen;
     
     /**Search and Start pop up Header */
-    @FindBy(id="ui-id-2")
+    @FindBy(css="div.inforDialogTitleBar .caption")
     WebElement lblSearchAndStart
     
     /**Search and Start text box */
@@ -123,40 +123,40 @@ class HomePage extends BasePage {
     @FindBy(xpath="//ul[@id='gvMenuSettings']")
     WebElement listPageMenu;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[1]/a")
+    @FindBy(xpath="//a[text()='Start Page']")
     WebElement listStartPage;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[3]/a")
+    @FindBy(xpath="//a[text()='Add Widget...']")
     WebElement listAddWidget;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[4]/a")
+    @FindBy(xpath="//a[text()='Add Page...']")
     WebElement listAddPage;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[5]/a")
+    @FindBy(xpath="//a[text()='Add Page from Library...']")
     WebElement listAddPageFromLibrary;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[7]/a")
+    @FindBy(xpath="//a[text()='Delete Page...']")
     WebElement listDeletePage;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[8]/a")
+    @FindBy(xpath="//a[text()='Remove Favorite Page ...']")
     WebElement listRemoveFavouritePage;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[9]/a")
+    @FindBy(xpath="//ul[@id='gvMenuSettings']//a[text()='Refresh']")
     WebElement listRefresh;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[11]/a")
+    @FindBy(xpath="//a[text()='My Pages...']")
     WebElement listMyPages;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[12]/a")
+    @FindBy(xpath="//a[text()='Page Settings...']")
     WebElement listPageSetting;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[13]/a")
+    @FindBy(xpath="//ul[@id='gvMenuSettings']//a[text()='User Settings...']")
     WebElement listUserSetting;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[15]/a")
+    @FindBy(xpath="//a[text()='Advanced']")
     WebElement listAdvanced;
     
-    @FindBy(xpath="//ul[@id='gvMenuSettings']/li[17]/a")
+    @FindBy(xpath="//a[text()='Administration']")
     WebElement listAdministration;
     
     @FindBy(id="startDiv")
@@ -857,6 +857,7 @@ def void GoToOIS275(){
 		pressShortcutKeys("r");
 		waitForLoadingComplete();
 		try{
+			Assert.assertEquals(verifySearchAndStartPopup(),"Search and Start");			
 			driver.findElement(By.id("ui-id-2"));
 			txtSearchAndStart.click();
 			txtSearchAndStart.sendKeys(program)
@@ -1014,6 +1015,13 @@ def void GoToOIS275(){
 		return linkStart.text;
 	}
 	
+	/**
+	 * Start menu List
+	 */
+	def WebElement getList(String listMenu){
+	var element = "//ul[@id='gvMenuSettings']/descendant::a[text()='"+listMenu+"']"
+	 	driver.findElement(By.xpath(element))
+	}
 }
 
 

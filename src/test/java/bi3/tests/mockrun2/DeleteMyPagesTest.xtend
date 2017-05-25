@@ -1,5 +1,6 @@
-package bi3.tests
+package bi3.tests.mockrun2
 
+import bi3.tests.BaseTest
 import bi3.pages.LoginPage
 import bi3.pages.HomePage
 import bi3.pages.BasePage
@@ -7,7 +8,7 @@ import bi3.pages.StartPage
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
 import org.testng.Assert
-import java.util.List
+
 
 class DeleteMyPagesTest extends BaseTest {
 	
@@ -33,7 +34,6 @@ class DeleteMyPagesTest extends BaseTest {
 	@Test
 	def void DeletePagesTest() {
 		
-		var List<String> startItemsList;
 		var String newPageName = "My Page";
 		
 		loginPage.GoTo();
@@ -42,17 +42,16 @@ class DeleteMyPagesTest extends BaseTest {
 		
 		basePage.goToHome();
 		//validate the start menu list
-		startItemsList = startPage.getStartMenuItemNames();		
-		Assert.assertEquals(startItemsList.get(0),"Start Page");
-		Assert.assertEquals(startItemsList.get(1),"Add Widget...");
-		Assert.assertEquals(startItemsList.get(2),"Add Page...");
-		Assert.assertEquals(startItemsList.get(3),"Add Page from Library...");
-		Assert.assertEquals(startItemsList.get(4),"Delete Page...");
-		Assert.assertEquals(startItemsList.get(5),"Remove Favorite Page ...");
-		Assert.assertEquals(startItemsList.get(6),"Refresh");
-		Assert.assertEquals(startItemsList.get(7),"My Pages...");
-		Assert.assertEquals(startItemsList.get(8),"Page Settings...");
-		Assert.assertEquals(startItemsList.get(9),"User Settings...");
+		Assert.assertEquals(homePage.startPageName, "Start Page");
+		Assert.assertEquals(homePage.getAddWidgetName, "Add Widget...");
+		Assert.assertEquals(homePage.getAddPageName, "Add Page...");
+		Assert.assertEquals(homePage.getAddPageFromLibraryName, "Add Page from Library...");
+		Assert.assertEquals(homePage.getDeletePageName, "Delete Page...");
+		Assert.assertEquals(homePage.getRemoveFavouritePageName, "Remove Favorite Page ...");
+		Assert.assertEquals(homePage.getRefreshName, "Refresh");
+		Assert.assertEquals(homePage.getMyPagesName, "My Pages...");
+		Assert.assertEquals(homePage.getPageSettingsName, "Page Settings...");
+		Assert.assertEquals(homePage.getUserSettingsName, "User Settings...");
 		Assert.assertEquals(homePage.getAdvancedName, "Advanced");
 		Assert.assertEquals(homePage.getAdministrationName, "Administration");
 		
@@ -71,6 +70,7 @@ class DeleteMyPagesTest extends BaseTest {
 		
 		startPage.gotoNewPage(newPageName);
 		startPage.deletePage();
+		Thread.sleep(2000);
 		basePage.goToHome();
 		// validate the start list whether the new page is deleted
 		Assert.assertFalse(startPage.checkPageExists(newPageName),"The new page is not deleted");
