@@ -70,6 +70,7 @@ class DeleteMyPagesTest extends BaseTest {
 		
 		startPage.gotoNewPage(newPageName);
 		startPage.deletePage();
+		Thread.sleep(2000);
 		basePage.goToHome();
 		// validate the start list whether the new page is deleted
 		Assert.assertFalse(startPage.checkPageExists(newPageName),"The new page is not deleted");
