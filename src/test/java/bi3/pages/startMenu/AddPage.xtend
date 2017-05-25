@@ -62,6 +62,5 @@ class AddPage extends BasePage{
 	 }
 	 
 	
-	
 	 
 }
