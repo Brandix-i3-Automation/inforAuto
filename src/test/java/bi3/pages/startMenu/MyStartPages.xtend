@@ -29,6 +29,7 @@ class MyStartPages extends BasePage {
 		var Action dragAndDrop = builder.clickAndHold(fromElement).moveToElement(toElement).release(toElement).build();
 		dragAndDrop.perform()
 		waitForLoadingComplete();
+		System.out.println(fromElement);
 	}
 	
 	/**
