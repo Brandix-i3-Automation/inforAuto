@@ -48,17 +48,17 @@ class SystemTC_09 extends BaseTest {
 		// 4. Enter MMS001 in the Textbox - Verify:Code is entered in the textbox
 		// 5. Click the Ok button - Verify: MMS001 (Item.Open) Program is opened and is displayed as a tab in the system.
 		homePage.goToProgramUsingShrt("MMS001");
-		// TODO: Assert here
-		
+		Assert.assertTrue(mms001b.getPageId().contains("MMS001/B"))
+				
 		// 6. Select any row - Verify: Row selected is highlighted
 		mms001b.selectRows(NUMBER_OF_ROWS);
 		
+		// 7. Click Tools - Verify: Tools list is displayed with the following actions: Add to Start Page Shortcuts, Personalize, User Settings, Export to Excel, Link Manager, Context Publisher
 		mms001b.clickTools();
 		var boolean toolMenuStatus = mms001b.verifyList(toolsOptionMenu, mms001b.getToolsMenuOptions());
 		Assert.assertEquals(toolMenuStatus, true);
 		mms001b.clickTools();
 		
-		// 7. Click Tools - Verify:  Tools list is displayed with the following actions: Add to Start Page Shortcuts, Personalize, User Settings, Export to Excel, Link Manager, Context Publisher
 		// 8. Click Export to Excel - Verify: Export to Excel pop-up window is prompted.
 		mms001b.clickTools("Export to Excel");
 		
@@ -72,9 +72,9 @@ class SystemTC_09 extends BaseTest {
 		
 		// 11. Click Export - Verify: Selected Row is exported to an excel file with "Item+Open.xls" filename
 		mms001b.clickExportBtn();
+		//TODO verify
 		
-		Thread.sleep(3000);
-		
+		Thread.sleep(5000);		
 		// 12. Open Item+Open.xls file - Verify: Check if the Item in the selected row and item in the exported file are the same.
 		var ExcelUtil excelUtil = new ExcelUtil(ConfigKeys.EXCEL_DOWNLOAD_PATH);
 		var ExcelData eData = excelUtil.readXlsExcel(0);
