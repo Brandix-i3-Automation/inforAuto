@@ -18,11 +18,9 @@ class SystemTC_05 extends BaseTest {
 	def void Initialize() {
 		loginPage = new LoginPage(driver)
 		homePage = new HomePage(driver)
-		toolBarPage = new ToolbarPage(driver);
-		
+		toolBarPage = new ToolbarPage(driver);		
 	}
-	
-	
+		
 	/**
 	 * @TestCaseID: 5
 	 * @CloudSuite: General
@@ -33,8 +31,7 @@ class SystemTC_05 extends BaseTest {
 	def void StartInfocenterTest(){
 		/* Test Data */
 		var String program = "MMS001";
-		
-		
+			
 		/* Test*/
 		loginPage.GoTo();
 		// 3. Press "Ctrl + R" button in the keyboard - Verify:Search and Start pop up window is displayed

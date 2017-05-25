@@ -82,7 +82,7 @@ class OSS401_CreateDataSet extends BaseTest{
 		var seq2 = hashMap.get("seq2").toString();
 		var field2 = hashMap.get("field2").toString();
 		var seq3 = hashMap.get("seq3").toString();
-		var field3 = hashMap.get("seq3").toString();
+		var field3 = hashMap.get("field3").toString();
 		var ttp1 = hashMap.get("ttp1").toString();
 		var ttp2 = hashMap.get("ttp2").toString();
 		var ttp3 = hashMap.get("ttp3").toString();

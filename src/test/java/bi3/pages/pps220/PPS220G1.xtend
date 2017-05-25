@@ -30,6 +30,9 @@ class PPS220G1 extends BasePage{
 
 	@FindBy(id="WGYRE1")
 	WebElement txtYourRef;
+	
+ 	@FindBy(xpath="//span[@id='menuBar']/descendant::button[4]/following-sibling::div[1]//ul//span[text()='F14']/ancestor::a") 
+ 	WebElement linkConfirmUpdate;
  	
  	def String getPONumberOfRow(int rowId){
  		var grid= new InforGrid(gridElement);
@@ -54,6 +57,13 @@ class PPS220G1 extends BasePage{
 		txtSupplOrderNo.sendKeys(supplOrderNo);
 		txtYourRef.sendKeys(yourRef);
 		waitForLoadingComplete();
-	}	
+	}
+	
+	def void confirmUpdate(){
+ 		btnAction.click();
+ 		waitForLoadingComplete();
+ 		linkConfirmUpdate.click();
+ 		waitForLoadingComplete();
+ 	}	
 	
 }

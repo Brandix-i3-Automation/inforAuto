@@ -40,7 +40,7 @@ class PPS201B extends BasePage{
 	@FindBy(xpath="//button[@id='ActionsBtn']") 
  	WebElement btnAction;
  	
- 	@FindBy(xpath="//span[@id='menuBar']/descendant::button[4]/following-sibling::div[1]//ul//li[9]//a") 
+ 	@FindBy(xpath="//span[@id='menuBar']/descendant::button[4]/following-sibling::div[1]//ul//span[text()='F3']/ancestor::a") 
  	WebElement linkClose;
 	
 	def boolean CheckIfDetailsGridEmpty(){

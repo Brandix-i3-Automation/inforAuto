@@ -37,6 +37,7 @@ class OSS420B extends ProgramCommons{
 		clearRobustly(txtBvs);
 		txtBvs.sendKeys(BudVer);
 		pressShortcutKeys("1");
+		waitForLoadingComplete();
 	}
 	
 	/**
