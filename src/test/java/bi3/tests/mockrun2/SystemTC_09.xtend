@@ -41,6 +41,17 @@ class SystemTC_09 extends BaseTest {
 		
 		// 6. Select any row - Verify: Row selected is highlighted
 		
+		// 7. Click Tools - Verify:  Tools list is displayed with the following actions: Add to Start Page Shortcuts, Personalize, User Settings, Export to Excel, Link Manager, Context Publisher
+		
+		// 8. Click Export to Excel - Verify: Export to Excel pop-up window is prompted.
+		
+		// 9. Under Rows, select Export currently selected rows - Verify: Export currently selected row is selected.
+		
+		// 10. Under Data Format, select Source Format - Verify: Source Format is selected.
+		
+		// 11. Click Export - Verify: Selected Row is exported to an excel file with "Item+Open.xls" filename
+
+		// 12. Open Item+Open.xls file - Verify: Check if the Item in the selected row and item in the exported file are the same.
 		
 		
 	}
