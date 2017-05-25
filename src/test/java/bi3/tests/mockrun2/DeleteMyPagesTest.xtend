@@ -17,6 +17,8 @@ class DeleteMyPagesTest extends BaseTest {
 	BasePage basePage
 	StartPage startPage
 	
+	
+	
 	@BeforeMethod
 	def void Initialize() {
 		loginPage = new LoginPage(driver);
