@@ -14,16 +14,16 @@ class SystemTC_15 extends BaseTest {
 	HomePage homePage
 	ToolbarPage toolBarPage
 	MNS105B mns105B
-	
+
 	@BeforeMethod
 	def void Initialize() {
 		loginPage = new LoginPage(driver)
 		homePage = new HomePage(driver)
 		toolBarPage = new ToolbarPage(driver);
 		mns105B = new MNS105B(driver);
-		
+
 	}
-	
+
 	/**
 	 * @TestCaseID: 15
 	 * @CloudSuite: General
@@ -31,23 +31,23 @@ class SystemTC_15 extends BaseTest {
 	 * @author:	poojas
 	 */
 	@Test
-	def void accessCurrrentSystemLanguagesTest(){
+	def void accessCurrrentSystemLanguagesTest() {
 		/* Test Data */
 		var String program = "MNS105";
-		
+		var String language1 = "English";
 		
 		/* Test*/
 		loginPage.GoTo();
 
+		// 3. Press "Ctrl + R" button in the keyboard - Verify: Search and Start pop up window is displayed
 		homePage.pressShortcutKeys("R");
-		
-		//verify that search and start pop up is displayed
-		Assert.assertEquals(homePage.verifySearchAndStartPopup(),"Search and Start");
-		
+		Assert.assertEquals(homePage.verifySearchAndStartPopup(), "Search and Start");
+
+		// 4. Enter MNS105 in the Textbox - Verify: Code is entered in the textbox
+		// 5. Click the Ok button - Verify:  MNS105 (System Language.Open) Program is opened and is displayed as a tab in the system. Current System Languages are displayed.
 		homePage.goToProgramUsingShrt(program);
-		
-		//verify system languages are displayed in grid
-		Assert.assertEquals(mns105B.gridContainsSystemLanguages(),true);		
+		Assert.assertEquals(mns105B.gridContainsSystemLanguages(), true);
+		Assert.assertTrue(mns105B.getSystemLanguages().contains(language1), "English language is not displayed");
 	}
-	
+
 }
