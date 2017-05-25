@@ -15,14 +15,14 @@ class StartPage extends BasePage {
 	@FindBy(id="startDiv")
 	WebElement btnStart;
 	
-	@FindBy(xpath="//ul[@id='gvMenuSettings']/li[8]/a[@href='#deletepage']")
-	WebElement btnDeletePage;
-	
 	@FindBy(css="ul[id='gvMenuSettings'] li a")
     List<WebElement> listStartMenuItems;
     
     @FindBy(xpath="//*[contains(text(),'Add Page...')]")
 	WebElement listItemAddPage;
+	
+	@FindBy(xpath="//*[contains(text(),'Delete Page...')]")
+	WebElement listItemDeletePage;
 	
 	@FindBy(css="input[id='gvAddDashoboardTitle']")
     WebElement txtAddPageTitle;
@@ -33,6 +33,9 @@ class StartPage extends BasePage {
 	@FindBy(xpath="//div[@class='inforMenu']/ul[@id='gvMenuSettings']")
 	WebElement menuStart;
 	
+	@FindBy(xpath="//div[@class='dialogButtonBar']/button[contains(text(),'OK')]")
+	WebElement btnDeleteConfirm;
+	
 	
 	// Constructor
 	new(WebDriver driver) { 
@@ -40,20 +43,20 @@ class StartPage extends BasePage {
 	}
 	
 	/**
-	 * Checks if a page other than the start page exists
+	 * Checks whether a page with the given name already exists
+	 * @return true if found and false if not
 	 */
-	def boolean checkNewPageExists(){
-		var ret = false;
+	def boolean checkPageExists(String pageName){
+		var boolean found = false;
 		
-		try{
-		if(listItemNewPage.isEnabled())
-			ret = true;
-		}
-		catch(Exception e){
-			print("not exist");
+		for (var int i = 0; i < listStartMenuItems.length; i++) {
+			var String listItemName = listStartMenuItems.get(i).getText();
+			if(listItemName.equals(pageName)){
+				found = true;
+			}
 		}
 		
-		return ret;
+		return found;
 	}
 	
 	/**
@@ -106,10 +109,9 @@ class StartPage extends BasePage {
 	def deletePage(){
 		btnStart.waitToBeClickable();
 		btnStart.click();
-		btnDeletePage.waitToBeClickable();
-		btnDeletePage.click();
+		listItemDeletePage.waitToBeClickable();
+		listItemDeletePage.click();
+		btnDeleteConfirm.waitToBeClickable();
+		btnDeleteConfirm.click();
 	}
-	
-	
-	
 }

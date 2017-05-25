@@ -18,21 +18,12 @@ class AddShortcutWidgetTest extends BaseTest {
 	ToolbarPage toolbarPage
 	MMS001 mms001
 	
-	ExcelUtil addShortcutData;
-	HashMap<String, String> hashMap;
-	
 	@BeforeMethod
 	def void Initialize() {
 		loginPage = new LoginPage(driver);
 		homePage = new HomePage(driver);
 		toolbarPage = new ToolbarPage(driver);
 		mms001 = new MMS001(driver);
-		
-		val path = ConfigKeys.DATA_HELPER_PATH;
-		val sheetOIS390A = "OIS390A";
-
-		addShortcutData = new ExcelUtil(path, sheetOIS390A);
-		hashMap = addShortcutData.getExcelActiveSheetFirstTwoColumnData;
 	}
 	
 	/**

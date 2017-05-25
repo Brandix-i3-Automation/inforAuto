@@ -16,7 +16,6 @@ class DeleteMyPagesTest extends BaseTest {
 	BasePage basePage
 	StartPage startPage
 	
-	
 	@BeforeMethod
 	def void Initialize() {
 		loginPage = new LoginPage(driver);
@@ -35,15 +34,14 @@ class DeleteMyPagesTest extends BaseTest {
 	def void DeletePagesTest() {
 		
 		var List<String> startItemsList;
-		var String newPageName = "NewTest";
+		var String newPageName = "My Page";
 		
 		loginPage.GoTo();
 		Assert.assertEquals(startPage.getStartPageText,"Start","Start page is not displayed");
-		
 		basePage.goToHome();
-		startItemsList = startPage.getStartMenuItemNames();
 		
 		//validate the start list
+		startItemsList = startPage.getStartMenuItemNames();		
 		Assert.assertEquals(startItemsList.get(0),"Start Page");
 		Assert.assertEquals(startItemsList.get(1),"Add Widget...");
 		Assert.assertEquals(startItemsList.get(2),"Add Page...");
@@ -51,23 +49,31 @@ class DeleteMyPagesTest extends BaseTest {
 		Assert.assertEquals(startItemsList.get(4),"Delete Page...");
 		Assert.assertEquals(startItemsList.get(5),"Remove Favorite Page ...");
 		Assert.assertEquals(startItemsList.get(6),"Refresh");
+		Assert.assertEquals(startItemsList.get(7),"My Pages...");
+		Assert.assertEquals(startItemsList.get(8),"Page Settings...");
+		Assert.assertEquals(startItemsList.get(9),"User Settings...");
+		Assert.assertEquals(homePage.getAdvancedName, "Advanced");
+		Assert.assertEquals(homePage.getAdministrationName, "Administration");
 		
-		/*
 		// check whether a page exists
-		if(startPage.checkNewPageExists()){
-			print("exist");
-			//startPage.deletePage("NewTest");
+		if(startPage.checkPageExists(newPageName)){
+			print("The page already exists");
 		}
 		else{
-			print("new page not exist");
+			print("The page not exist");
+			startPage.addNewPage(newPageName);
 		}
-		*/
 		
-		startPage.addNewPage(newPageName);
 		basePage.goToHome();
-		// validate the start list with the new page
 		
-		startPage.gotoNewPage("NewTest");
+		// validate the start list whether the new page is created
+		Assert.assertTrue(startPage.checkPageExists(newPageName),"The new page is not created");
 		
+		startPage.gotoNewPage(newPageName);
+		startPage.deletePage();
+		basePage.goToHome();
+
+		// validate the start list whether the new page is deleted
+		Assert.assertFalse(startPage.checkPageExists(newPageName),"The new page is not deleted");
 	}
 }
