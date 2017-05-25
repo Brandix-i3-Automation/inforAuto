@@ -1,5 +1,6 @@
 package bi3.tests.mockrun2
 
+import bi3.tests.BaseTest
 import bi3.pages.LoginPage
 import bi3.pages.HomePage
 import bi3.pages.BasePage
@@ -7,9 +8,9 @@ import bi3.pages.StartPage
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
 import org.testng.Assert
-import bi3.tests.BaseTest
 
-class DeleteMyPagesTest extends bi3.tests.BaseTest {
+
+class DeleteMyPagesTest extends BaseTest {
 	
 	LoginPage loginPage
 	HomePage homePage
