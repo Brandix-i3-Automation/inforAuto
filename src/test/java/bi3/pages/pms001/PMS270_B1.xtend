@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.Keys
+import bi3.framework.elements.inforelements.InforGrid
+import java.util.List
 
 class PMS270_B1 extends BasePage {
 	
@@ -21,8 +23,7 @@ class PMS270_B1 extends BasePage {
 	@FindBy(id="Next") 
 	WebElement btnNext;
 
-	@FindBy(css="WDPAVR") 
-	WebElement txtView;
+
 	
 	@FindBy(id="WWSPIC-shdo") 
 	WebElement openningPannel;
@@ -33,11 +34,72 @@ class PMS270_B1 extends BasePage {
 	@FindBy(css="a[href='#F13']")
 	WebElement btnSelect;
 	
-	@FindBy(css="WFSCHN") 
+	@FindBy(css="#WFSCHN") 
 	WebElement txtScheduleNo1;
 	
-	@FindBy(css="WFSCHN") 
+	@FindBy(css="#WTSCHN") 
 	WebElement txtScheduleNo2;
+	
+	@FindBy(id="WWPAVRContainer") 
+	WebElement txtView;
+	
+	@FindBy(xpath="//button[@class='inforTriggerButton inforBrowseIcon']/descendant::span[text()='Open']")
+	WebElement btnView;
+	
+	@FindBy(xpath="//*[contains(text(),'F01')]") 
+	WebElement txtreportVersion;
+	
+	@FindBy(id="POS") 
+	WebElement txtReportVer;
+	
+	@FindBy(id="BTN_L52T24") 
+	WebElement btnM3browSelect;
+	
+	@FindBy(id="WFSTDT") 
+	WebElement txtFromDate;
+	
+	@FindBy(css="div[id*='PMA230BS'][class*='inforDataGrid']")
+	WebElement gridElement;
+	
+	@FindBy(css="div[id*='PMA060BS'][class*='inforDataGrid']")
+	WebElement reportIssuegridElement;
+	
+	
+	@FindBy(xpath="//a[text()='Related']")
+	WebElement linkRelated;
+	
+	@FindBy(xpath="//a//*[contains(text(), 'Report Issue')]")
+	WebElement linkReportIssue;
+	
+	@FindBy(css="#WMSPMT-shdo")
+	WebElement cmdIssueMtd;
+	
+	@FindBy(css="#dropdown-list li")
+	List<WebElement> listSortingOrder;
+	
+    @FindBy(xpath="//*[contains(text(),'Issue mtd')]")
+	WebElement txtOpeningPanel;
+	
+	@FindBy(css=".inforIconButton.refresh")
+	WebElement btnRefresh
+	
+	@FindBy(css=".slick-cell.l0.r0")
+	WebElement firstGridCell;
+	
+	
+	@FindBy(xpath="//*[contains(text(),'Confirmation')]/span/..")
+	WebElement btnConfirmation;
+	
+	@FindBy(id="RelatedBtn")
+	WebElement btnRealted;
+	
+		
+	@FindBy(xpath=".//*[@href='#tabhost_0']/div/div")
+	WebElement lblWorkCent;
+	
+	@FindBy(id="showProgramShortName")
+	WebElement lblProgramShortName;
+	
 	
 	def void EnterScheduleNo(String ScheduleNo){
 				
@@ -50,11 +112,20 @@ class PMS270_B1 extends BasePage {
 	}
 	
 	def void enterView( String value) {		
-		
-		selectFromDropdown(openningPannel,"B-Browse");
-		txtView.click();		
-		clearRobustly(txtView);		
-		txtView.sendKeys(value);		
+		waitForLoadingComplete();	
+		btnView.click();
+		waitForLoadingComplete();
+		txtReportVer.clearRobustly();	
+		txtReportVer.sendKeys(value);	
+		txtReportVer.sendKeys(Keys.ENTER);
+		waitForLoadingComplete();
+		txtreportVersion.click();
+		waitForLoadingComplete();
+		btnM3browSelect.click();
+		waitForLoadingComplete();
+		txtFromDate.click();
+		txtFromDate.sendKeys(Keys.ENTER);
+		waitForLoadingComplete();		
 		
 	}
 	
@@ -68,14 +139,16 @@ class PMS270_B1 extends BasePage {
 	}
 	
 	def void enterScheduleNos(String ScheduleNo1 , String ScheduleNo2) {
-				
+			waitForLoadingComplete();
 			txtScheduleNo1.click();
 			clearRobustly((txtScheduleNo1));
 			txtScheduleNo1.sendKeys(ScheduleNo1);
+			waitForLoadingComplete();
 
 			txtScheduleNo2.click();
 			clearRobustly((txtScheduleNo2));
-			txtScheduleNo1.sendKeys(ScheduleNo2);			
+			txtScheduleNo2.sendKeys(ScheduleNo2);
+			waitForLoadingComplete();			
 			 
 	}
 	
@@ -98,4 +171,126 @@ class PMS270_B1 extends BasePage {
 		waitForLoadingComplete();
 		
 	}
+	/**
+	 * Report Issuing line
+	 */
+	def void reportIssue() {
+		
+		waitForLoadingComplete();
+		var InforGrid grid = new InforGrid(gridElement);
+
+		var deliveryBoxCol = grid.getCellsFromColumn(1)
+		var secoundCell = deliveryBoxCol.get(0)
+		rightClick(secoundCell)
+		waitForLoadingComplete()
+		linkRelated.click();
+		waitForLoadingComplete()
+		linkReportIssue.click();
+		waitForLoadingComplete()
+		
+		
+		}
+		/**
+		 * Get Status values
+		 */
+		def String getStatus() {
+		waitForLoadingComplete();
+		var InforGrid grid = new InforGrid(reportIssuegridElement);
+
+		var schedCol = grid.getCellsFromColumn(6)
+		return schedCol.get(0).text;
+		
+
+		//waitForLoadingComplete();
+		//var InforGrid grid = new InforGrid(reportIssuegridElement);
+		//var sts=grid.getDataOfColumn(columName);
+		
+		
+		
+		
+		}
+		
+		/**
+		 * Change the Issue Methods
+		 */
+		def void selectIssueMtdl(String openingPanelValue){
+		waitForLoadingComplete();
+		selectFromDropdown(cmdIssueMtd, listSortingOrder, openingPanelValue);
+		waitForAnyText(txtOpeningPanel, 100);
+	}
+	/**
+	 * Refresh the Page
+	 */
+	
+		def void refreshPage() {
+		waitToBeClickable(btnRefresh)
+		btnRefresh.click()
+		waitForLoadingComplete()
+	}
+	/**
+	 * Select First Row in PMS060B1
+	 */
+	 def selectFirstRows() {
+		waitForLoadingComplete();
+		firstGridCell.click();
+		waitForLoadingComplete();
+
+	}
+	
+	/**
+	 * Select Confirmation button
+	 */
+	
+	def confirmation(){
+		waitForLoadingComplete()
+		waitToBeClickable(btnRealted)
+	  	btnRealted.click();
+	  	waitToBeClickable(btnConfirmation)
+	  	btnConfirmation.click();
+	    waitForLoadingComplete();
+	    Thread.sleep(1000);
+	}
+	
+	/**
+	 * Get PMS 230 Header Value
+	 */
+	 
+	 def String getPms230HeaderlblValue() {
+		waitToBeDisplayed(lblWorkCent)
+		return lblWorkCent.text;
+	}
+	
+	/**
+	 * Validate PMS 230 Header Value
+	 */
+	 
+	 def String getPanellblValue() {
+		waitToBeDisplayed(lblProgramShortName)
+		return lblProgramShortName.text;
+	}
+	
+	/**
+	 * Get PMS 230 Header Value
+	 */
+	 
+	 def String getPms060lblValue() {
+		waitToBeDisplayed(lblProgramShortName)
+		return lblProgramShortName.text;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

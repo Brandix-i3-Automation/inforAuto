@@ -70,6 +70,17 @@ class PMS100_B extends BasePage {
 		waitForLoadingComplete();
 
 	}
+	
+	def compareNumOfSchNoAndMoNo(String schNo){
+		var InforGrid grid= new InforGrid(gridElement);
+		var row = grid.getRowsContainingTextInColumn(1,schNo)
+		for(r:row){
+			if(row.get(3).text.length==0){
+				return false;
+			}
+		}
+		return true;
+	}
 
 	def void selectRowsWithSchedNum(String SchedNum) {
 	 waitForLoadingComplete();
@@ -207,11 +218,13 @@ class PMS100_B extends BasePage {
 	}
 
 	def ClearProduct() {
+		txtProduct.click();
 		txtProduct.clearRobustly();
 
 	}
 
 	def ClearMoNo() {
+		txtMoNo.click();
 		txtMoNo.clearRobustly();
 
 	}
