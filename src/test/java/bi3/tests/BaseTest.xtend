@@ -28,7 +28,7 @@ class BaseTest {
 	@BeforeMethod
 	def void BeforeTest() {
 		var _BROWSER = ConfigKeys.BROWSER_TYPE.toUpperCase();
-		var downloadFilepath = "D:/My Files/TryDownload";
+		var downloadFilepath = ConfigKeys.EXCEL_DOWNLOAD_PATH;
 
 		if (_BROWSER == "CHROME") {
 			System.setProperty("webdriver.chrome.driver", ConfigKeys.CHROME_DRIVER_PATH);

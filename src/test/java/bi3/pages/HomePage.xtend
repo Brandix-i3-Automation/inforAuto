@@ -171,6 +171,9 @@ class HomePage extends BasePage {
 	@FindBy(css="div[class='gvPage'] div[class='gvWidget ui-draggable ui-droppable ui-resizable ui-resizable-autohide']")
     List<WebElement> listWidgets;
     
+    @FindBy(css="div.inforMenu>ul#gvMenuSettings>li")
+    List<WebElement> listStartMenuOptions;
+    
 	def void GoToMMS001() {
 		waitForLoadingComplete();
 		// Wait for Home page loaded
@@ -1021,6 +1024,11 @@ def void GoToOIS275(){
 	def WebElement getList(String listMenu){
 	var element = "//ul[@id='gvMenuSettings']/descendant::a[text()='"+listMenu+"']"
 	 	driver.findElement(By.xpath(element))
+	}
+	
+	def List<String> getStartMenuOptions(){
+		var List<String> menuOptions = listStartMenuOptions.getTextList();
+		return menuOptions;
 	}
 }
 
