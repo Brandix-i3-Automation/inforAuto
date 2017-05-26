@@ -44,6 +44,9 @@ class CAS950E extends BasePage {
 	@FindBy(css="#tabsList > li.ui-tabs-selected.ui-state-active > button")
 	WebElement btnClose
 	
+	@FindBy(id="WWDIVI")
+    WebElement txtDivision
+	
 	
 	def void selectFromDate(String fromDate) {
 		waitForLoadingComplete();
@@ -111,6 +114,12 @@ class CAS950E extends BasePage {
 	def close() {
 		btnClose.click()
 		System.out.println("MMS001 tab closed")
+	}
+	
+	def void FillDivision(String Division) {
+				
+		txtDivision.sendKeys(Division);
+				 
 	}
 	
 }

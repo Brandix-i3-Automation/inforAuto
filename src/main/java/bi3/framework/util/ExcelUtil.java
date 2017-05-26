@@ -73,6 +73,8 @@ public class ExcelUtil {
 	
 	/** The sheet name. */
 	private static String sheetName;
+	
+	public static String fileName;
 
 	/**
 	 * Instantiates a new excel file reader.
@@ -109,6 +111,7 @@ public class ExcelUtil {
 	
 	public ExcelUtil(final String path){
 		File file = FileUtil.getFile(path);
+		this.fileName = FileUtil.extractFileNameFromPath(file);
 		try {
 			Boolean fileTypeHssf = POIFSFileSystem.hasPOIFSHeader(new BufferedInputStream(new FileInputStream(file)));
 			
@@ -507,7 +510,7 @@ public class ExcelUtil {
 		            	   break;
 		               
 		               case Cell.CELL_TYPE_STRING:
-		            	   tmp.add(hssfCell.getStringCellValue());
+		            	   tmp.add(hssfCell.getStringCellValue().trim());
 		            	   break;
 		            }
 	            } else {

@@ -17,7 +17,7 @@ class OSS402E extends BasePage{
 	def void selectFCMtdFrWhs(){
 		var checked = chckbFCMtdFrWhs.getAttribute("aria-checked")
 		if(checked.equals("false")){
-			chckbFCMtdFrWhs.waitToBeClickable()
+			//chckbFCMtdFrWhs.waitToBeClickable() // Commented due to unwanted delay			
 			chckbFCMtdFrWhs.click()
 		}
 	}

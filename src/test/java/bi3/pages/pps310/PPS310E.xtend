@@ -63,4 +63,10 @@ class PPS310E extends BasePage {
 		txtRejReason.clearRobustly()
 		txtRejReason.sendKeys(rejReasonCode)
 	}
+	
+	def void ClickNext(){
+		btnNext.waitToBeClickable()
+		btnNext.click()
+		waitForLoadingComplete()
+	}
 }

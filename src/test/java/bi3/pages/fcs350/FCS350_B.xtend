@@ -26,6 +26,9 @@ class FCS350_B extends BasePage {
 	
 	@FindBy(id="WWSTDT") 
 	WebElement txtPeriodframeDate;
+	
+	@FindBy(id="WWDPID")
+	WebElement txtPeriodFrame;
 		
 	@FindBy(id="WWPETP-shdo") 
 	WebElement cmbPeriodType;
@@ -44,6 +47,9 @@ class FCS350_B extends BasePage {
 	
 	@FindBy(id="W1CYP6")
 	WebElement txtPer
+	
+	@FindBy(id="PERIxxx")
+	WebElement dialogPer
 	/*
 	 * ACTIONS ( TEST METHODS )
 	 * 
@@ -67,13 +73,16 @@ class FCS350_B extends BasePage {
 
 		if (periodFrame != "") {
 			waitForLoadingComplete();
-			txtPeriodframeDate.clear();
-			txtPeriodframeDate.sendKeys(periodFrame);
+			txtPeriodFrame.clear();
+			txtPeriodFrame.sendKeys(periodFrame);
 		}
 		
 		// Click Apply	
 		btnApply.clickWhenReady();
+		txtBoxItemNo.click();
+		txtBoxItemNo.sendKeys(Keys.F5);
 		waitForLoadingComplete();
+		
 	}
 	
 	/**
@@ -85,11 +94,12 @@ class FCS350_B extends BasePage {
 			grid.setValueToColumnSearchField("Per", periodWithinCalYear).sendKeys(Keys.ENTER);
 			waitForLoadingComplete();			
 		}
-
+		waitToBeHidden(dialogPer);
 		// 1. First, get the cell without a value
 		// 2. Click on it
 		// 3. Type in the textbox
 		grid.getCell("F/C qty", "").findElement(By.cssSelector("div.edit-cell")).clickWhenReady();
+//		Thread.sleep(2000);
 		grid.getCell("F/C qty", "").findElement(By.cssSelector("input.inforTextbox")).sendKeys(fcQty);
 
 		// 4. Return Fr dt of the row

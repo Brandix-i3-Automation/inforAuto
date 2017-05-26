@@ -67,4 +67,8 @@ class FileUtil {
 	def static String getNameWithoutExtension(String FileName) {
 		return FilenameUtils.removeExtension(FileName);
 	}
+	
+	def static String extractFileNameFromPath(File file) {
+		return file.name;
+	}
 }

@@ -31,6 +31,12 @@ class PPS300B extends BasePage {
  	
  	@FindBy(css="div[id*='PPA300BS'][class*='inforDataGrid']")
  	WebElement inforGrid;
+ 	
+ 	@FindBy(xpath="//button[@id='ActionsBtn']") 
+ 	WebElement btnAction;
+ 	
+ 	@FindBy(xpath="//span[@id='menuBar']/descendant::button[4]/following-sibling::div[1]//ul//span[text()='F3']/ancestor::a") 
+ 	WebElement linkClose;
 	
 	def void enterPONum(String po){
 		txtPONum.waitToBeClickable()
@@ -65,4 +71,14 @@ class PPS300B extends BasePage {
 		waitForLoadingComplete();
 	
 	}
+	
+	/**
+	 * Close Panal
+	 */
+	 def void closePanal(){
+ 		btnAction.click();
+ 		waitForLoadingComplete();
+ 		linkClose.click();
+ 		waitForLoadingComplete();
+ 	}
 }
