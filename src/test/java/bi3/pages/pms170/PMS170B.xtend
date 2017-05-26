@@ -59,6 +59,12 @@ class PMS170B extends BasePage {
  	@FindBy(id = "W1OBKV")
 	WebElement txtPlnOrdNo
  
+ 	@FindBy(id="headerText")
+	WebElement filterOprions
+	
+	@FindBy(xpath="//fieldset[@id='collapsibleDiv']/button")
+	WebElement btnFilterOptions 
+ 
 	def void SelectSortingOrder(String value) {
 		//Thread.sleep(1000);
 		waitForLoadingComplete();
@@ -101,6 +107,17 @@ class PMS170B extends BasePage {
 		linkRelated.click();
 		linkRelease.click();
 		waitForLoadingComplete();
+	}
+	
+	def compareItemWithSts60(String item){
+		var InforGrid grid= new InforGrid(gridElement);
+		var row = grid.getRowsContainingTextInColumn(3,item)
+		for(r:row){
+			if(!row.get(8).text.equals("60")){
+				return false;
+			}			
+		}
+		return true;
 	}
 
 	def SearchScheduleNo(String schNo) {
@@ -157,4 +174,19 @@ class PMS170B extends BasePage {
 		var data = grid.getDataOfRowContainingTextInColumn(1,plnOrd.replaceFirst("^0+(?!$)", ""))
 		return data.get(7)
 	}
+	
+	/**
+	 * click on filter options
+	 */
+	def void clickFilterOptions(){
+		filterOprions.click();
+		waitForLoadingComplete();
+	}
+	
+	def void minimiseFilterOptions(){
+		if(btnFilterOptions.getAttribute("class").contains("closed")){
+			filterOprions.click();
+			waitForLoadingComplete();
+		}			
+	} 
 }
