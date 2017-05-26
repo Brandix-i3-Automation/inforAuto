@@ -28,9 +28,9 @@ class MyPages extends BasePage {
 		return driver.findElement(By.xpath(lblChangedDateXpath));
 	}
 
-	def WebElement iconShare(String pageTitle) {
-		var String iconShareXpath = "//div[text()='"+pageTitle+"']/following::div[1]/descendant::div[1]";
-		return driver.findElement(By.xpath(iconShareXpath));
+	def WebElement iconType(String pageTitle) {
+		var String iconTypeXpath = "//div[text()='"+pageTitle+"']/following::div[1]/descendant::div[1]";
+		return driver.findElement(By.xpath(iconTypeXpath));
 	}
 	
 	def WebElement btnSettings(String pageTitle) {
@@ -83,8 +83,8 @@ class MyPages extends BasePage {
 	 * @return Share icon
 	 * 
 	 */
-	def boolean isShareIconAvailable(String pageTitle) {
-		var WebElement iconShare = iconShare(pageTitle);
+	def boolean isTypeIconAvailable(String pageTitle) {
+		var WebElement iconShare = iconType(pageTitle);
 		waitForLoadingComplete();
 		try {
 			if (iconShare.displayed) {
@@ -107,10 +107,9 @@ class MyPages extends BasePage {
 	}
 	
 	/**
-      * This method returns the page title.
-      * @return "My Page" page title.
-      **/
-      def boolean isMyPageClosed(){    
+	 * Checks whether the My Pages popup is displayed.
+	 */
+      def boolean isMyPageOpened(){    
            try {
                   if(panelMyPage.displayed){
                         return true;

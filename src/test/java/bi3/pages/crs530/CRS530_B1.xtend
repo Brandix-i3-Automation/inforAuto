@@ -24,6 +24,10 @@ class CRS530B1 extends BasePage{
 	@FindBy(css=".slick-cell.l0.r0")
 	WebElement firstGridCell;
 	
+	@FindBy(xpath="//div[@class='ui-widget-content slick-row  even   lastClicked selected']/descendant::div[@class='slick-cell l0 r0  uppercase selected']")
+	WebElement gridEmpNo;
+
+	
 	/**
 	 * Select All the rows
 	 */
@@ -47,26 +51,32 @@ class CRS530B1 extends BasePage{
 		txtEmpNo.clearRobustly()
 		txtEmpNo.sendKeys(employNo);
 		txtEmpNo.sendKeys(Keys.ENTER);
-		waitForLoadingComplete();
+		
 		
 	}
 	def  String getEmploNoLblValue() {
-		 var status =  "NotFound"
-		 
+		var status =  "NotFound"
+		 	
 		try
 		{
-			
-		waitToBeDisplayed(firstGridCell)
-		status = firstGridCell.text;
+		firstGridCell.click;	
+		waitToBeDisplayed(gridEmpNo)
+	    status = gridEmpNo.text;
 		return status;
 		
 		}
 		catch(Exception e)
 		{
-			return  status
+		return status;
+		
 		}
 		
-
-	}
+		
+		
+		}
+	
+	
+	
+	
 	
 }

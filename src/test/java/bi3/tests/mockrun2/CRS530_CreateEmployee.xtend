@@ -9,6 +9,7 @@ import bi3.pages.ToolbarPage
 import bi3.pages.crs530.CRS530B1
 import bi3.configuration.settings.CRS530SettingTest
 import bi3.pages.crs530.CRS530_E
+import org.testng.Assert
 
 class CRS530_CreateEmployee extends BaseTest{
 	
@@ -28,9 +29,6 @@ class CRS530_CreateEmployee extends BaseTest{
 		crs530SettingTest = new CRS530SettingTest(driver);
 		crs530_e = new CRS530_E(driver);
 		
-		
-		
-		
 	}
 	
 	/**
@@ -43,7 +41,7 @@ class CRS530_CreateEmployee extends BaseTest{
 	 @Test
 	def void createEmployee(){
 		
-		//var int empNo=0001
+		var empNo= "0001";
 		loginPage.GoTo();
 		
 		homePage.goToProgram("CRS530")
@@ -52,9 +50,10 @@ class CRS530_CreateEmployee extends BaseTest{
 		//var String empNo = crs530b1.getEmploNoLblValue()
 		//System.out.println(empNo)
 		
-		if (crs530b1.getEmploNoLblValue().equals("NotFound")){
-		crs530b1.selectAllRows()
 		
+		if (crs530b1.getEmploNoLblValue().equals(empNo)){
+			System.out.print("Entered to the deletion part");
+		crs530b1.selectAllRows()
 		toolbarPage.ClickOption_Delete()
 		crs530b1.ClickNext()
 		crs530b1.ClickNext()
@@ -64,9 +63,10 @@ class CRS530_CreateEmployee extends BaseTest{
 		crs530_e.enterWorkSch(1);
 		crs530_e.selectScheduleFrDt();
 		crs530_e.ClickNext()
-		
+		Assert.assertEquals(crs530b1.getEmploNoLblValue(), empNo, " Employee number is successfully created ");
 		}
 		else{
+		System.out.print("creation part");
 			
 		toolbarPage.clickCreateLogo
 		crs530_e.enterFullName("Dulan Jayasekara");
@@ -74,10 +74,10 @@ class CRS530_CreateEmployee extends BaseTest{
 		crs530_e.enterWorkSch(1);
 		crs530_e.selectScheduleFrDt();
 		crs530_e.ClickNext()
-		}
-			
-
 		
+		Assert.assertEquals(crs530b1.getEmploNoLblValue(), empNo, " Employee number is successfully created ");
+		}
+
 		}
 	
 	}

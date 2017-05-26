@@ -1,17 +1,20 @@
 package bi3.pages.mms001
 
+import bi3.framework.elements.inforelements.InforGrid
+import bi3.pages.BasePage
+import java.awt.Robot
+import java.awt.event.KeyEvent
+import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
-import org.openqa.selenium.Keys
-import bi3.pages.BasePage
-import java.util.List
-import bi3.framework.elements.inforelements.InforGrid
 import org.testng.Assert
-import org.openqa.selenium.By
-import java.io.Console
+import bi3.pages.ToolbarPage
+import java.util.List
+import java.util.ArrayList
+import java.lang.Thread.State
 
-class MMS001B extends BasePage {
+class MMS001B extends ToolbarPage {
 
 	new(WebDriver driver) { // Constructor
 		super(driver)
@@ -26,14 +29,37 @@ class MMS001B extends BasePage {
 	@FindBy(id="saveBtn")
 	public WebElement btnSave;
 	
-	
 	//caption of pop-up <- Element
 	@FindBy(xpath="//div//div//div[contains(text(),'User Settings')]")
 	public WebElement popUpUserSettings;
 	
+	@FindBy(css="div[id*='MMA001BS'][class*='inforDataGrid']")
+	WebElement gridMMS001;
 	
+	@FindBy(id="QuickExport_option1")
+	WebElement btnRadioExportExcel;
+	
+	@FindBy(id="QuickExport_option3")
+	WebElement btnRadioSourceFormat;
+	
+	@FindBy(css="div[id='ExportDlg']+div>button")
+	WebElement btnExport;
+	
+	@FindBy(id = "QuickExport_option1")
+	WebElement rbtnExportSelectedRows;
+	
+	@FindBy(id = "QuickExport_option3")
+	WebElement rbtnSourceFormat;
+	
+	def String isCheckedExportSelectedRows(){
+		return rbtnExportSelectedRows.getAttribute("aria-checked");
+	}
+	
+	def String isCheckedSourceFormat(){
+		return rbtnSourceFormat.getAttribute("aria-checked");
+	}
 
-	def WebElement findElementInTools(String DropDownElement) {
+	override WebElement findElementInTools(String DropDownElement) {
 		var element = "//ul[@class='inforContextMenu ToolsMenu inforMenuOptions']//li/a[contains(text(),'" +
 			DropDownElement + "')]"
 		return driver.findElement(By.xpath(element))
@@ -43,8 +69,6 @@ class MMS001B extends BasePage {
 		waitToBeClickable(btnToolsBtn)
 		btnToolsBtn.click()
 		waitForLoadingComplete()
-
-
 	}
 
 	def void clickUserSettings() {
@@ -114,5 +138,95 @@ class MMS001B extends BasePage {
 	 	var text = titleElement.text;
 		Assert.assertTrue(text.contains(ProgramId),"Program Id is not displayed on the tab");
 	}
+	
+	/**
+	 * Select the given number of rows.
+	 * 
+	 * @param row count
+	 */
+	def void selectRows(int count) {
+		waitForLoadingComplete();
+		var InforGrid grid = new InforGrid(gridMMS001);
+		var WebElement firstRow = grid.getRow(0);
+		firstRow.click();
+		
+		Thread.sleep(1000);
+		var Robot rb = new Robot();
+		rb.keyPress(KeyEvent.VK_SHIFT);
+		
+		var int cnt = count - 1;
+		for (var int i = cnt; i < count; i++) {
+			rb.keyPress(KeyEvent.VK_DOWN);
+			rb.keyRelease(KeyEvent.VK_DOWN);
+		}
+		rb.keyRelease(KeyEvent.VK_SHIFT);
+	}
+	
+	/**
+	 * Select the expected currently selected rows radio button
+	 */
+	def void clickSelectedRowsBtn() {
+		waitForLoadingComplete();
+		btnRadioExportExcel.click();
+	}
 
+	/**
+	 * Select the keep source format radio Button
+	 */
+	def void clickSourceFormatBtn() {
+		waitForLoadingComplete();
+		btnRadioSourceFormat.click();
+	}
+	
+	/**
+	 * Click the export button
+	 */
+	def clickExportBtn() {
+		waitForLoadingComplete();
+		btnExport.click();
+	}
+	
+	/**
+	 * Get data form the given number of rows.
+	 * 
+	 * @param row count
+	 */
+	def List<List<String>> getRowsWithHeaders(int count) {
+		waitForLoadingComplete();
+		var List<List<String>> data = new ArrayList<List<String>>();
+		var InforGrid grid = new InforGrid(gridMMS001);
+		
+		// Get the column headers
+		var List<String> headerVals = grid.getColumnHeaders();
+		var List<String> tblHeaders = new ArrayList<String>();
+		for (String value : headerVals) {
+			tblHeaders.add(value.trim());
+		}
+		data.add(tblHeaders);
+		
+		for(var int i = 0; i < count; i++){
+			var List<String> rowVals = grid.getDataOfRow(i);
+			data.add(rowVals);
+		}
+		
+		return data;
+	}
+	
+	/**
+	 * Compare two String List.
+	 * 
+	 * @param List<String> expected
+	 * @param List<String> actual
+	 * @return return a boolean
+	 */
+	def boolean verifyList(List<String> expected, List<String> actual) {
+		var boolean status = false;
+		for (String value : expected) {
+			status = actual.contains(value);
+			if(!status){
+				return false;
+			}
+		}
+		return status;
+	}
 }

@@ -64,6 +64,8 @@ import bi3.pages.ois100.OIS100H
 import bi3.pages.mws060.MWS060B
 import org.testng.annotations.BeforeMethod
 import bi3.pages.pms100.PMS100_B
+import bi3.pages.ToolbarPage
+import org.testng.Assert
 
 class TC_11E2E_ManufactureProduct extends BaseTest {
 
@@ -137,6 +139,7 @@ class TC_11E2E_ManufactureProduct extends BaseTest {
 	CAS310 cas310
 	
 	PMS100_B pms100_b
+	ToolbarPage toolbarPage
 
 	@BeforeMethod
 	def void Initialize() {
@@ -208,6 +211,8 @@ class TC_11E2E_ManufactureProduct extends BaseTest {
 
 		cas950_E = new CAS950E(driver);
 		cas310 = new CAS310(driver);
+		toolbarPage = new ToolbarPage(driver);
+		
 	}
 
 	/**
@@ -219,7 +224,7 @@ class TC_11E2E_ManufactureProduct extends BaseTest {
 	@Test
 	def void ManufactureProductTest () {
 		
-		CreateMO();
+		//CreateMO();
 		workCeneterSchedules();
 	}
 
@@ -291,12 +296,26 @@ class TC_11E2E_ManufactureProduct extends BaseTest {
 
 		loginPage.GoTo();
 		homePage.GoToPMS230();
+		Assert.assertEquals(pms270_b1.getPms230HeaderlblValue, "Work Center Schedule. OpenPMS230")
 		pms270_b1.enterView("F01");
+		Assert.assertEquals(pms270_b1.getPanellblValue, "PMS230/S")
+		
+		pms270_b1.enterScheduleNos("133", "133")
+		
 		pms270_b1.clickNext();
+		pms270_b1.reportIssue();
+		
+		Assert.assertEquals(pms270_b1.getPms060lblValue, "PMS060/B1")
+		pms270_b1.selectIssueMtdl("2-Requisition")
+		pms270_b1.refreshPage();
+		pms270_b1.selectFirstRows();
+		pms270_b1.confirmation();
+		Assert.assertEquals(pms270_b1.getStatus, "99","Status 99 is incorrect")
+		
 		// change the drop down to -- no need
 		// Enter new schedule Nos
-		pms270_b1.enterScheduleNos("85", "85")
-		pms270_b1.ClickActions();
+		
+		//pms270_b1.ClickActions();
 
 	}
 

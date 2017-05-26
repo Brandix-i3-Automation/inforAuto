@@ -54,11 +54,17 @@ class MNS205B1 extends ToolbarPage {
 		var InforGrid grid = new InforGrid(gridMNS205);
 		grid.setValueToColumnSearchField("User", user).sendKeys(Keys.ENTER);
 		waitForLoadingComplete();
-		var row = grid.getRowsContainingTextInColumn(2, user).length;
-		if (row != 0) {
-			return true;
+		var rowCount = grid.getRowCount();
+		if (rowCount < 1) {
+			return false;
+		} 
+		else {
+			var row = grid.getRowsContainingTextInColumn(2, user).length;
+			if (row != 0) {
+				return true;
+			}
+			return false;
 		}
-		return false;
 	}
 	
 	/**

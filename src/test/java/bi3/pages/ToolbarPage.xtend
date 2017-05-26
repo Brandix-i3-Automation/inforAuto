@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.Keys
 import org.openqa.selenium.By
+import java.util.List
+import java.util.ArrayList
 
 class ToolbarPage extends BasePage {
 
@@ -136,6 +138,10 @@ class ToolbarPage extends BasePage {
 
 	@FindBy(id = "helpIconBtn")
 	WebElement btnHelpBtn
+    
+     /* Tool bar option list */
+     @FindBy(css=".inforContextMenu.ToolsMenu.inforMenuOptions>li")
+	 List<WebElement> toolbarOptionList;
     
     /*
      * 
@@ -361,5 +367,12 @@ class ToolbarPage extends BasePage {
 	 	btnHelpBtn.click()
 	 	waitForLoadingComplete()
 	 	findElementInHelp(DropDownElement).click()
+	 }
+	 
+	 /**
+	  * Get tools menu option list.
+	  */
+	 def List<String> getToolsMenuOptions() {
+		return this.toolbarOptionList.textList;
 	 }
 }
