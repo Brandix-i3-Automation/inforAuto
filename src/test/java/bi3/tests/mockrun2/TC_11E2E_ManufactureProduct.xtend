@@ -224,7 +224,7 @@ class TC_11E2E_ManufactureProduct extends BaseTest {
 	@Test
 	def void ManufactureProductTest () {
 		
-		//CreateMO();
+		CreateMO();
 		workCeneterSchedules();
 	}
 
@@ -241,7 +241,7 @@ class TC_11E2E_ManufactureProduct extends BaseTest {
 
 		Thread.sleep(2000);
 		// Assert.assertEquals(pms001_b.ValidateInterfaceDetails()	, "PMS001/E");
-		pms001_e.EnterStartDate("170524");
+		pms001_e.EnterStartDate("170526");
 		pms001_e.EnterOrderQty("10");
 		pms001_e.clickNext();
 
@@ -271,6 +271,7 @@ class TC_11E2E_ManufactureProduct extends BaseTest {
 //        crs207_b.clickNext();
 //        println("3")
 		mms001.close();
+		mms001.closeAllTabs();
 		println("closed pms001")
 		homePage.GoToPMS100();
 		pms100_b.SelectSortingOrder("91-SchNo/Product");
@@ -297,10 +298,11 @@ class TC_11E2E_ManufactureProduct extends BaseTest {
 		loginPage.GoTo();
 		homePage.GoToPMS230();
 		Assert.assertEquals(pms270_b1.getPms230HeaderlblValue, "Work Center Schedule. OpenPMS230")
+		pms270_b1.enterWrkCenter("Y0010");
 		pms270_b1.enterView("F01");
 		Assert.assertEquals(pms270_b1.getPanellblValue, "PMS230/S")
 		
-		pms270_b1.enterScheduleNos("133", "133")
+		pms270_b1.enterScheduleNos("1705261425", "1705261425")
 		
 		pms270_b1.clickNext();
 		pms270_b1.reportIssue();
@@ -311,6 +313,27 @@ class TC_11E2E_ManufactureProduct extends BaseTest {
 		pms270_b1.selectFirstRows();
 		pms270_b1.confirmation();
 		Assert.assertEquals(pms270_b1.getStatus, "99","Status 99 is incorrect")
+		pms270_b1.ClickPrev();
+		pms270_b1.selectFirstRows();
+		pms270_b1.reportOperation();
+		Assert.assertEquals(pms270_b1.getPanellblValue, "PMS070/A")
+		pms270_b1.clickNext();
+		pms270_b1.selectFirstRows();
+		pms270_b1.confirmation();
+		Assert.assertEquals(pms270_b1.getStatusInMoOpe, "80","Status 80 is incorrect")
+		
+		pms270_b1.ClickPrev();
+		pms270_b1.ClickPrev();
+		
+		pms270_b1.reportReceipt();
+		pms270_b1.clickNext();
+		Assert.assertEquals(pms270_b1.getMosTsStatus, "80","Status 80 is incorrect")
+		pms270_b1.reportOperation();
+		pms270_b1.clickNext();
+		
+		Assert.assertEquals(pms270_b1.getStatusInMoOpe, "80","Status 80 is incorrect")
+		
+		
 		
 		// change the drop down to -- no need
 		// Enter new schedule Nos
