@@ -27,21 +27,24 @@ class PMS001_B extends BasePage {
 	//Page actions
 	
 	def void EnterProductNumber(String productNumber) {
+		
 		waitForLoadingComplete();
 		txtProductNo.click();
 		clearRobustly(txtProductNo);
+		txtProductNo.sendKeys(productNumber);
 		
 		txtProductNo.sendKeys(productNumber);
-		txtProductNo.sendKeys(Keys.ENTER);
+	//	txtProductNo.sendKeys(Keys.ENTER);
 		waitForLoadingComplete();
 	}
 	
 	def void ClickOnCreate() {
-		waitToBeClickable(btnCreate);
+		waitForLoadingComplete();
 		btnCreate.click();
 		waitForLoadingComplete();
 		
 	}
+	
 	def EnterProductNumInGrid(String productNumber){
 		var InforGrid grid= new InforGrid(gridElementPMA001BS);
 		grid.setValueToColumnSearchField("Product",productNumber);
