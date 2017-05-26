@@ -160,6 +160,11 @@ class TC10_E2E extends BaseTest{
 		oss220E.closeAllTabs();
 	}
 
+<<<<<<< HEAD
+=======
+	var per = newArrayList("1706","1707","1708","1709","1710","1711","1712","1801","1802","1803","1804","1805");
+	
+>>>>>>> 510fc3918f3721524baf60c005fd548b7ad79012
 	/**
 	 * create forecast via m3
 	 */
@@ -191,6 +196,7 @@ class TC10_E2E extends BaseTest{
 	 */
 	def void releaseMOP(String item){
 		homePage.goToProgramUsingShrt("PMS170");
+		pms170B.minimiseFilterOptions();
 		pms170B.SelectSortingOrder(sortingOrder);
 		pms170B.clearResponsible();
 		pms170B.enterRespSearchKey(resp);
@@ -199,9 +205,18 @@ class TC10_E2E extends BaseTest{
 		var scheduleNo = pms270E.GetSchedNo();
 		pms270E.clickOnNext();
 		pms170B.ReleaseItem();
+		pms170B.clickFilterOptions();
+		if(pms170B.compareItemWithSts60(item)==false){
+			Assert.fail("Status is not 60")
+		}
 		pms170B.closeAllTabs();
 		homePage.goToProgramUsingShrt("PMS100");
 		pms100B.SelectSortingOrder(sortingOrderPMS);
+		pms100B.ClearMoNo();
+		pms100B.ClearProduct();
 		pms100B.EnterSchNo(scheduleNo);
+		if(pms100B.compareNumOfSchNoAndMoNo(scheduleNo)==false){
+			Assert.fail("MO is not created")
+		}
 	}
 }
