@@ -47,6 +47,9 @@ class CAS310 extends BasePage {
 	@FindBy(css="#WWQTTP-shdo")
 	WebElement cmdSortingOrder;
 
+	@FindBy(xpath=".//*[@href='#tabhost_1']/div/div")
+	WebElement txtheaderVal;
+	
 //	@FindBy(css="#dropdown-list li")
 //	
 	@FindBy(css="Next#WGFACIContainer>input") 
@@ -110,6 +113,11 @@ class CAS310 extends BasePage {
 		textFaciulity.click();
 		textFaciulity.sendKeys(facility)	
 		
+	}
+	
+	def String validateHeader() {
+				
+			txtheaderVal.text;	
 	}
 }
 

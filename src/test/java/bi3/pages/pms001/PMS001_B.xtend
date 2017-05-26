@@ -22,6 +22,8 @@ class PMS001_B extends BasePage {
 	@FindBy(css="div[id*='PMA001BS'][class*='inforDataGrid']") 
 	WebElement gridElementPMA001BS;
 	
+	@FindBy(id="showProgramShortName") 
+	WebElement txtInterfaceDetails;
 	//Page actions
 	
 	def void EnterProductNumber(String productNumber) {
@@ -46,6 +48,12 @@ class PMS001_B extends BasePage {
 		txtProductNo.sendKeys(Keys.ENTER);
 		waitForLoadingComplete();
 		
+	}
+	
+	def String ValidateInterfaceDetails() {
+		
+		txtInterfaceDetails.text;		
+				
 	}
 	
 	

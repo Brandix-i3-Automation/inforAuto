@@ -64,8 +64,10 @@ import bi3.pages.ois100.OIS100H
 import bi3.pages.mws060.MWS060B
 import org.testng.annotations.BeforeMethod
 import bi3.pages.pms100.PMS100_B
+import org.testng.Assert
 
 class TC_11E2E_ManufactureProduct extends BaseTest {
+
 
 	LoginPage loginPage
 	HomePage homePage
@@ -140,6 +142,7 @@ class TC_11E2E_ManufactureProduct extends BaseTest {
 
 	@BeforeMethod
 	def void Initialize() {
+		
 		loginPage = new LoginPage(driver)
 		homePage = new HomePage(driver)
 		mms001 = new MMS001(driver);
@@ -220,14 +223,19 @@ class TC_11E2E_ManufactureProduct extends BaseTest {
 	def void ManufactureProductTest () {
 		
 		CreateMO();
-		workCeneterSchedules();
+	//	workCeneterSchedules();
+	//	ValidateCostsAndVariances();
+		
 	}
 
 	/**
-	 * Crate MO
+	 * Crate MO 
 	 */
 	def void CreateMO() {
 
+		var startDate = "170526"
+	//	var 
+		
 		loginPage.GoTo();
 		homePage.GoToPMS001();
 		var prodNo = "D10929";
@@ -235,8 +243,13 @@ class TC_11E2E_ManufactureProduct extends BaseTest {
 		pms001_b.ClickOnCreate();
 
 		Thread.sleep(2000);
-		// Assert.assertEquals(pms001_b.ValidateInterfaceDetails()	, "PMS001/E");
-		pms001_e.EnterStartDate("170524");
+		// validate for the page navigation
+				
+	    Assert.assertEquals(pms001_b.ValidateInterfaceDetails()	, "PMS001/E");
+	    
+	    println("Assertion is done");
+
+		pms001_e.EnterStartDate(startDate);
 		pms001_e.EnterOrderQty("10");
 		pms001_e.clickNext();
 
@@ -290,6 +303,7 @@ class TC_11E2E_ManufactureProduct extends BaseTest {
 	def void workCeneterSchedules() {
 
 		loginPage.GoTo();
+		// Navigate to PMS230
 		homePage.GoToPMS230();
 		pms270_b1.enterView("F01");
 		pms270_b1.clickNext();
@@ -307,6 +321,7 @@ class TC_11E2E_ManufactureProduct extends BaseTest {
 
 		loginPage.GoTo();
 		homePage.GoToCAS950();
+		// Enter from and To dates
 		cas950_E.selectFromDate("170508");
 		cas950_E.selectToDate("170531");
 		cas950_E.checkStockTrance();
@@ -330,10 +345,14 @@ class TC_11E2E_ManufactureProduct extends BaseTest {
 	def void ValidateCostsAndVariances() {
 
 		loginPage.GoTo();
+		// navigate to CAS310
 		homePage.GoToCAS310();
+		// validate for the header value
+		Assert.assertEquals(cas310.validateHeader(), "Order Costing. Display");
+		// Set the Ascending order
 		cas310.SelectSortingOrder("2-Per facility and order no");
+		// In
 		cas310.addFacilityDetails("D01");
-	// Assert check the header of the page
 	}
 
 }
