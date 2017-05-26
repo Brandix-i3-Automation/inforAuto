@@ -77,6 +77,7 @@ class SystemTC_09 extends BaseTest {
 		Thread.sleep(5000);		
 		// 12. Open Item+Open.xls file - Verify: Check if the Item in the selected row and item in the exported file are the same.
 		var ExcelUtil excelUtil = new ExcelUtil(ConfigKeys.EXCEL_DOWNLOAD_PATH);
+		Assert.assertEquals(ExcelUtil.fileName , "Item Open.xls");
 		var ExcelData eData = excelUtil.readXlsExcel(0);
 		
 		var ExcelData aData = new ExcelData();
